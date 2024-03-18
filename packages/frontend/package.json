@@ -1,0 +1,8 @@
+{
+  "name": "@safsbe/mental-health-app-frontend",
+  "version": "0.0.1",
+  "private": false,
+  "devDependencies": {
+    "shadow-cljs": "2.27.5"
+  }
+}

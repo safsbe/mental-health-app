@@ -1,0 +1,23 @@
+{
+  "name": "@safsbe/mental-health-app-monorepo",
+  "version": "1.0.0",
+  "description": "A proof of concept application created by the SBE Innovation Team, part of the SBE NSF Council.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safsbe/mental-health-app.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/safsbe/mental-health-app/issues"
+  },
+  "homepage": "https://github.com/safsbe/mental-health-app#readme",
+  "dependencies": {
+    "lerna": "^8.1.2"
+  }
+}

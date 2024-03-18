@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "github>safsbe/cicd//shared-configs/renovate/base"
+  ]
+}
+
