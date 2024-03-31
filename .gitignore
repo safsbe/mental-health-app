@@ -1,3 +1,7 @@
 node_modules/
+.clj-kondo/
+.lsp/
+.expo/
 *~
+packages/frontend/app/
 #*#
