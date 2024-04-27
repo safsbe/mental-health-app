@@ -3,7 +3,6 @@
     "name": "hello-world",
     "slug": "reagent-expo",
     "privacy": "public",
-    "entryPoint": "./app/index.js",
     "platforms": [
       "ios",
       "android",
@@ -20,11 +19,24 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "userInterfaceStyle": "automatic",
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "node_modules/@expo-google-fonts/mulish/Mulish_400.ttf",
+            "node_modules/@expo-google-fonts/mulish/Mulish_700.ttf",
+            "node_modules/@expo-google-fonts/mulish/Mulish_800.ttf"
+          ]
+        }
+      ]
+    ]
   }
 }

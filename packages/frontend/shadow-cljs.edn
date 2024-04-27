@@ -4,14 +4,18 @@
   "src/main"
   "src/test"]
 
+ :local-repo "./.m2/repository"
+ 
  :dependencies
  [[reagent "1.2.0"]
   [re-frame "1.4.3"]]
- 
+
  :builds
-  {:app
-   {:target :react-native
-    :init-fn frontend.app/init
-    :output-dir "app"
-    :compiler-options {:infer-externs :auto}
-    :devtools {:autoload true}}}}
+ {:app
+  {:target :react-native
+   :init-fn frontend.app/init
+   :output-dir "app"
+   :compiler-options {:infer-externs :auto}
+   :devtools
+   {:autoload true
+    :reload-strategy :full}}}}

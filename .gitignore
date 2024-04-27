@@ -4,4 +4,6 @@ node_modules/
 .expo/
 *~
 packages/frontend/app/
-#*#
+\#*#
+.\#*
+.m2
