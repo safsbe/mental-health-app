@@ -72,9 +72,7 @@
      :#DDF1FE
      "https://mindline.sg/"]
     
-    [section-header "Useful Contacts"]
-    [useful-contacts]
-    ]])
+    [section-header "Useful Contacts"]]])
 
 (defn resources-screen []
   [resources-screen-inner])
