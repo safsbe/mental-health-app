@@ -1,8 +1,12 @@
 (ns screen.home
   (:require [reagent.core :as r]
+            [re-frame.core :as rf]
+            [screen.article :refer [article-screen]]
+            [screen.explore :refer [explore-screen]]
             [screen.sos :refer [sos-screen]]
             ["react-native" :as rn]
             ["@react-navigation/drawer" :as rnd]
+            ["@react-navigation/native-stack" :as rnns]
             ["@expo/vector-icons" :refer [FontAwesome5]]))
 
 (defn section [title child]
@@ -13,36 +17,40 @@
     title]
    child])
 
-(defn explore-card [title bg-color my-url]
-  [:> rn/View {:style {:background bg-color
-                       :borderRadius :6px
-                       :marginRight :15px
-                       :padding :15px
-                       :width :180px
-                       :height :200px}}
+(defn explore-card [title nav category bg-color my-url]
+  [:> rn/Pressable {:style {:background bg-color
+                            :borderRadius :6px
+                            :marginRight :15px
+                            :padding :15px
+                            :width :180px
+                            :height :200px
+                            :alignItems "stretch"}
+                    :onPress #(nav.navigate "Explore" #js{:category category})}
    [:> rn/Text {:style {:textAlign :right
                         :fontWeight :bold
                         :color :#2A4E4C}}
     title]
-   [:> rn/Image {:source my-url}]])
+   [:> rn/Image {:style {:width "100%"
+                         :flexGrow 1}
+                 :source my-url}]])
 
-(defn explore []
+(defn explore [nav]
   [:> rn/ScrollView {:horizontal true}
-   [explore-card "Self" :#fff7d6 :my-url]
-   [explore-card "Self-Care" :#DDE5FF :my-url]
-   [explore-card "About Mental Health" :#DEF7E5 :my-url]
-   [explore-card "About Others" :#FFE7E7 :my-url]])
+   [explore-card "Self" nav :self :#fff7d6 (js/require "../assets/home-explore-self.png")]
+   [explore-card "Self-Care" nav :self-care :#DDE5FF (js/require "../assets/home-explore-self-care.png")]
+   [explore-card "About Mental Health" nav :mental-health :#DEF7E5 (js/require "../assets/home-explore-mental-health.png")]
+   [explore-card "About Others" :others nav :#FFE7E7 (js/require "../assets/home-explore-others.png")]])
 
 (defn mindful-pauses []
   [:> rn/View {:style {:background :#FFE7E7
                        :padding :15px
                        :borderRadius :6px
                        :flexDirection :row
+                       :alignItems "space-around"
                        :gap :5px}}
-;   [:> rn/Text {:style {:flex 2}}
-;    "Image goes here"]
-   [:> rn/Image {:style {:flex 2}
-                 :source ""}]
+   [:> rn/Image {:style {:flex 2
+                         :height "100%"}
+                 :source (js/require "../assets/home-mindful-minutes.png")}]
    [:> rn/View {:style {:flex 5}}
     [:> rn/Text {:style {:color :#2A4E4C
                          :fontWeight :bold}}
@@ -76,6 +84,9 @@
     [:> FontAwesome5 {:name :smile
                       :size 32
                       :color :black}]
+    [:> FontAwesome5 {:name :meh
+                      :size 32
+                      :color :black}]
     [:> FontAwesome5 {:name :frown
                       :size 32
                       :color :black}]
@@ -84,8 +95,9 @@
                       :color :black}]]])
 
 (def Drawer (rnd/createDrawerNavigator))
+(def Stack (rnns/createNativeStackNavigator))
 
-(defn home-screen-inner []
+(defn home-screen-inner [{navigation :navigation}]
   [:> rn/ScrollView
    [:> rn/View {:style {:flex 1
                         :align-items :stretch
@@ -94,18 +106,34 @@
     [daily-feeling-scale]
     [section "Quote of the day"
      [quote-of-the-day]]
-    [section "Mindful Pauses" 
+    [section "Activities" 
      [mindful-pauses]]
     [section "Explore"
-     [explore]]]])
+     [explore navigation]]]])
+
+(defn stack-navigation []
+  [:> Stack.Navigator {:initialRouteName "Home"}
+   [:> Stack.Screen {:name "Home"
+                     :component (r/reactify-component home-screen-inner)
+                     :options {:headerShown false}}]
+   [:> Stack.Screen {:name "Explore"
+                     :component (r/reactify-component explore-screen)}]
+     [:> Stack.Screen {:name "Article"
+                       :component (r/reactify-component article-screen)}]])
 
 (defn drawer-navigation []
-  [:> Drawer.Navigator {:initialRouteName :Home}
-   [:> Drawer.Screen {:name :Home
-                      :component (r/reactify-component home-screen-inner)}]
+  (let [user-name @(rf/subscribe [:user])]
+  [:> Drawer.Navigator {:initialRouteName :Home
+                        :screenOptions {:title #(r/reactify-component [:> rn/Text "Hello, " user-name])}}
+   [:> Drawer.Screen {:name "Home"
+                      :component (r/reactify-component stack-navigation)
+                      :options  {:headerTitle #(r/reactify-component [:> rn/Text "Hello " user-name])}}]
+   (comment
+     [:> Drawer.Screen {:name :Home
+                        :component (r/reactify-component home-screen-inner)}])
    [:> Drawer.Screen {:name :SOS
-                      :component (r/reactify-component sos-screen)}]])
+                      :component (r/reactify-component sos-screen)}]]))
 
 (defn home-screen []
-    [drawer-navigation]
+    [stack-navigation]
 )
