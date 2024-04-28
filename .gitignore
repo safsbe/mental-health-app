@@ -8,3 +8,5 @@ packages/frontend/assets/
 \#*#
 .\#*
 .m2
+packages/frontend/android/
+packages/frontend/assets/

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "hello-world",
+    "name": "SBE/SBC Mental Health App",
     "slug": "reagent-expo",
     "privacy": "public",
     "platforms": [
@@ -10,9 +10,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -31,12 +31,15 @@
         "expo-font",
         {
           "fonts": [
-            "node_modules/@expo-google-fonts/mulish/Mulish_400.ttf",
-            "node_modules/@expo-google-fonts/mulish/Mulish_700.ttf",
-            "node_modules/@expo-google-fonts/mulish/Mulish_800.ttf"
+            "node_modules/@expo-google-fonts/mulish/Mulish_400Regular.ttf",
+            "node_modules/@expo-google-fonts/mulish/Mulish_700Bold.ttf",
+            "node_modules/@expo-google-fonts/mulish/Mulish_800ExtraBold.ttf"
           ]
         }
       ]
-    ]
+    ],
+    "android": {
+      "package": "com.achrinza.sbesbc_mental_health"
+    }
   }
 }
