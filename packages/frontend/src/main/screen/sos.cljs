@@ -1,20 +1,21 @@
 (ns screen.sos
   (:require [reagent.core :as r]
-            ["react-native" :as rn]))
+            [re-frame.core :as rf]
+            [component.helplines :refer [helplines]]
+            ["react-native" :as rn]
+            ["@expo/vector-icons" :refer [FontAwesome5]]))
 
 (defn prominent-dialer []
   [:> rn/View {:style {:alignItems :center}}
-;                       :height :90%}}
    [:> rn/View {:style {:alignItems :center
                         :justifyContent :center
                         :padding :15px
-;                        :height :90%
                         :maxWidth :500px}}
     [:> rn/Text {:style {:fontSize 24}} "You are not alone."]
     [:> rn/Text {:style {:fontSize 24}} "We're here to help."]
     [:> rn/Text {:style {:fontSize 14
                          :color :#a5a5a5}} "You will remain anonymous."]
-    [:> rn/View {:style {:borderRadius :100%
+    [:> rn/Pressable {:style {:borderRadius :100%
                          :background :#FCEDD0
                          :margin :20px
                          :padding :15px
@@ -52,21 +53,9 @@
         "Helpline 1767"]]]]
     [:> rn/Text {:style {:color :#a5a5a5
                          :fontSize 14}}
-     "The button will bring up your phone’s dialler but will not call immediately."]]])
-
-(defn helpline-group [title hotlines]
-  [:> rn/View
-   [:> rn/Text title]])
-
-(defn helplines []
-  [:> rn/View
-   [:> rn/Text {:style {:color :#2A4E4C
-                        :fontSize 24}}
-    "More helplines"]
-   [helpline-group
-    "General Mental Well-Being"]])
+     "The button will bring up your phone’s dialer but will not call immediately."]]])
 
 (defn sos-screen []
-  [:> rn/ScrollView
+  [:> rn/ScrollView {:style {:padding "10px"}}
    [prominent-dialer]
    [helplines]])

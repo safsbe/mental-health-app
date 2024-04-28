@@ -1,5 +1,6 @@
 (ns screen.resources
   (:require [reagent.core :as r]
+            [component.helplines :refer [helplines]]
             ["react-native" :as rn]
             ["@expo/vector-icons" :refer [FontAwesome5]]))
 
@@ -72,7 +73,8 @@
      :#DDF1FE
      "https://mindline.sg/"]
     
-    [section-header "Useful Contacts"]]])
+    [section-header "Useful Contacts"]
+    [helplines true]]])
 
 (defn resources-screen []
   [resources-screen-inner])
