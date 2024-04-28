@@ -39,8 +39,10 @@
                        :borderRadius :6px
                        :flexDirection :row
                        :gap :5px}}
-   [:> rn/Text {:style {:flex 2}}
-    "Image goes here"]
+;   [:> rn/Text {:style {:flex 2}}
+;    "Image goes here"]
+   [:> rn/Image {:style {:flex 2}
+                 :source ""}]
    [:> rn/View {:style {:flex 5}}
     [:> rn/Text {:style {:color :#2A4E4C
                          :fontWeight :bold}}
