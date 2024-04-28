@@ -4,6 +4,7 @@
             [shadow.expo :as expo]
             [screen.home :refer [home-screen]]
             [screen.sos :refer [sos-screen]]
+            [screen.resources :refer [resources-screen]]
             ["expo-font" :as ef]
             ["react-native" :as rn]
             ["@react-navigation/native" :as rnn]
@@ -30,7 +31,11 @@
                     :options {:headerShown false}}]
     [:> Tab.Screen {:name "SOS"
                     :component (r/reactify-component sos-screen)
-                    :options {:headerShown false}}]]])
+                    :options {:headerShown false}}]
+    [:> Tab.Screen {:name "Resources"
+                    :component (r/reactify-component resources-screen)
+                    :options {:headerShown false}}]
+                    ]])
 
 (defn start
   {:dev/after-load true}

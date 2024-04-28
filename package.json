@@ -19,5 +19,8 @@
   "homepage": "https://github.com/safsbe/mental-health-app#readme",
   "dependencies": {
     "lerna": "^8.1.2"
+  },
+  "devDependencies": {
+    "expo": "^50.0.17"
   }
 }
