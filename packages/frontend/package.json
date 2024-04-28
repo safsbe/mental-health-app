@@ -14,7 +14,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.19",
     "eas-cli": "^7.8.5",
-    "expo": "^50.0.14",
+    "expo": "^50.0.17",
     "postcss": "^8.4.38",
     "postcss-loader": "^8.1.1",
     "shadow-cljs": "2.27.5",
