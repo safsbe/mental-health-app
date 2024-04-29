@@ -24,22 +24,23 @@
                             :padding :15px
                             :width :180px
                             :height :200px
-                            :alignItems "stretch"}
+                            :alignItems "fit"}
                     :onPress #(nav.navigate "Explore" #js{:category category})}
    [:> rn/Text {:style {:textAlign :right
                         :fontWeight :bold
                         :color :#2A4E4C}}
     title]
    [:> rn/Image {:style {:width "100%"
+                         :height "100%"
                          :flexGrow 1}
                  :source my-url}]])
 
 (defn explore [nav]
   [:> rn/ScrollView {:horizontal true}
-   [explore-card "Self" nav :self :#fff7d6 (js/require "../assets/home-explore-self.png")]
-   [explore-card "Self-Care" nav :self-care :#DDE5FF (js/require "../assets/home-explore-self-care.png")]
-   [explore-card "About Mental Health" nav :mental-health :#DEF7E5 (js/require "../assets/home-explore-mental-health.png")]
-   [explore-card "About Others" :others nav :#FFE7E7 (js/require "../assets/home-explore-others.png")]])
+   [explore-card "Self" nav :self :#fff7d6 (js/require "../assets/home-explore-self.svg")]
+   [explore-card "Self-Care" nav :self-care :#DDE5FF (js/require "../assets/home-explore-self-care.svg")]
+   [explore-card "About Mental Health" nav :mental-health :#DEF7E5 (js/require "../assets/home-explore-mental-health.svg")]
+   [explore-card "About Others" :others nav :#FFE7E7 (js/require "../assets/home-explore-others.svg")]])
 
 (defn mindful-pauses []
   [:> rn/View {:style {:background :#FFE7E7
@@ -47,10 +48,11 @@
                        :borderRadius :6px
                        :flexDirection :row
                        :alignItems "space-around"
-                       :gap :5px}}
+                       :gap :5px
+                       :minHeight "20px"}}
    [:> rn/Image {:style {:flex 2
                          :height "100%"}
-                 :source (js/require "../assets/home-mindful-minutes.png")}]
+                 :source (js/require "../assets/home-mindful-minutes.svg")}]
    [:> rn/View {:style {:flex 5}}
     [:> rn/Text {:style {:color :#2A4E4C
                          :fontWeight :bold}}
