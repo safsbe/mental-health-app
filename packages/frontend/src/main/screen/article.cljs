@@ -2,8 +2,10 @@
   (:require [reagent.core :as r]
             ["react-native" :as rn]))
 
-(defn article-screen [{{params :params} :route}]
-  (let [{title :title sections :section} (js->clj (.-article params))]
+(defn article-screen [{route :route}]
+  (let [article (:article (.-params route))
+        title (:title article)
+        sections (:sections article)]
     (->> sections
          (map (fn [{title :title body :body}]
                 [:> rn/View
