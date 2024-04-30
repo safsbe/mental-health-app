@@ -5,6 +5,7 @@
             [screen.explore :refer [explore-screen]]
             [screen.sos :refer [sos-screen]]
             ["react-native" :as rn]
+            ["@react-navigation/native" :as rnn]
             ["@react-navigation/drawer" :as rnd]
             ["@react-navigation/native-stack" :as rnns]
             ["@expo/vector-icons" :refer [FontAwesome5]]))
@@ -47,11 +48,13 @@
                        :padding :15px
                        :borderRadius :6px
                        :flexDirection :row
-                       :alignItems "space-around"
+                       :alignItems "center"
                        :gap :5px
-                       :minHeight "20px"}}
-   [:> rn/Image {:style {:flex 2
-                         :height "100%"}
+                       :height "10vh"}}
+   [:> rn/Image {:style {:flex 3
+                         :resizeMode "contain"
+                         :height "100%"
+                         :minHeight "20vh"}
                  :source (js/require "../assets/home-mindful-minutes.svg")}]
    [:> rn/View {:style {:flex 5}}
     [:> rn/Text {:style {:color :#2A4E4C
@@ -96,6 +99,14 @@
                       :size 32
                       :color :black}]]])
 
+(defn greeting []
+  (let [user-name @(rf/subscribe [:user])]
+    [:> rn/Text {:style {:fontSize "24px"
+                         :fontWeight "bold"
+                         :paddingLeft "15px"
+                         :paddingRight "15px"
+                         :color "#2A4E4C"}} "Hey, " user-name, "!"]))
+
 (def Drawer (rnd/createDrawerNavigator))
 (def Stack (rnns/createNativeStackNavigator))
 
@@ -103,8 +114,10 @@
   [:> rn/ScrollView
    [:> rn/View {:style {:flex 1
                         :align-items :stretch
+                        :paddingTop :50px
                         :paddingLeft :5px
                         :paddingRight :5px}}
+    [greeting]
     [daily-feeling-scale]
     [section "Quote of the day"
      [quote-of-the-day]]
@@ -124,17 +137,14 @@
                        :component (r/reactify-component article-screen)}]])
 
 (defn drawer-navigation []
-  (let [user-name @(rf/subscribe [:user])]
-  [:> Drawer.Navigator {:initialRouteName :Home
-                        :screenOptions {:title #(r/reactify-component [:> rn/Text "Hello, " user-name])}}
+  [:> Drawer.Navigator {:initialRouteName "Home"}
    [:> Drawer.Screen {:name "Home"
                       :component (r/reactify-component stack-navigation)
-                      :options  {:headerTitle #(r/reactify-component [:> rn/Text "Hello " user-name])}}]
-   (comment
-     [:> Drawer.Screen {:name :Home
-                        :component (r/reactify-component home-screen-inner)}])
-   [:> Drawer.Screen {:name :SOS
-                      :component (r/reactify-component sos-screen)}]]))
+                      :listeners (fn [props]
+                                   (let [{navigation :navigation} (js->clj props {:keywordize-keys true})]
+                                     {:tabPress #(navigation.dispatch (rnn/StackActions.popToTop))}))}]
+   [:> Drawer.Screen {:name "SOS"
+                      :component (r/reactify-component sos-screen)}]])
 
 (defn home-screen []
     [stack-navigation]
