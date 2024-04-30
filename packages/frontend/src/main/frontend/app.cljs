@@ -9,7 +9,9 @@
             ["react-native" :as rn]
             ["@react-navigation/native" :as rnn]
             ["@react-navigation/bottom-tabs" :as rnbt]
-            ["@react-navigation/native-stack" :as rnns]))
+            ["@react-navigation/native-stack" :as rnns]
+            ["@expo/vector-icons" :refer [FontAwesome5
+                                          MaterialIcons]]))
 
 (js/require "../global.css")
 (js/require "react-native-gesture-handler")
@@ -19,17 +21,36 @@
 
 (defn root []
   [:> rnn/NavigationContainer
-   [:> Tab.Navigator {:initialRouteName :Home}
+   [:> Tab.Navigator {:initialRouteName "Home"
+                      :screenOptions {:tabBarShowLabel false}}
     [:> Tab.Screen {:name "Home"
                     :component (r/reactify-component home-screen)
-                    :options {:headerShown false}}]
+                    :options {:headerShown false
+                              :tabBarIcon #(let [{size :size
+                                                  color :color} (js->clj % {:keywordize-keys true})]
+                                             (-> [:> FontAwesome5 {:name "home"
+                                                                   :color color
+                                                                   :size size}]
+                                                 (r/as-element)))}}]
     [:> Tab.Screen {:name "SOS"
                     :component (r/reactify-component sos-screen)
-                    :options {:headerShown false}}]
+                    :options {:headerShown false
+                              
+                              :tabBarIcon #(let [{size :size
+                                                  color :color} (js->clj % {:keywordize-keys true})]
+                                             (-> [:> MaterialIcons {:name "sos"
+                                                                    :color color
+                                                                    :size size}]
+                                                (r/as-element)))}}]
     [:> Tab.Screen {:name "Resources"
                     :component (r/reactify-component resources-screen)
-                    :options {:headerShown false}}]
-                    ]])
+                    :options {:headerShown false
+                              :tabBarIcon #(let [{size :size
+                                                  color :color} (js->clj % {:keywordize-keys true})]
+                                             (-> [:> MaterialIcons {:name "message"
+                                                                    :color color
+                                                                    :size size}]
+                                                 (r/as-element)))}}]]])
 
 (defn start
   {:dev/after-load true}
