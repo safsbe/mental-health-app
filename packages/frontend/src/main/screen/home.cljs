@@ -4,6 +4,7 @@
             [screen.article :refer [article-screen]]
             [screen.explore :refer [explore-screen]]
             [screen.sos :refer [sos-screen]]
+            [screen.mindfulpause :refer [mindfulpause-screen]]
             ["react-native" :as rn]
             ["@react-navigation/native" :as rnn]
             ["@react-navigation/drawer" :as rnd]
@@ -43,18 +44,18 @@
    [explore-card "About Mental Health" nav :mental-health :#DEF7E5 (js/require "../assets/home-explore-mental-health.svg")]
    [explore-card "About Others" :others nav :#FFE7E7 (js/require "../assets/home-explore-others.svg")]])
 
-(defn mindful-pauses []
-  [:> rn/View {:style {:background :#FFE7E7
-                       :padding :15px
-                       :borderRadius :6px
-                       :flexDirection :row
-                       :alignItems "center"
-                       :gap :5px
-                       :height "10vh"}}
-   [:> rn/Image {:style {:flex 3
+(defn mindful-pauses [navigation]
+  [:> rn/Pressable {:style {:background :#FFE7E7
+                            :padding :15px
+                            :borderRadius :6px
+                            :flexDirection :row
+                            :alignItems "center"
+                            :gap :5px
+                            :minHeight "20px"
+                            :onPress #(navigation.navigate "MindfulPause" #js{})}}
+   [:> rn/Image {:style {:flex 2
                          :resizeMode "contain"
-                         :height "100%"
-                         :minHeight "20vh"}
+                         :height "100%"}
                  :source (js/require "../assets/home-mindful-minutes.svg")}]
    [:> rn/View {:style {:flex 5}}
     [:> rn/Text {:style {:color :#2A4E4C
@@ -122,7 +123,7 @@
     [section "Quote of the day"
      [quote-of-the-day]]
     [section "Activities" 
-     [mindful-pauses]]
+     [mindful-pauses navigation]]
     [section "Explore"
      [explore navigation]]]])
 
@@ -133,8 +134,14 @@
                      :options {:headerShown false}}]
    [:> Stack.Screen {:name "Explore"
                      :component (r/reactify-component explore-screen)}]
-     [:> Stack.Screen {:name "Article"
-                       :component (r/reactify-component article-screen)}]])
+   [:> Stack.Screen {:name "Article"
+                     :component (r/reactify-component article-screen)}]
+   [:> Stack.Screen {:name "MindfulPause"
+                     :options {:headerTitle ""
+                               :headerStyle {:backgroundColor "#595F59"
+                                             :borderBottomWidth 0}
+                               :headerBackImageSource (js/require "../assets/angle-left-solid.svg")}
+                     :component (r/reactify-component mindfulpause-screen)}]])
 
 (defn drawer-navigation []
   [:> Drawer.Navigator {:initialRouteName "Home"}
