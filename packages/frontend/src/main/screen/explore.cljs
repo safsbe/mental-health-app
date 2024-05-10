@@ -40,6 +40,7 @@
                                             :marginBottom "10px"
                                             :marginLeft :20px
                                             :marginRight :20px
+                                            :padding "20px"
                                             :height :32px
                                             :flex 1
                                             :alignItems :center}

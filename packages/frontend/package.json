@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "main": "./app/index.js",
+  "homepage": "/mental-health-app-demo",
   "scripts": {
     "server": "shadow-cljs server",
     "start": "expo start --offline",
@@ -31,6 +32,8 @@
     "@react-navigation/native-stack": "^6.9.26",
     "babel-plugin-module-resolver": "^5.0.0",
     "create-react-class": "^15.7.0",
+    "expo-asset": "^9.0.2",
+    "expo-av": "^13.10.6",
     "expo-font": "^11.10.3",
     "nativewind": "^4.0.36",
     "react": "^18.2.0",
