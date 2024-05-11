@@ -3,7 +3,7 @@
             ["react-native" :as rn]))
 
 (defn explore-screen [{navigation :navigation route :route}]
-    (let [category (js->clj (.-category (.-params route)))
+    (let [category (js->clj (.. route .-category .-params))
           categories {:self {:name "About Self"}}
           articles [{:title "Know Your Personality"
                      :category :self

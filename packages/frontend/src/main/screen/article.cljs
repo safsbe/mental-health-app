@@ -7,7 +7,6 @@
         title (:title article)
         sections (:sections article)]
     (navigation.setOptions #js{:title title})
-    ;(js/console.log (str title))
     (->> sections
          (map (fn [{title :title body :body}]
                 [:> rn/View {:style {:marginLeft :20px
