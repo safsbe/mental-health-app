@@ -56,6 +56,22 @@
      (-> db
          (assoc :user-preferred-name nil)
          (assoc :user-mode nil)
+         (assoc :categories {:self
+                             {:name "Self"
+                              :color "#FFF7D6"
+                              :image (js/require "../assets/home-explore-self.svg")}
+                             :self-card
+                             {:name "Self-Care"
+                              :color "#DDE5FF"
+                              :image (js/require "../assets/home-explore-self-care.svg")}
+                             :mental-health
+                             {:name "About Mental Health"
+                              :color "#DEF7E5"
+                              :image (js/require "../assets/home-explore-mental-health.svg")}
+                             :other
+                             {:name "About Others"
+                              :color "#FFE7E7"
+                              :image (js/require "../assets/home-explore-others.svg")}})
          (assoc :helpline-groups {:general {:displayName "General Mental Well-being"}
                                   :ns {:displayName "Service Helplines"}})
          (assoc :helplines [{:name "Institute of Mental Health"
@@ -108,14 +124,14 @@
      (assoc db :user-prefered-name user-preferred-name)))
 
   (rf/reg-sub
-   :user-feeling-rating
+   :user-feeling-scale/rating
    (fn [db _]
-     (:user-feeling-rating db)))
+     (:user-feeling-scale/rating db)))
 
   (rf/reg-event-db
-   :set-user-feeling-rating
-   (fn [db [_ user-feeling-rating]]
-     (assoc db :user-feeling-rating user-feeling-rating)))
+   :user-feeling-scale/set-rating
+   (fn [db [_ rating]]
+     (assoc db :user-feeling-scale/rating rating)))
 
   (rf/reg-sub
    :helplines-groups
@@ -152,6 +168,12 @@
    :set-playing-mode
    (fn [db playing]
      (assoc db :av-player/playing playing)))
+
+  (rf/reg-sub
+   :categories
+   (fn [db _]
+     (-> db
+         :categories)))
   
   (rf/dispatch-sync [:initialize-db])
   (start))

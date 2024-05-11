@@ -31,12 +31,15 @@
         "expo-font",
         {
           "fonts": [
-            "node_modules/@expo-google-fonts/mulish/Mulish_400.ttf",
-            "node_modules/@expo-google-fonts/mulish/Mulish_700.ttf",
-            "node_modules/@expo-google-fonts/mulish/Mulish_800.ttf"
+            "node_modules/@expo-google-fonts/mulish/Mulish_400Regular.ttf",
+            "node_modules/@expo-google-fonts/mulish/Mulish_700Bold.ttf",
+            "node_modules/@expo-google-fonts/mulish/Mulish_800ExtraBold.ttf"
           ]
         }
       ]
-    ]
+    ],
+    "android": {
+      "package": "com.achrinza.sbesbc_mentalhealth"
+    }
   }
 }
