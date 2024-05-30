@@ -23,23 +23,30 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "packagerOpts": {
+      "assetExts": ["md"]
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sbe.androidtest"
     },
     "plugins": [
       [
         "expo-font",
         {
-          "fonts": [
-            "node_modules/@expo-google-fonts/mulish/Mulish_400Regular.ttf",
-            "node_modules/@expo-google-fonts/mulish/Mulish_700Bold.ttf",
-            "node_modules/@expo-google-fonts/mulish/Mulish_800ExtraBold.ttf"
-          ]
+          "fonts": []
+        }
+      ],
+      [
+        "expo-asset",
+        {
+          "assets": ["assets/"]
         }
       ]
+      
     ],
     "android": {
-      "package": "com.achrinza.sbesbc_mentalhealth"
+      "package": "com.sbe.androidtest"
     }
   }
 }

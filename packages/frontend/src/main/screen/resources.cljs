@@ -7,29 +7,29 @@
 (defn section-header [title]
   [:> rn/View
    [:> rn/Text {:style {:fontWeight :bold
-                        :color :#2A4E4C
-                        :marginTop :10px
-                        :marginBottom :10px
-                        :fontSize :16px}}
+                        :color "#2A4E4C"
+                        :marginTop 10
+                        :marginBottom 10
+                        :fontSize 16}}
     title]]) ; modified from home.cljs
 
 (defn telegram-card [title text img bg-color linkurl]
-  [:> rn/Pressable {:style {:background bg-color
+  [:> rn/Pressable {:style {:backgroundColor bg-color
                             :flex 1
                             :justifyContent :center
                             :flexDirection :row
-                            :marginBottom :10px}
+                            :marginBottom 10}
                     :onPress #(rn/Linking.openURL linkurl)}
-   [:> rn/View {:style {:margin :10px :flex :40%}}
+   [:> rn/View {:style {:margin 10 :flex 2}}
     [:> rn/Image  {:source img}]]
-   [:> rn/View {:style {:flex :60%
+   [:> rn/View {:style {:flex 3
                         :flexDirection :column
-                        :margin :10px
-                        :maxHeight :137px}}
+                        :margin 10
+                        :maxHeight 137}}
     [:> rn/Text {:style {:fontWeight :bold
-                         :fontSize :16px
-                         :color :#2A4E4C
-                         :marginBottom :10px
+                         :fontSize 16
+                         :color "#2A4E4C"
+                         :marginBottom 10
                         ;:textAlign :justify
                          }}
      title]
@@ -39,7 +39,7 @@
                          :flexDirection :row-reverse
                          :position :relative}}
      [:> FontAwesome5 {:name "telegram"
-                       :size "32px"
+                       :size 32
                        :style {:position "absolute"
                                :bottom 0
                                :right 0}}]]]])
@@ -47,14 +47,14 @@
 (defn resources-screen-inner []
   [:> rn/ScrollView
    [:> rn/View {:style {:flex 1
-                        :align-items :stretch
-                        :marginTop :8vw
-                        :paddingLeft :20px
-                        :paddingRight :20px}} ; also modified from home.cljs
-    [:> rn/Text {:style {:fontSize :24px
+                        :alignItems :stretch
+                        :marginTop "8vw"
+                        :paddingLeft 20
+                        :paddingRight 20}} ; also modified from home.cljs
+    [:> rn/Text {:style {:fontSize 24
                          :fontWeight :bold
-                         :color :#2A4E4C
-                         :marginBottom :5vw}}
+                         :color "#2A4E4C"
+                         :marginBottom "5vw"}}
      "Stay updated with us" ]
 
     [section-header "Telegram"]
@@ -62,15 +62,15 @@
     [telegram-card
      "CSSCOM Well‑being"
      "Daily boost to your mental well‑being"
-     (js/require "../assets/telegram-image-1.png")
-     :#DEF7E5
+     (js/require "../assets/telegram_image_1.png")
+     "#DEF7E5"
      "https://t.me/+qw2b_RfOEaY3MmQ1"]
 
     [telegram-card
      "Mindline.sg"
      "An external digital platform with self-care/ stress management tools, knowledge and pathways to professional help."
-     (js/require "../assets/telegram-image-2.png")
-     :#DDF1FE
+     (js/require "../assets/telegram_image_2.png")
+     "#DDF1FE"
      "https://mindline.sg/"]
     
     [section-header "Useful Contacts"]
