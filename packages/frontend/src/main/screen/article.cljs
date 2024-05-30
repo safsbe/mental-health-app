@@ -1,20 +1,21 @@
 (ns screen.article
   (:require [reagent.core :as r]
             ["react-native" :as rn]
-            ["react-native-markdown-display" :refer [Markdown]]))
+            ["react-native-markdown-display" :default Markdown]))
 
 (defn article-screen [{navigation :navigation route :route}]
   (let [article (:article (.-params route))
         title (:title article)
-        body (:body article)]
+        mdText (:mdText article)]
     (navigation.setOptions #js{:title title})
-    ;(js/console.log (str title))
-    [:> rn/View {:style {:marginLeft 20
-                          :marginRight 20}}
-      (js/console.log body)
-      [:> Markdown ;{:style {:fontSize "16px"
-                    ;      :marginTop "10px"
-                     ;     :fontWeight :bold
-                      ;    :textDecorationLine :underline}}
-      body]]
-      (into [:> rn/ScrollView])))
+    (js/console.log (str Markdown))
+    [:> rn/ScrollView {:style {:marginLeft 20
+                         :marginRight 20}}
+      ;(js/console.log mdText)
+      [:> Markdown {:style {:heading3 {:fontSize 24
+                                       :marginTop 10
+                                       :fontWeight :bold
+                                       :textDecorationLine :underline}
+                            :body {:fontSize 16}
+                            :link {:color :blue}}}
+     mdText]]))
