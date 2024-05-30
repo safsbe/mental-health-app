@@ -4,9 +4,9 @@
             ["@expo/vector-icons" :refer [FontAwesome5]]))
 
 (defn helpline-group [title helplines streamlined-svc-mode]
-  [:> rn/View {:style {:marginTop (if streamlined-svc-mode "" "20px")}}
+  [:> rn/View {:style {:marginTop (if streamlined-svc-mode "" 20)}}
    [:> rn/Text {:style {:color "#2A4E4C"
-                        :fontSize "16px"}}
+                        :fontSize 16}}
     title]
    (->> helplines
         (map (fn [{name :name
@@ -15,11 +15,11 @@
                [:> rn/Pressable {:style {:flexDirection :row
                                          :alignItems "center"
                                          :justifyContent "space-between"
-                                         :padding "10px"}
+                                         :padding 10}
                                  :onPress #(rn/Linking.openURL (str "tel:" contact))}
                 [:> rn/View
                  [:> rn/Text name]
-                 [:> rn/Text {:style {:color :#a5a5a5}}
+                 [:> rn/Text {:style {:color "#a5a5a5"}}
                   contact " · " operating-hours]]
                 [:> FontAwesome5 {:name :phone
                                   :size 24
@@ -27,9 +27,9 @@
         (into [:> rn/View]))])
 
 (defn helplines [streamlined-svc-mode]
-  [:> rn/View {:style {:marginTop (if streamlined-svc-mode "" "20px")}}
+  [:> rn/View {:style {:marginTop (if streamlined-svc-mode "" 20)}}
    (when (not streamlined-svc-mode)
-     [:> rn/Text {:style {:color :#2A4E4C
+     [:> rn/Text {:style {:color "#2A4E4C"
                           :fontSize 24}}
       "More helplines"]
      [helpline-group
