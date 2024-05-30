@@ -8,6 +8,9 @@
     "platforms": [],
     "android": {
       "package": "com.sbe.test2"
+    },
+    "ios": {
+      "bundleIdentifier": "com.sbe.test"
     }
   }
 }

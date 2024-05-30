@@ -26,16 +26,16 @@
                             :borderRadius 6
                             :marginRight 15
                             :padding 15
-                            :width 180
-                            :height 200
+                            :width 160
+                            :height 160
                             :alignItems :center}
                     :onPress #(nav.navigate "Explore" #js{:category category})}
    [:> rn/Text {:style {:textAlign :right
                         :fontWeight :bold
                         :color "#2A4E4C"}}
     title]
-   [:> rn/Image {:style {:width "100%"
-                         :height "100%"
+   [:> rn/Image {:style {:width 128
+                         :height 128
                          :flexGrow 1}
                  :source my-url}]])
 

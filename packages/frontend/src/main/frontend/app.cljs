@@ -55,6 +55,7 @@
 (defn start
   {:dev/after-load true}
   []
+  (r/set-default-compiler! (r/create-compiler {:function-components true}))
   (expo/render-root (r/as-element [:f> root])))
 ;  (expo/render-root (r/as-element [root])))
 
