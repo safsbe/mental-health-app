@@ -16,25 +16,21 @@
     title]
    child])
 
-(defn explore-card [{title :name
-                     nav :nav
-                     category :keyword
-                     bg-color :color
-                     my-url :image}]
-  [:> rn/Pressable {:style {:background bg-color
-                            :borderRadius "6px"
-                            :marginRight "15px"
-                            :padding "15px"
-                            :width "180px"
-                            :height "200px"
-                            :alignItems "fit"}
+(defn explore-card [title nav category bg-color my-url]
+  [:> rn/Pressable {:style {:backgroundColor bg-color
+                            :borderRadius 6
+                            :marginRight 15
+                            :padding 15
+                            :width 160
+                            :height 160
+                            :alignItems :center}
                     :onPress #(nav.navigate "Explore" #js{:category category})}
    [:> rn/Text {:style {:textAlign "right"
                         :fontWeight "bold"
                         :color "#2A4E4C"}}
     title]
-   [:> rn/Image {:style {:width "100%"
-                         :height "100%"
+   [:> rn/Image {:style {:width 128
+                         :height 128
                          :flexGrow 1}
                  :source my-url}]])
 
