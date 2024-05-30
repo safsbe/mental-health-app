@@ -23,20 +23,30 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "packagerOpts": {
+      "assetExts": ["md"]
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sbe.androidtest"
     },
     "plugins": [
       [
         "expo-font",
         {
-          "fonts": [
-            "node_modules/@expo-google-fonts/mulish/Mulish_400.ttf",
-            "node_modules/@expo-google-fonts/mulish/Mulish_700.ttf",
-            "node_modules/@expo-google-fonts/mulish/Mulish_800.ttf"
-          ]
+          "fonts": []
+        }
+      ],
+      [
+        "expo-asset",
+        {
+          "assets": ["assets/"]
         }
       ]
-    ]
+      
+    ],
+    "android": {
+      "package": "com.sbe.androidtest"
+    }
   }
 }

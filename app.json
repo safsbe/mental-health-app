@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "@safsbe/mental-health-app-monorepo",
+    "slug": "@safsbemental-health-app-monorepo",
+    "version": "1.0.0",
+    "description": "A proof of concept application created by the SBE Innovation Team, part of the SBE NSF Council.",
+    "sdkVersion": "50.0.0",
+    "platforms": [],
+    "android": {
+      "package": "com.sbe.test2"
+    }
+  }
+}
