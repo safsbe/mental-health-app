@@ -9,7 +9,7 @@
   [:> rn/Pressable {:style {:marginBottom "10px"
                             :maxWidth "50vw"}
                     :onPress #(rf/dispatch [:play-track {:audio-file audio-file}])}
-   [:> rn/Text {:style {:fontSize "22px"
+   [:> rn/Text {:style {:fontSize 22
                         :color "#A5A5A5"
                         :fontWeight "bold"
                         :justifyContent "center"}}
@@ -39,34 +39,34 @@
                            :height "100%"
                            :textAlign "center"
                            :justifyContent "center"}}
-       [:> rn/Text {:style {:fontSize "14px"
+       [:> rn/Text {:style {:fontSize 14
                             :color "#A5A5A5"}}
         "Take a"]
-       [:> rn/Text {:style {:fontSize "24px"
+       [:> rn/Text {:style {:fontSize 24
                             :fontWeight "bold"
                             :textAlign "center"
                             :alignItems "center"
                             :color "white"
                             :marginBottom "10px"}}
         "Mindful Pause"]
-       [:> rn/Text {:style {:fontSize "14px"
+       [:> rn/Text {:style {:fontSize 14
                             :textAlign "center"
                             :color "#A5A5A5"}}
         "Life is a "
-        [:> rn/Text {:style {:fontSize "14px"
+        [:> rn/Text {:style {:fontSize 14
                              :fontWeight "bold"}}
          "marathon"]]
-       [:> rn/Text {:style {:fontSize "14px"
+       [:> rn/Text {:style {:fontSize 14
                             :textAlign "center"
                             :color "#A5A5A5"}}
         "Not a "
-        [:> rn/Text {:style {:fontSize "14px"
+        [:> rn/Text {:style {:fontSize 14
                              :fontWeight "bold"}}
          "sprint"]]]]
      [:> rn/View {:style {:flex 5
                           :justifyContent "center"
                           :alignItems "center"}}
-      [:> rn/Pressable {:style {:borderRadius "100%"
+      [:> rn/Pressable {:style {:borderRadius 5000
                                 :border "10px solid #A5A5A5"
                                 :width "50vw"
                                 :height "50vw"
@@ -92,7 +92,7 @@
                                 :justifyContent "center"}
                         :onPress #(navigation.navigate "Explore")}
        [audio-player]
-       [:> rn/Text {:style {:fontSize "16px"
+       [:> rn/Text {:style {:fontSize 16
                             :color "#A5A5A5"
                             :textAlign "center"}}
         "Read More"]]]]))

@@ -5,12 +5,12 @@
    ["react-native" :as rn]))
 
 (def styles (-> (.create rn/StyleSheet #js {:btn
-                                            {:paddingTop "10px"
+                                            {:paddingTop 10
                                              :paddingBottom "10px"
                                              :paddingLeft "30px"
                                              :paddingRight "30px"
                                              :minWidth "10vw"
-                                             :borderRadius "8px"
+                                             :borderRadius 8
                                              :border "2px solid #2A4E4C"
                                              :textAlign "center"}
                                             
@@ -39,7 +39,7 @@
                                              :flexDirection "row"
                                              :alignItems "center"
                                              :justifyContent "center"
-                                             :columnGap "20px"}})
+                                             :columnGap 20}})
                 (js->clj {:keywordize-keys true})))
 
 (defn auth-screen []
