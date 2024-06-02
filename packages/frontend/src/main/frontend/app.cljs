@@ -60,19 +60,19 @@
          (assoc :categories {:self
                              {:name "Self"
                               :color "#FFF7D6"
-                              :image (js/require "../assets/home-explore-self.svg")}
+                              :image (js/require "../assets/home_explore_self.svg")}
                              :self-card
                              {:name "Self-Care"
                               :color "#DDE5FF"
-                              :image (js/require "../assets/home-explore-self-care.svg")}
+                              :image (js/require "../assets/home_explore_self_care.svg")}
                              :mental-health
                              {:name "About Mental Health"
                               :color "#DEF7E5"
-                              :image (js/require "../assets/home-explore-mental-health.svg")}
+                              :image (js/require "../assets/home_explore_mental_health.svg")}
                              :other
                              {:name "About Others"
                               :color "#FFE7E7"
-                              :image (js/require "../assets/home-explore-others.svg")}})
+                              :image (js/require "../assets/home_explore_others.svg")}})
          (assoc :helpline-groups {:general {:displayName "General Mental Well-being"}
                                   :ns {:displayName "Service Helplines"}})
          (assoc :helplines [{:name "Institute of Mental Health"
@@ -90,18 +90,18 @@
                              :operating-hours "Weekdays 9am-5pm"}])
          (assoc :mindful-pause {:audio
                                  [{:name "Breathe"
-                                   :audio-file (js/require "../assets/mindful-minutes/breathe.mp3")
+                                   :audio-file (js/require "../assets/mindful_minutes/breathe.mp3")
                                    :icon [:> evi/MaterialIcons {:name "air"
                                                             :size "20px"
                                                             :color "#A5A5A5"}]}
                                   {:name "Take a sip of tea"
-                                   :audio-file (js/require "../assets/mindful-minutes/sip-tea.mp3")
+                                   :audio-file (js/require "../assets/mindful_minutes/sip_tea.mp3")
                                    :icon [:> evi/SimpleLineIcons {:name "cup" :size "20px" :color "#A5A5A5"}]}
                                   {:name "Take a walk"
-                                   :audio-file "../assets/mindful-minutes/sip-tea.mp3"
+                                   :audio-file "../assets/mindful_minutes/sip_tea.mp3"
                                    :icon [:> evi/MaterialIcons {:name "directions-walk" :size "20px" :color "#A5A5A5"}]}
                                   {:name "Look at the sky"
-                                   :audio-file "../assets/mindful-minutes/observe-sky.mp3"
+                                   :audio-file "../assets/mindful_minutes/observe_sky.mp3"
                                    :icon [:> evi/MaterialIcons {:name "cloud" :size "20px" :color "#A5A5A5"}]}]}))))
 
   (rf/reg-sub

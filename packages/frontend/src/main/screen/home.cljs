@@ -16,8 +16,12 @@
     title]
    child])
 
-(defn explore-card [title nav category bg-color my-url]
-  [:> rn/Pressable {:style {:backgroundColor bg-color
+(defn explore-card [{name :name
+                     color :color
+                     image :image
+                     category :keyword
+                     nav :nav}]
+  [:> rn/Pressable {:style {:backgroundColor color
                             :borderRadius 6
                             :marginRight 15
                             :padding 15
@@ -28,11 +32,11 @@
    [:> rn/Text {:style {:textAlign "right"
                         :fontWeight "bold"
                         :color "#2A4E4C"}}
-    title]
+    name]
    [:> rn/Image {:style {:width 128
                          :height 128
                          :flexGrow 1}
-                 :source my-url}]])
+                 :source image}]])
 
 (defn explore [nav]
   (let [categories @(rf/subscribe [:categories])]
@@ -44,17 +48,17 @@
 (defn activities [navigation]
   [:> rn/Pressable {:style {:background "#FFE7E7"
                             :padding "15px"
-                            :borderRadius "6px"
+                            :borderRadius 6
                             :flexDirection "row"
                             :alignItems "center"
-                            :gap "5px"
+                            :gap 5
                             :minHeight "20px"}
                     :onPress #(navigation.navigate "MindfulPause")}
    [:> rn/Image {:style {:flex 2
                          :resizeMode "contain"
                          :height "100%"
                          :maxHeight "50px"}
-                 :source (js/require "../assets/home-mindful-minutes.svg")}]
+                 :source (js/require "../assets/home_mindful_minutes.svg")}]
    [:> rn/View {:style {:flex 5}}
     [:> rn/Text {:style {:color "#2A4E4C"
                          :fontWeight "bold"}}
@@ -67,7 +71,7 @@
                        :flexDirection "row"
                        :background "#2A4E4C"
                        :padding "15px"
-                       :borderRadius "6px"}}
+                       :borderRadius 6}}
    [:> evi/FontAwesome5 {:name "quote-right"
                          :size 24
                          :color "white"
@@ -77,7 +81,7 @@
 
 (defn greeting []
   (let [user-name @(rf/subscribe [:user])]
-    [:> rn/Text {:style {:fontSize "24px"
+    [:> rn/Text {:style {:fontSize 24
                          :fontWeight "bold"
                          :paddingLeft "15px"
                          :paddingRight "15px"
@@ -92,7 +96,7 @@
      (->> feeling-ratings
          (map-indexed (fn [index, icon-name]
                         [:> rn/Pressable {:onPress #(rf/dispatch [:user-feeling-scale/set-rating index])
-                                          :style {:borderRadius "8px"
+                                          :style {:borderRadius 8
                                                   :padding "10px"
                                                   :background (when (= index feeling-rating) "#B7DBD9")}}
                          [:> evi/FontAwesome5 {:name icon-name
