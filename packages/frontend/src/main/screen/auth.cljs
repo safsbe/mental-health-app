@@ -6,10 +6,10 @@
 
 (def styles (-> (.create rn/StyleSheet #js {:btn
                                             {:paddingTop 10
-                                             :paddingBottom "10px"
-                                             :paddingLeft "30px"
-                                             :paddingRight "30px"
-                                             :minWidth "10vw"
+                                             :paddingBottom 10
+                                             :paddingLeft 30
+                                             :paddingRight 30
+                                             :minWidth 20
                                              :borderRadius 8
                                              :border "2px solid #2A4E4C"
                                              :textAlign "center"}
@@ -26,16 +26,11 @@
                                              :height "100%"}
                                             
                                             :auth-logo-container
-                                            {:height "100%"
-                                             :justifyContent "center"
+                                            {:justifyContent "center"
                                              :alignItems "center"}
                                             
                                             :auth-selection
-                                            {:position "absolute"
-                                             :bottom 0
-                                             :left 0
-                                             :height "40vh"
-                                             :width "100%"
+                                            {:width "100%"
                                              :flexDirection "row"
                                              :alignItems "center"
                                              :justifyContent "center"
