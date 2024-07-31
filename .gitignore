@@ -9,3 +9,6 @@ packages/frontend/assets/*
 .\#*
 .m2
 dist/
+packages/frontend/android/
+packages/frontend/ios/
+packages/frontend/dist

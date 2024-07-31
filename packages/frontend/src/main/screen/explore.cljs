@@ -47,15 +47,16 @@
                (filter (fn [{article-category :category}]
                          (= article-category category)))
                (map (fn [{title :title mdText :mdText :as article}]
-                       [:> rn/Pressable {:style {:backgroundColor :white
+                       [:> rn/Pressable {:style {:backgroundColor "white"
                                                  :borderRadius 12
                                                  :overflow "hidden"
-                                                 :marginBottom 10
+                                                 ;:marginBottom 10
                                                  :marginLeft 20
                                                  :marginRight 20
-                                                 :height 32
                                                  :flex 1
-                                                 :alignItems :center}
+                                                 :alignItems "center"
+                                                 :justifyContent "center"
+                                                 :height 32}
                                          :onPress #(navigation.navigate "Article" {:article article})}
                        [:> rn/Text {:style {:fontSize 16
                                             :paddingLeft 10
@@ -64,5 +65,6 @@
                (into [:> rn/View
                        [:> rn/Text {:style {:fontSize 24
                                            :marginLeft 20
-                                           :marginRight 20}}
+                                           :marginRight 20
+                                           :marginBottom 5}}
                        "Articles"]]))]))

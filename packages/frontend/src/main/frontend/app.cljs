@@ -25,11 +25,32 @@
     [:> navigator {:initialRouteName "Home"
                        :screenOptions {:headerShown false}}
      [:> screen {:name "Home"
-                     :component (r/reactify-component home-screen)}]
+                     :component (r/reactify-component home-screen)
+                     :options {:headerShown false
+                               :tabBarIcon #(let [{size :size
+                                                  color :color} (js->clj % {:keywordize-keys true})]
+                                             (-> [:> FontAwesome5 {:name "home"
+                                                                   :color color
+                                                                   :size size}]
+                                                 (r/as-element)))}}]
      [:> screen {:name "SOS"
-                     :component (r/reactify-component sos-screen)}]
+                     :component (r/reactify-component sos-screen)
+                     :options {:headerShown false
+                               :tabBarIcon #(let [{size :size
+                                                  color :color} (js->clj % {:keywordize-keys true})]
+                                             (-> [:> MaterialIcons {:name "sos"
+                                                                   :color color
+                                                                   :size size}]
+                                                 (r/as-element)))}}]
      [:> screen {:name "Resources"
-                     :component (r/reactify-component resources-screen)}]]))
+                     :component (r/reactify-component resources-screen)
+                     :options {:headerShown false
+                               :tabBarIcon #(let [{size :size
+                                                  color :color} (js->clj % {:keywordize-keys true})]
+                                             (-> [:> MaterialIcons {:name "message"
+                                                                   :color color
+                                                                   :size size}]
+                                                 (r/as-element)))}}]]))
 
 (defn root []
   (let [user-mode @(rf/subscribe [:user-mode])
@@ -60,19 +81,19 @@
          (assoc :categories {:self
                              {:name "Self"
                               :color "#FFF7D6"
-                              :image (js/require "../assets/home_explore_self.svg")}
+                              :image (js/require "../assets/home_explore_self.png")}
                              :self-card
                              {:name "Self-Care"
                               :color "#DDE5FF"
-                              :image (js/require "../assets/home_explore_self_care.svg")}
+                              :image (js/require "../assets/home_explore_self_care.png")}
                              :mental-health
                              {:name "About Mental Health"
                               :color "#DEF7E5"
-                              :image (js/require "../assets/home_explore_mental_health.svg")}
+                              :image (js/require "../assets/home_explore_mental_health.png")}
                              :other
                              {:name "About Others"
                               :color "#FFE7E7"
-                              :image (js/require "../assets/home_explore_others.svg")}})
+                              :image (js/require "../assets/home_explore_others.png")}})
          (assoc :helpline-groups {:general {:displayName "General Mental Well-being"}
                                   :ns {:displayName "Service Helplines"}})
          (assoc :helplines [{:name "Institute of Mental Health"
@@ -90,19 +111,29 @@
                              :operating-hours "Weekdays 9am-5pm"}])
          (assoc :mindful-pause {:audio
                                  [{:name "Breathe"
-                                   :audio-file (js/require "../assets/mindful_minutes/breathe.mp3")
+                                   ;:audio-file (js/require "../assets/mindful_minutes/breathe.mp3")
+                                   :audio-file (js/require "../assets/love_wins_all.mp3") ;since I dont have the other audios yet on 290724
                                    :icon [:> evi/MaterialIcons {:name "air"
-                                                            :size "20px"
-                                                            :color "#A5A5A5"}]}
+                                                                :size 20
+                                                                :color "#A5A5A5"}]}
                                   {:name "Take a sip of tea"
-                                   :audio-file (js/require "../assets/mindful_minutes/sip_tea.mp3")
-                                   :icon [:> evi/SimpleLineIcons {:name "cup" :size "20px" :color "#A5A5A5"}]}
+                                   ;:audio-file (js/require "../assets/mindful_minutes/sip_tea.mp3")
+                                   :audio-file (js/require "../assets/love_wins_all.mp3") ;since I dont have the other audios yet on 290724
+                                   :icon [:> evi/SimpleLineIcons {:name "cup" 
+                                                                  :size 20 
+                                                                  :color "#A5A5A5"}]}
                                   {:name "Take a walk"
-                                   :audio-file "../assets/mindful_minutes/sip_tea.mp3"
-                                   :icon [:> evi/MaterialIcons {:name "directions-walk" :size "20px" :color "#A5A5A5"}]}
+                                   ;:audio-file "../assets/mindful_minutes/sip_tea.mp3"
+                                   :audio-file (js/require "../assets/love_wins_all.mp3") ;since I dont have the other audios yet on 290724
+                                   :icon [:> evi/MaterialIcons {:name "directions-walk" 
+                                                                :size 20 
+                                                                :color "#A5A5A5"}]}
                                   {:name "Look at the sky"
-                                   :audio-file "../assets/mindful_minutes/observe_sky.mp3"
-                                   :icon [:> evi/MaterialIcons {:name "cloud" :size "20px" :color "#A5A5A5"}]}]}))))
+                                   ;:audio-file "../assets/mindful_minutes/observe_sky.mp3"
+                                   :audio-file (js/require "../assets/love_wins_all.mp3") ;since I dont have the other audios yet on 290724
+                                   :icon [:> evi/MaterialIcons {:name "cloud" 
+                                                                :size 20 
+                                                                :color "#A5A5A5"}]}]}))))
 
   (rf/reg-sub
    :user

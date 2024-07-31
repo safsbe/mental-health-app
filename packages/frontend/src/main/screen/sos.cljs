@@ -6,9 +6,9 @@
             ["@expo/vector-icons" :refer [FontAwesome5]]))
 
 (defn prominent-dialer []
-  [:> rn/View {:style {:alignItems :center}}
-   [:> rn/View {:style {:alignItems :center
-                        :justifyContent :center
+  [:> rn/View {:style {:alignItems "center"}}
+   [:> rn/View {:style {:alignItems "center"
+                        :justifyContent "center"
                         :padding 15
                         :maxWidth 500}}
     [:> rn/Text {:style {:fontSize 24}} "You are not alone."]
@@ -19,9 +19,7 @@
                               :backgroundColor "#FCEDD0"
                               :margin 20
                               :padding 15
-                              :width "90vw"
-                              :height "90vw"
-                              :maxWidth 200
+                              :maxWidth 300
                               :maxHeight 200}
                  :onPress #(rn/Linking.openURL "tel:1767")
                  :accessibilityRole :button
@@ -36,19 +34,19 @@
                            :padding 10
                            :height "100%"
                            :width "100%"
-                           :justifyContent :center
-                           :alignItems :center}}
-       [:> rn/Text {:style {:color :white
-                            :textAlign :center
+                           :justifyContent "center"
+                           :alignItems "center"}}
+       [:> rn/Text {:style {:color "white"
+                            :textAlign "center"
                             :fontSize 30
-                            :fontWeight :bold}}
+                            :fontWeight "bold"}}
         "SOS"]
-       [:> rn/Text {:style {:color :white
-                            :textAlign :center
+       [:> rn/Text {:style {:color "white"
+                            :textAlign "center"
                             :fontSize 14}}
         "Samaritans of Singapore"]
-       [:> rn/Text {:style {:color :white
-                            :textAlign :center
+       [:> rn/Text {:style {:color "white"
+                            :textAlign "center"
                             :fontSize 14}}
         "Helpline 1767"]]]]
     [:> rn/Text {:style {:color "#a5a5a5"
