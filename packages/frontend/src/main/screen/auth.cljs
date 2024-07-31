@@ -11,23 +11,30 @@
                                              :paddingRight 30
                                              :minWidth 20
                                              :borderRadius 8
-                                             :border "2px solid #2A4E4C"
+                                             :borderWidth 1
+                                             :borderColor "#2A4E4C"
+                                             :borderStyle "solid"
                                              :textAlign "center"}
                                             
                                             :btn-primary
-                                            {:background "#2A4E4C"
+                                            {:backgroundColor "#2A4E4C"
                                              :color "#FFF"}
                                             
                                             :btn-secondary
-                                            {:border "2px solid #2A4E4C"}
+                                            {;:border "2px solid #2A4E4C"
+                                             :borderRadius 8
+                                             :borderWidth 1
+                                             :borderStyle "solid"
+                                             :borderColor "#2A4E4C"}
                                             
                                             :auth-screen
                                             {:position "relative"
                                              :height "100%"}
                                             
                                             :auth-logo-container
-                                            {:justifyContent "center"
-                                             :alignItems "center"}
+                                            {:justifyContent "flex-end"
+                                             :alignItems "center"
+                                             :height "50%"}
                                             
                                             :auth-selection
                                             {:width "100%"

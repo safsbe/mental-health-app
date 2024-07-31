@@ -12,7 +12,7 @@
         (map (fn [{name :name
                    contact :contact
                    operating-hours :operating-hours}]
-               [:> rn/Pressable {:style {:flexDirection :row
+               [:> rn/Pressable {:style {:flexDirection "row"
                                          :alignItems "center"
                                          :justifyContent "space-between"
                                          :padding 10}
@@ -21,9 +21,9 @@
                  [:> rn/Text name]
                  [:> rn/Text {:style {:color "#a5a5a5"}}
                   contact " · " operating-hours]]
-                [:> FontAwesome5 {:name :phone
+                [:> FontAwesome5 {:name "phone"
                                   :size 24
-                                  :color :black}]]))
+                                  :color "black"}]]))
         (into [:> rn/View]))])
 
 (defn helplines [streamlined-svc-mode]
