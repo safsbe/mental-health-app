@@ -1,7 +1,7 @@
 (ns screen.article
   (:require [reagent.core :as r]
             ["react-native" :as rn]
-            ["react-native-markdown-display" :default Markdown]))
+            ["@ronradtke/react-native-markdown-display" :default Markdown]))
 
 (defn article-screen [{navigation :navigation route :route}]
   (let [article (:article (.-params route))

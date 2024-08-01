@@ -27,3 +27,9 @@ web-build/
 # Build
 android/
 ios/
+
+# Custom
+app/
+vendor/
+assets/*
+!assets/**/*.svg

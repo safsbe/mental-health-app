@@ -1,13 +1,5 @@
 (ns screen.explore
-  (:require [cljs.core.async :as async]
-            [cljs.core.async.interop :refer-macros [<p!]]
-            [reagent.core :as r]
-            ["react-native" :as rn]
-            ["expo-asset" :as ea]
-            ["expo-file-system" :as efs]
-            ;[component.articles :refer [readThisFile]]
-            ["react-native-markdown-display" :as rnmd]
-            ))
+  (:require ["react-native" :as rn]))
 
 (defn explore-screen [{navigation :navigation route :route}]
       (let [category (js->clj (.. route  -params -category))

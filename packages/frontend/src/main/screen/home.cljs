@@ -6,6 +6,7 @@
             [screen.mindfulpause :refer [mindfulpause-screen]]
             ["@expo/vector-icons" :as evi]
             ["@react-navigation/native-stack" :as rnns]
+            ["expo-image" :refer [Image]]
             ["react-native" :as rn]))
 
 (defn section [title child]
@@ -33,9 +34,9 @@
                         :fontWeight "bold"
                         :color "#2A4E4C"}}
     name]
-   [:> rn/Image {:style {:width 128
-                         :height 128
-                         :flexGrow 1}
+   [:> Image {:style {:width 128
+                      :height 128
+                      :flexGrow 1}
                  :source image}]])
 
 (defn explore [nav]
@@ -57,7 +58,7 @@
    [:> rn/Image {:style {:flex 3
                          :height "100%"
                          :maxHeight "20vh"}
-                 :source (js/require "../assets/home_mindful_minutes.png")}]
+                 :source (js/require "../assets/home_mindful_minutes.svg")}]
    [:> rn/View {:style {:flex 5}}
     [:> rn/Text {:style {:color "#2A4E4C"
                          :fontWeight :bold}}

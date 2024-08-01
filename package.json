@@ -19,10 +19,9 @@
     "url": "https://github.com/safsbe/mental-health-app/issues"
   },
   "homepage": "https://github.com/safsbe/mental-health-app#readme",
+  "workspaces": ["packages/*"],
   "dependencies": {
     "lerna": "^8.1.2"
-  },
-  "devDependencies": {
-    "expo": "^50.0.17"
   }
 }
+
