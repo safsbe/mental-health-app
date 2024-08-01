@@ -16,6 +16,7 @@
    :init-fn frontend.app/init
    :output-dir "app"
    :compiler-options {:infer-externs :auto}
+   :js-options {:node-modules-dir "../../node_modules"}
    :devtools
    {:autoload true
     :reload-strategy :full}}}}

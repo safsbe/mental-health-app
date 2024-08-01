@@ -6,9 +6,7 @@
             [screen.home :refer [home-screen]]
             [screen.sos :refer [sos-screen]]
             [screen.resources :refer [resources-screen]]
-            ["expo-font" :as ef]
             ["@expo/vector-icons" :as evi]
-            ["react-native" :as rn]
             ["@react-navigation/native" :as rnn]
             ["@react-navigation/bottom-tabs" :as rnbt]
             ["@react-navigation/native-stack" :as rnns]
@@ -64,12 +62,13 @@
                           :component (r/reactify-component auth-screen)}]
         [:> screen {:name "AuthenticatedArea"
                           :component (r/reactify-component -authenticated-navigator)}])]]))
+
 (defn start
   {:dev/after-load true}
   []
   (r/set-default-compiler! (r/create-compiler {:function-components true}))
   (expo/render-root (r/as-element [:f> root])))
-;  (expo/render-root (r/as-element [root])))
+;  (expo/render-root (r/as-element [test])))
 
 (defn init []
   (rf/reg-event-db
@@ -81,19 +80,19 @@
          (assoc :categories {:self
                              {:name "Self"
                               :color "#FFF7D6"
-                              :image (js/require "../assets/home_explore_self.png")}
+                              :image (js/require "../assets/home_explore_self.svg")}
                              :self-card
                              {:name "Self-Care"
                               :color "#DDE5FF"
-                              :image (js/require "../assets/home_explore_self_care.png")}
+                              :image (js/require "../assets/home_explore_self_care.svg")}
                              :mental-health
                              {:name "About Mental Health"
                               :color "#DEF7E5"
-                              :image (js/require "../assets/home_explore_mental_health.png")}
+                              :image (js/require "../assets/home_explore_mental_health.svg")}
                              :other
                              {:name "About Others"
                               :color "#FFE7E7"
-                              :image (js/require "../assets/home_explore_others.png")}})
+                              :image (js/require "../assets/home_explore_others.svg")}})
          (assoc :helpline-groups {:general {:displayName "General Mental Well-being"}
                                   :ns {:displayName "Service Helplines"}})
          (assoc :helplines [{:name "Institute of Mental Health"

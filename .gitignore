@@ -3,8 +3,6 @@ node_modules/
 .lsp/
 .expo/
 *~
-packages/frontend/app/
-packages/frontend/assets/*
 \#*#
 .\#*
 .m2
