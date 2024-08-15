@@ -8,7 +8,7 @@
         title (:title article)
         mdText (:mdText article)]
     (navigation.setOptions #js{:title title})
-    (js/console.log (str Markdown))
+    ;(js/console.log (str Markdown))
     [:> rn/ScrollView {:style {:marginLeft 20
                          :marginRight 20}}
       ;(js/console.log mdText)

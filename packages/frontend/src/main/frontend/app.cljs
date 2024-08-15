@@ -29,27 +29,27 @@
                      :options {:headerShown false
                                :tabBarIcon #(let [{size :size
                                                   color :color} (js->clj % {:keywordize-keys true})]
-                                             (-> [:> FontAwesome5 {:name "home"
-                                                                   :color color
-                                                                   :size size}]
+                                             (-> [:> rn/Image {:source (js/require "../assets/new/Home_Button.png")
+                                                               :style {:width 24
+                                                                       :height 24}}]
                                                  (r/as-element)))}}]
      [:> screen {:name "SOS"
                      :component (r/reactify-component sos-screen)
                      :options {:headerShown false
                                :tabBarIcon #(let [{size :size
                                                   color :color} (js->clj % {:keywordize-keys true})]
-                                             (-> [:> MaterialIcons {:name "sos"
-                                                                   :color color
-                                                                   :size size}]
+                                             (-> [:> rn/Image {:source (js/require "../assets/new/SOS_Button.png")
+                                                               :style {:width 32
+                                                                       :height 32}}]
                                                  (r/as-element)))}}]
      [:> screen {:name "Resources"
                      :component (r/reactify-component resources-screen)
                      :options {:headerShown false
                                :tabBarIcon #(let [{size :size
                                                   color :color} (js->clj % {:keywordize-keys true})]
-                                             (-> [:> MaterialIcons {:name "message"
-                                                                   :color color
-                                                                   :size size}]
+                                             (-> [:> rn/Image {:source (js/require "../assets/new/Feedback_Button.png")
+                                                               :style {:width 28
+                                                                       :height 28}}]
                                                  (r/as-element)))}}]]))
 
 (defn root []
@@ -78,22 +78,22 @@
      (-> db
          (assoc :user-preferred-name nil)
          (assoc :user-mode nil)
-         (assoc :categories {:self
-                             {:name "Self"
+         (assoc :categories {:self-care
+                             {:name "Self Care"
                               :color "#FFF7D6"
-                              :image (js/require "../assets/home_explore_self.png")}
-                             :self-card
-                             {:name "Self-Care"
+                              :image (js/require "../assets/new/Self_Care_Graphic.png")}
+                             :understanding-yourself
+                             {:name "Understanding Yourself"
                               :color "#DDE5FF"
-                              :image (js/require "../assets/home_explore_self_care.png")}
-                             :mental-health
-                             {:name "About Mental Health"
+                              :image (js/require "../assets/new/Understanding_Yourself_Graphic.png")}
+                             :mental-health-condition
+                             {:name "Understanding Mental Health"
                               :color "#DEF7E5"
-                              :image (js/require "../assets/home_explore_mental_health.png")}
+                              :image (js/require "../assets/new/Mental_Health_Graphic.png")}
                              :other
-                             {:name "About Others"
+                             {:name "Stories From Others"
                               :color "#FFE7E7"
-                              :image (js/require "../assets/home_explore_others.png")}})
+                              :image (js/require "../assets/new/Self_Help_Graphic.png")}})
          (assoc :helpline-groups {:general {:displayName "General Mental Well-being"}
                                   :ns {:displayName "Service Helplines"}})
          (assoc :helplines [{:name "Institute of Mental Health"

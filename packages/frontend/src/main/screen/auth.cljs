@@ -29,7 +29,8 @@
                                             
                                             :auth-screen
                                             {:position "relative"
-                                             :height "100%"}
+                                             :height "100%"
+                                             :gap 20}
                                             
                                             :auth-logo-container
                                             {:justifyContent "flex-end"
@@ -47,7 +48,9 @@
 (defn auth-screen []
   [:> rn/View {:style (:auth-screen styles)}
    [:> rn/View {:style (:auth-logo-container styles)}
-    [:> rn/Image {:source (js/require "../assets/logo.png")}]
+    [:> rn/Image {:style {:maxWidth 250
+                          :maxHeight 250}
+                  :source (js/require "../assets/new/Logo_Placeholder_Graphic_noBlueBg.png")}]
     [:> rn/Text {:style {:textAlign "center"}}
      "For when you are feeling something..."]]
    

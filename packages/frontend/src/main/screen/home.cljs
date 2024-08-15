@@ -16,6 +16,8 @@
     title]
    child])
 
+#(js/console.log (.-get (.-rn/Dimensions "window")))
+
 (defn explore-card [{name :name
                      color :color
                      image :image
@@ -23,44 +25,56 @@
                      nav :nav}]
   [:> rn/Pressable {:style {:backgroundColor color
                             :borderRadius 6
-                            :marginRight 15
-                            :padding 15
-                            :width 160
-                            :height 160
-                            :alignItems "center"}
+                            :padding 10
+                            :width "40%"
+                            :height "auto"
+                            :flexGrow 1
+                            ;:alignItems "center"
+                            }
                     :onPress #(nav.navigate "Explore" #js{:category category})}
    [:> rn/Text {:style {:textAlign "right"
                         :fontWeight "bold"
                         :color "#2A4E4C"}}
     name]
-   [:> rn/Image {:style {:width 128
-                         :height 128
+   [:> rn/Image {:style {:width 96
+                         :height 96
                          :flexGrow 1}
                  :source image}]])
+
+;(defn explore2 [nav]
+;  (let [categories @(rf/subscribe [:categories])]
+;    (->> categories
+;         (map (fn [[k v]]
+;                [explore-card (assoc (assoc v :keyword k) :nav nav)]))
+;         (into [:> rn/ScrollView {:horizontal true :persistentScrollbar true :contentContainerStyle {:style {:flexGrow 1}}}])))) ; // Changed from ScrollView to View // Actually just gonna change this to completely different to accomodate non scrollview anymore
 
 (defn explore [nav]
   (let [categories @(rf/subscribe [:categories])]
     (->> categories
-         (map (fn [[k v]]
-                [explore-card (assoc (assoc v :keyword k) :nav nav)]))
-         (into [:> rn/ScrollView {:horizontal true}]))))
+          (map (fn [[k v]]
+                  [explore-card (assoc (assoc v :keyword k) :nav nav)]))
+          (into [:> rn/View {:style {:flexDirection "row"
+                                   :flexWrap "wrap"
+                                   :gap 10
+                                   :justifyContent "space-evenly"}}]))))
 
 (defn activities [navigation]
   [:> rn/Pressable {:style {:backgroundColor "#FFE7E7"
-                            :padding 15
-                            :borderRadius 6
+                            :padding 5
+                            :borderRadius 3
                             :flexDirection "row"
                             :alignItems "center"
                             :gap 5
-                            :minHeight 20}
+                            :height 144
+                            }
                     :onPress #(navigation.navigate "MindfulPause")}
-   [:> rn/Image {:style {:flex 3
-                         :height "100%"
-                         :maxHeight "20vh"}
-                 :source (js/require "../assets/home_mindful_minutes.png")}]
-   [:> rn/View {:style {:flex 5}}
+   [:> rn/Image {:style {:flex 4
+                         :height 128
+                         :width 64}
+                 :source (js/require "../assets/new/Stressed_Out_Graphic.png")}]
+   [:> rn/View {:style {:flex 6}}
     [:> rn/Text {:style {:color "#2A4E4C"
-                         :fontWeight :bold}}
+                         :fontWeight "bold"}}
      "Overwhelmed and unable to focus?"]
     [:> rn/Text {:style {:color "#2A4E4C"}}
      "Take this mindful pause for a 5 minute break"]]])
@@ -89,20 +103,20 @@
 
 (defn daily-feeling-scale []
   (let [feeling-rating @(rf/subscribe [:user-feeling-scale/rating])
-        feeling-ratings ["frown-open" "frown" "meh" "smile" "smile-beam"]]
+        feeling-ratings [(js/require "../assets/new/feelings_scale/Sad_Button.png") (js/require "../assets/new/feelings_scale/Slightly_Sad_Button.png") (js/require "../assets/new/feelings_scale/Neutral_Button.png") (js/require "../assets/new/feelings_scale/Slightly_Happy_Button.png") (js/require "../assets/new/feelings_scale/Happy_Button.png")]]
     [:> rn/View {:style {:padding 15}}
      [:> rn/Text "How are you feeling today?"]
      (->> feeling-ratings
-         (map-indexed (fn [index, icon-name]
+         (map-indexed (fn [index, image-source]
                         [:> rn/Pressable {:onPress #(rf/dispatch [:user-feeling-scale/set-rating index])
                                           :style {:borderRadius 8
                                                   :padding 10
                                                   :backgroundColor (when (= index feeling-rating) "#B7DBD9")}}
-                         [:> evi/FontAwesome5 {:name icon-name
-                                               :size 32
-                                               :color "#000"}]]))
+                         [:> rn/Image {:source image-source
+                                       :style {:height 48
+                                               :width 48}}]]))
          
-         (reverse)
+         ;(reverse) // Testing if this breaks
          (into [:> rn/View {:style {:flex 1
                                     :flexDirection "row"
                                     :justifyContent "space-around"

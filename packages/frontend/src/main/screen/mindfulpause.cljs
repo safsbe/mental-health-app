@@ -33,7 +33,8 @@
   (let [audio-list @(rf/subscribe [:mindful-pause-audio])]
     [:> rn/View {:style {:flex 1
                          :backgroundColor "#595F59"}}
-     [:> rn/View {:style {:flex 2}}
+     [:> rn/View {:style {:flex 4
+                          :gap 10}}
       [:> rn/View {:style {:flex 1
                            :alignItems "center"
                            :height "100%"
@@ -46,9 +47,14 @@
                             :fontWeight "bold"
                             :textAlign "center"
                             :alignItems "center"
-                            :color "white"
-                            :marginBottom 10}}
+                            :color "white"}}
         "Mindful Pause"]
+       [:> rn/Text {:style {:fontSize 20
+                            :fontWeight "bold"
+                            :fontStyle "italic"
+                            :fontFamily "Mulish Regular"
+                            :color "white"}}
+        "(Breathe-Work)"]
        [:> rn/Text {:style {:fontSize 14
                             :textAlign "center"
                             :color "#A5A5A5"}}
@@ -66,14 +72,12 @@
      [:> rn/View {:style {:flex 5
                           :justifyContent "center"
                           :alignItems "center"}}
-      [:> rn/Pressable {:style {:borderRadius 5000
+      [:> rn/Pressable {:style {:borderRadius 50000
                                 :borderStyle "solid"
                                 :borderWidth 10
                                 :borderColor "#A5A5A5"
-                                :width "50vw"
-                                :height "50vw"
-                                :maxWidth 280
-                                :maxHeight 280
+                                :width 200
+                                :height 200
                                 :justifyContent "center"
                                 :alignItems "center"}
                         :onPress #(rf/dispatch [:set-playing-mode true])}
@@ -83,7 +87,7 @@
                         :style {:paddingLeft 20}}]]
       [:> rn/Text {}]]
      
-     [:> rn/View {:style {:flex 5}}
+     [:> rn/View {:style {:flex 4}}
       (->> audio-list
            (map (fn [{name :name audio-file :audio-file icon :icon}]
                   [audio-option-button {:name name :icon icon :audio-file audio-file}]))
