@@ -3,6 +3,7 @@
             [re-frame.core :as rf]
             ["react-native" :as rn]
             ["@expo/vector-icons" :as evi]
+            ["@react-navigation/native-stack" :as rnns]
             ["expo-av" :as eav]))
 
 (defn audio-option-button [{name :name icon :icon audio-file :audio-file}] ; INPUT FOR AUDIOFILE, PLEASE SET UP ON YOUR END @RIFA
@@ -96,7 +97,7 @@
       
       [:> rn/Pressable {:style {:flex 1
                                 :justifyContent "center"}
-                        :onPress #(navigation.navigate "Explore")}
+                        :onPress #(navigation.navigate "MindfulPauseArticle")}
        [audio-player-system]
        [:> rn/Text {:style {:fontSize 16
                             :color "#A5A5A5"

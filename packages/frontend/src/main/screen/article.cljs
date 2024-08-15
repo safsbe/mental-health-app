@@ -10,12 +10,12 @@
     (navigation.setOptions #js{:title title})
     ;(js/console.log (str Markdown))
     [:> rn/ScrollView {:style {:marginLeft 20
-                         :marginRight 20}}
+                               :marginRight 20}}
       ;(js/console.log mdText)
       [:> Markdown {:style {:heading3 {:fontSize 24
                                        :marginTop 10
-                                       :fontWeight :bold
-                                       :textDecorationLine :underline}
+                                       :fontWeight "bold"
+                                       :textDecorationLine "underline"}
                             :body {:fontSize 16}
-                            :link {:color :blue}}}
+                            :link {:color "blue"}}}
      mdText]]))

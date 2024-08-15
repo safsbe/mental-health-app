@@ -4,6 +4,7 @@
             [screen.article :refer [article-screen]]
             [screen.explore :refer [explore-screen]]
             [screen.mindfulpause :refer [mindfulpause-screen]]
+            [screen.mparticle :refer [mindfulpausearticle-screen]]
             ["@expo/vector-icons" :as evi]
             ["@react-navigation/native-stack" :as rnns]
             ["react-native" :as rn]))
@@ -152,7 +153,9 @@
                  :component (r/reactify-component article-screen)}]
      [:> screen {:name "MindfulPause"
                  :component (r/reactify-component mindfulpause-screen)
-                 :options {:headerShown false}}]]))
+                 :options {:headerShown false}}]
+     [:> screen {:name "MindfulPauseArticle"
+                 :component (r/reactify-component mindfulpausearticle-screen)}]]))
 
 (defn home-screen []
   [stack-navigation])
