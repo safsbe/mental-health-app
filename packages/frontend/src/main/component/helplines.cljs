@@ -31,7 +31,7 @@
    (when (not streamlined-svc-mode)
      [:> rn/Text {:style {:color "#2A4E4C"
                           :fontSize 24}}
-      "More helplines"]
+      "More helplines"] ; It doesn't show this anywhere? Or at least does not render on my device
      [helpline-group
       "General Mental Well-Being"
       [{:name "Institute of Mental Health"

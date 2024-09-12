@@ -4,7 +4,9 @@
             [screen.article :refer [article-screen]]
             [screen.explore :refer [explore-screen]]
             [screen.mindfulpause :refer [mindfulpause-screen]]
-            [screen.mparticle :refer [mindfulpausearticle-screen]]
+            [screen.mparticle :refer [MindfulPauseArticle-Screen]]
+            [screen.articlemindfulpauses :refer [article-mindfulpauses]]
+            [screen.articleknowyourpersonality :refer [article-knowyourpersonality]]
             ["@expo/vector-icons" :as evi]
             ["@react-navigation/native-stack" :as rnns]
             ["react-native" :as rn]))
@@ -55,9 +57,9 @@
           (map (fn [[k v]]
                   [explore-card (assoc (assoc v :keyword k) :nav nav)]))
           (into [:> rn/View {:style {:flexDirection "row"
-                                   :flexWrap "wrap"
-                                   :gap 10
-                                   :justifyContent "space-evenly"}}]))))
+                                     :flexWrap "wrap"
+                                     :gap 10
+                                     :justifyContent "space-evenly"}}]))))
 
 (defn activities [navigation]
   [:> rn/Pressable {:style {:backgroundColor "#FFE7E7"
@@ -155,7 +157,16 @@
                  :component (r/reactify-component mindfulpause-screen)
                  :options {:headerShown false}}]
      [:> screen {:name "MindfulPauseArticle"
-                 :component (r/reactify-component mindfulpausearticle-screen)}]]))
+                 :component (r/reactify-component MindfulPauseArticle-Screen)}]
+      
+     ; Articles, add more article screens below ->
+     [:> screen {:name "Article-MindfulPauses"
+                 :component (r/reactify-component article-mindfulpauses)
+                 :options {:title "Mindful Pauses"}}]
+     [:> screen {:name "Article-KnowYourPersonality"
+                 :component (r/reactify-component article-knowyourpersonality)
+                 :options {:title "Know Your Personality (Legacy)"}}]           
+                 ]))
 
 (defn home-screen []
   [stack-navigation])

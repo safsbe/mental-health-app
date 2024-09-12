@@ -4,7 +4,7 @@
             ["react-native-markdown-display" :default Markdown]
             ["react-native" :as rn]))
 
-(defn mindfulpausearticle-screen [{navigation :navigation route :route}]
+(defn MindfulPauseArticle-Screen [{navigation :navigation route :route}]
   (navigation.setOptions #js{:title "Mindful Pauses"})
   [:> rn/ScrollView {:style {:marginLeft 20
                              :marginRight 20}}
