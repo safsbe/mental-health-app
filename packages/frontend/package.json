@@ -12,7 +12,7 @@
     "build:web": "npm run prebuild:common && expo export --platform=web",
     "watch:common": "shadow-cljs watch app",
     "watch:web": "expo start --web",
-    "watch:android:expo": "expo run:android",
+    "watch:android:expo": "expo start --android",
     "dev-test-android-build": "react-native bundle --dev false --platform android --entry-file app/index.js --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res/",
     "dev-test-android-run": "./gradlew assembleDebug",
     "android": "expo run:android",
