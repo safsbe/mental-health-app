@@ -8,6 +8,6 @@ config.resolver.sourceExts.push(
   'md', 'txt', 'svg'
 );
 
-config.watchFolders = [path.resolve(__dirname, 'app')];
+//config.watchFolders = [path.resolve(__dirname, 'app')];
 console.log(config.watchFolders);
 module.exports = config;
