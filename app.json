@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Lumin",
+    "slug": "mentalhealthapp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/common/logo.png",
+    "scheme": "mental-health-app",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/common/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.safsbe.mentalhealthapp"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/common/logo.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

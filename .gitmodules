@@ -1,0 +1,5 @@
+[submodule "assets"]
+	path = assets
+	url = https://github.com/safsbe/mental-health-app-assets.git
+	branch = main
+  shallow = true

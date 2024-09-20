@@ -1,5 +1,7 @@
 # SBE Mental Health App
 
+[![CI](https://github.com/safsbe/mental-health-app/actions/workflows/ci.yaml/badge.svg)](https://github.com/safsbe/mental-health-app/actions/workflows/ci.yaml)
+
 A proof of concept application created by the SBE Innovation Team, part of the SBE NSF Council.
 
 ## Prerequisites
@@ -11,16 +13,14 @@ A proof of concept application created by the SBE Innovation Team, part of the S
 
 ## Getting Started
 
-To quickly deploy the mobile app to an Android device with Expo:
+To quickly deploy the mobile app to an Android device/emulator with Expo:
 
 ```sh
-$ git clone https://github.com/safsbe/mental-health-app
+$ git clone https://github.com/safsbe/mental-health-app.git
 $ cd mental-health-app
+$ git submodule update --init
 $ npm ci
-$ npm run -w '@safsbe/mental-health-frontend' watch:common
-$ npm run -w '@safsbe/mental-health-frontend' watch:android:expo
-
-# Press 's' to switch to Expo Go builds
+$ npm run watch:android
 ```
 
 ## Security
@@ -35,6 +35,12 @@ This project does not adopt any long term support policy.
 
 External pull requests are not currently being accepted. Our internal contribution workflow is documented in [CONTIRBUTING.md](./CONTRIBUTING.md).
 
-## Developing
+## Maintaining
 
-Instructions for building and developing this appication is provided in [DEVELOPING.md](./DEVELOPING.md).
+Instructions for maintaining this application is provided in [MAINTAINING.md](./MAINTAINING.md).
+
+## License
+
+Source code is licensed under [MIT](./LICENSES/MIT).
+
+Images, text and other content are licensed under a proprietary license.
