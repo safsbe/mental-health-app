@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+[ -n "$CI" ] && exit 0
+if [ "$LINT_STAGED" = "0" ]; then
+  echo "lint-staged disabled via LINT_STAGED env var"
+  exit 0
+fi
+
+npx --no lint-staged

@@ -1,0 +1,173 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 13 * * 6' # At 13:00 on Saturday
+
+permissions: {}
+
+jobs:
+  code-lint:
+    name: Code Lint
+    runs-on: ubuntu-latest
+    permissions: {}
+    
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
+      with:
+        disable-sudo: true
+        egress-policy: block
+        allowed-endpoints: >
+          github.com:443
+          registry.npmjs.org:443
+
+    - name: Checkout Repository
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      with:
+        submodules: true
+
+    - name: Setup Node.js
+      uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+      with:
+        node-version: 20
+        cache: npm
+
+    - name: Bootstrap Dependencies
+      run: npm ci
+
+    - name: Verify Code Linting
+      run: "npm run lint:check"
+
+
+  commit-lint:
+    name: Commit Lint
+    runs-on: ubuntu-latest
+    permissions: {}
+    
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
+      with:
+        disable-sudo: true
+        egress-policy: block
+        allowed-endpoints: >
+          github.com:443
+          registry.npmjs.org:443
+
+    - name: Checkout Repository
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      with:
+        fetch-depth: 0
+        submodules: true
+
+    - name: Setup Node.js
+      uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+      with:
+        node-version: 20
+        cache: npm
+
+    - name: Bootstrap Dependencies
+      run: npm ci
+
+    - name: Verify Commit Linting
+      run: |
+        npm exec \
+          --no \
+          --package=@commitlint/cli \
+          -- \
+          commitlint \
+            --from origin/main \
+            --to HEAD \
+            --verbose
+
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    permissions: {}
+
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
+      with:
+        disable-sudo: true
+        egress-policy: block
+        allowed-endpoints: >
+          dl.google.com:443
+          github.com:443
+          registry.npmjs.org:443
+
+    - name: Checkout Repository
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      with:
+        submodules: true
+
+    - name: Setup Node.js
+      uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+      with:
+        node-version: 20
+        cache: npm
+
+    - name: Bootstrap Dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: |
+        npm exec \
+          --no \
+          --package=jest \
+          -- \
+          jest
+
+  android-build:
+    name: Android Build
+    runs-on: ubuntu-latest
+    permissions: {}
+
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
+      with:
+        disable-sudo: true
+        egress-policy: block
+        allowed-endpoints: >
+          dl.google.com:443
+          github.com:443
+          maven.google.com:443
+          objects.githubusercontent.com:443
+          oss.sonatype.org:443
+          plugins-artifacts.gradle.org:443
+          plugins.gradle.org:443
+          registry.npmjs.org:443
+          repo.maven.apache.org:443
+          services.gradle.org:443
+
+    - name: Checkout Repository
+      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      with:
+        submodules: true
+
+    - name: Setup Java
+      uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
+      with:
+        distribution: temurin
+        java-version: 17
+
+    - name: Setup Node.js
+      uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+      with:
+        node-version: 20
+        cache: npm
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@00854ea68c109d98c75d956347303bf7c45b0277 # v3.2.1
+
+    - name: Bootstrap Dependencies
+      run: npm ci
+
+    - name: Build Android APK
+      run: npm run build:android:apk
