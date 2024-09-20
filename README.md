@@ -1,40 +1,25 @@
 # SBE Mental Health App
 
-A proof of concept application created by the SBE Innovation Team, part of the SBE NSF Council.
+## Installation
 
-## Prerequisites
+1. Install dependencies
 
-- Node.js 20
-- Java 17
-- Android CLI Tools
-- ADB with a connected Android device/emulator
+   ```bash
+   npm install
+   ```
 
-## Getting Started
+2. Start the app
 
-To quickly deploy the mobile app to an Android device with Expo:
+   ```bash
+    npx expo start
+   ```
 
-```sh
-$ git clone https://github.com/safsbe/mental-health-app
-$ cd mental-health-app
-$ npm ci
-$ npm run -w '@safsbe/mental-health-frontend' watch:common
-$ npm run -w '@safsbe/mental-health-frontend' watch:android:expo
+In the output, you'll find options to open the app in a
 
-# Press 's' to switch to Expo Go builds
-```
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-## Security
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-See [SECURITY.md](./SECURITY.md).
-
-### Long-Term Support
-
-This project does not adopt any long term support policy.
-
-## Contributing
-
-External pull requests are not currently being accepted. Our internal contribution workflow is documented in [CONTIRBUTING.md](./CONTRIBUTING.md).
-
-## Developing
-
-Instructions for building and developing this appication is provided in [DEVELOPING.md](./DEVELOPING.md).
