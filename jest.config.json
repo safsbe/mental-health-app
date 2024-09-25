@@ -1,0 +1,9 @@
+{ 
+  "preset": "jest-expo",
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "components/**",
+    "!components/__tests__/**",
+    "app/**"
+  ]
+}

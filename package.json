@@ -24,14 +24,11 @@
     "test:watch": "jest --watchAll",
     "eslint": "eslint .",
     "eslint:fix": "npm run eslint -- --fix",
-    "prettier:cli": "prettier '**/*.md' '**/*.ts' '**/*.tsx' '**/*.js' '**/*.mjs'",
+    "prettier:cli": "prettier '**/*.md' '**/*.ts' '**/*.tsx' '**/*.js' '**/*.mjs' '!assets/**'",
     "prettier:check": "npm run prettier:cli -- --check",
     "prettier:fix": "npm run prettier:cli -- --write",
     "lint:check": "npm run eslint && npm run prettier:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix"
-  },
-  "jest": {
-    "preset": "jest-expo"
   },
   "dependencies": {
     "@expo-google-fonts/mulish": "^0.2.3",

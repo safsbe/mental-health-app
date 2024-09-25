@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -97,7 +100,9 @@ jobs:
         disable-sudo: true
         egress-policy: block
         allowed-endpoints: >
+          coveralls.io:443
           dl.google.com:443
+          objects.githubusercontent.com:443
           github.com:443
           registry.npmjs.org:443
 
@@ -116,12 +121,13 @@ jobs:
       run: npm ci
 
     - name: Run tests
-      run: |
-        npm exec \
-          --no \
-          --package=jest \
-          -- \
-          jest
+      run: npm test
+
+    - name: Publish Coverage Report
+      uses: coverallsapp/github-action@643bc377ffa44ace6394b2b5d0d3950076de9f63 # v2.3.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        file: coverage/lcov.info
 
   android-build:
     name: Android Build
