@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ResizeMode, Video} from 'expo-av';
 import {Image} from 'expo-image';
 import {router} from 'expo-router';
+import {useEffect, useRef, useState} from 'react';
 import {Alert, StyleSheet, Text, View} from 'react-native';
 
 export default function Login() {
@@ -13,15 +15,35 @@ export default function Login() {
     }
   };
 
+  const [heroIntroFinished, setHeroIntroFinished] = useState(false);
+
+  const _heroIntroStatusUpdateHandler = e => {
+    if (e.didJustFinish === true) setHeroIntroFinished(true);
+  };
+
   return (
     <View style={styles.screen}>
-      <Image
-        style={{
-          height: 250,
-          width: 250,
-        }}
-        source={require('../../assets/common/logo.svg')}
-      />
+      {heroIntroFinished ? (
+        <Image
+          contentFit="contain"
+          style={{
+            height: 250,
+            width: 250,
+          }}
+          source={require('../../assets/auth/hero_graphic.gif')}
+        />
+      ) : (
+        <Video
+          resizeMode={ResizeMode.CONTAIN}
+          onPlaybackStatusUpdate={_heroIntroStatusUpdateHandler}
+          shouldPlay={true}
+          style={{
+            height: 250,
+            width: 250,
+          }}
+          source={require('../../assets/auth/hero_intro.mov')}
+        />
+      )}
       <Text style={{textAlign: 'center'}}>
         For when you are feeling something...
       </Text>
