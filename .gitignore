@@ -1,3 +1,4 @@
+coverage/
 node_modules/
 .lsp/
 *~
@@ -15,8 +16,6 @@ npm-debug.*
 web-build/
 android/
 ios/
-assets/*
-!assets/**/*.svg
 # macOS
 .DS_Store
 

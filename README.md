@@ -1,6 +1,7 @@
 # SBE Mental Health App
 
 [![CI](https://github.com/safsbe/mental-health-app/actions/workflows/ci.yaml/badge.svg)](https://github.com/safsbe/mental-health-app/actions/workflows/ci.yaml)
+[![Coverage Status](https://coveralls.io/repos/github/safsbe/mental-health-app/badge.svg?branch=main)](https://coveralls.io/github/safsbe/mental-health-app?branch=main)
 
 A proof of concept application created by the SBE Innovation Team, part of the SBE NSF Council.
 
