@@ -19,6 +19,7 @@ export default function TabLayout() {
           title: 'Home',
           tabBarIcon: ({size, color, focused}) => (
             <Image
+              contentFit="contain"
               style={{width: size, height: size}}
               source={require('../../assets/tab_icons/home.svg')}
             />
@@ -31,6 +32,7 @@ export default function TabLayout() {
           title: 'SOS',
           tabBarIcon: ({size, color, focused}) => (
             <Image
+              contentFit="contain"
               style={{width: size, height: size}}
               source={require('../../assets/tab_icons/sos.svg')}
             />
@@ -43,6 +45,7 @@ export default function TabLayout() {
           title: 'Resources',
           tabBarIcon: ({size, color, focused}) => (
             <Image
+              contentFit="contain"
               style={{width: size, height: size}}
               source={require('../../assets/tab_icons/feedback.svg')}
             />
