@@ -28,7 +28,9 @@
     "prettier:check": "npm run prettier:cli -- --check",
     "prettier:fix": "npm run prettier:cli -- --write",
     "lint:check": "npm run eslint && npm run prettier:check",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix"
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "dependencies": {
     "@expo-google-fonts/mulish": "^0.2.3",
