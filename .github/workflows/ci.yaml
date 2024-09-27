@@ -1,6 +1,8 @@
 name: CI
 
-on: [push]
+on:
+  - push
+  - pull_request
 
 permissions: {}
 
@@ -9,6 +11,13 @@ jobs:
     name: Code Lint
     runs-on: ubuntu-latest
     permissions: {}
+    if: >-
+      ${{
+        github.event_name == 'pull_request' ||
+        (
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main'
+      )}}
     
     steps:
     - name: Harden Runner
@@ -42,6 +51,7 @@ jobs:
     name: Commit Lint
     runs-on: ubuntu-latest
     permissions: {}
+    if: ${{ github.event_name == 'pull_request' }}
     
     steps:
     - name: Harden Runner
@@ -117,6 +127,7 @@ jobs:
 
     - name: Publish Coverage Report
       uses: coverallsapp/github-action@643bc377ffa44ace6394b2b5d0d3950076de9f63 # v2.3.0
+      if: ${{ github.event_name == 'push' }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         file: coverage/lcov.info
@@ -125,6 +136,13 @@ jobs:
     name: Android Build
     runs-on: ubuntu-latest
     permissions: {}
+    if: >-
+      ${{
+        github.event_name == 'pull_request' ||
+        (
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main'
+      )}}
 
     steps:
     - name: Harden Runner
