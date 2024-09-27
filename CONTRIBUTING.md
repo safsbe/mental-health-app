@@ -49,9 +49,13 @@ Due to the proprietary license and size of assets, they are stored in a separate
 
 **Do not introduce local changes directly to the git submodule. Instead, merge the changes to the original `safsbe/mental-health-app-assets` Git repository's `main` branch and follow the steps below to update the reference in this Git repository.**
 
-After merging changes into the `main` branch of `safsbe/mental-health-app-assets`, run `git submodule update assets/` in the root of **this** repository.
+After merging changes into the `main` branch of `safsbe/mental-health-app-assets`, run the following in the root of **this** repository:
 
-You must `git commit` after a `git submodule update`.
+```sh
+$ git submodule update --remote assets/
+```
+
+You must `git commit` after a `git submodule update --remote`.
 
 ### Writing a commit
 
@@ -77,3 +81,7 @@ Ensure that:
 
 - `user.email` in your `~/.gitconfig` is an email tied to your Github account (Github's masked emails **are** accepted).
 - The email in at least one `Signed-off-by` line in each commit matches the email of the Git Committer or Git Author of that commit.
+
+### `Error: Unable to resolve module` or `None of these files exist` in CI pipeline
+
+You may have added new assets into the `assets/` subdirectory. Ensure that these new assets have been merged into the `main` branch of the `mental-health-app-assets` Git repository.
