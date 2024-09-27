@@ -1,5 +1,5 @@
 {
-  "*.{js,ts}": [
+  "*.{js,jsx,ts,tsx}": [
     "npx --no --package=prettier -- prettier --write",
     "npx --no --package=eslint -- eslint --fix --report-unused-disable-directives --cache"
   ],
