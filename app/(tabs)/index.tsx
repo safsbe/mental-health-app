@@ -1,19 +1,27 @@
 import moment from 'moment';
 import {Image} from 'expo-image';
 import React, {useEffect, useState, type PropsWithChildren} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, Pressable} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MoodScale from '@/components/MoodScale';
 import Quote from '@/components/Quote';
 import Activities from '@/components/Activities';
+import {router} from 'expo-router';
 
 export default function Index() {
   const [name, setName] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const storedName = await AsyncStorage.getItem('alias');
-      setName(storedName || '');
+      const alias = await AsyncStorage.getItem('alias');
+      const dob = await AsyncStorage.getItem('dob');
+      const goals = await AsyncStorage.getItem('goals');
+      const authToken = await AsyncStorage.getItem('authToken');
+      const mood = await AsyncStorage.getItem('mood');
+
+      setName(alias || ''); // For this page
+
+      console.log(alias, dob, goals, authToken, mood); // Logging when you enter the page: for easier development to see current user
     };
 
     fetchUserData();
@@ -21,7 +29,9 @@ export default function Index() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.greeter}>Hey, {name}!</Text>
+      <Pressable onPress={DevLogoutUser}>
+        <Text style={styles.greeter}>Hey, {name}!</Text>
+      </Pressable>
       <DiaryHero />
       <Section title="Quote of the Day">
         <Quote />
@@ -171,6 +181,22 @@ function Section({title, children}: PropsWithChildren & {title: string}) {
       {children}
     </View>
   );
+}
+
+function DevLogoutUser() {
+  const removeUserData = async () => {
+    await AsyncStorage.multiRemove([
+      'alias',
+      'authToken',
+      'dob',
+      'goals',
+      'mood',
+    ]); // Remove all user info
+
+    router.replace('/login'); // Navigate to login setup screen again
+  };
+
+  removeUserData();
 }
 
 const styles = StyleSheet.create({
