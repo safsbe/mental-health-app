@@ -93,7 +93,7 @@ function DiaryHero() {
 function Explore() {
   const exploreImages = {
     SelfCare: require('../../assets/explore-categories/self.svg'),
-    UnderstandingYourself: require('../../assets/explore-categories/understanding-yourself.svg'),
+    UnderstandingYourself: require('../../assets/explore-categories/understanding_yourself.svg'),
     MentalHealth: require('../../assets/explore-categories/mental_health.svg'),
     StoriesFromOthers: require('../../assets/explore-categories/others.svg'),
   };
