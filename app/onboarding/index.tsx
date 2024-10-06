@@ -65,6 +65,7 @@ export default function Onboarding() {
           images: selectedGoalImages,
         }),
       );
+      await AsyncStorage.setItem('authToken', 'guest'); // Moved from login page to here.
 
       router.replace('/(tabs)'); // Navigate to tabs after saving
     } catch (error) {
@@ -138,6 +139,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 40,
     marginBottom: 20,
   },
   input: {
