@@ -39,10 +39,10 @@ export default function MoodScale({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 30,
+    marginVertical: 10,
   },
   moodContainer: {
-    marginVertical: 10,
+    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   moodImage: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     opacity: 30,
   },
   moodImageActive: {
