@@ -1,11 +1,11 @@
 import moment from 'moment';
-import {Image} from 'expo-image';
 import React, {useEffect, useState, type PropsWithChildren} from 'react';
 import {ScrollView, StyleSheet, Text, View, Pressable} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MoodScale from '@/components/MoodScale';
 import Quote from '@/components/Quote';
 import Activities from '@/components/Activities';
+import Explore from '@/components/Explore';
 import {router} from 'expo-router';
 
 export default function Index() {
@@ -18,31 +18,34 @@ export default function Index() {
       const goals = await AsyncStorage.getItem('goals');
       const authToken = await AsyncStorage.getItem('authToken');
       const mood = await AsyncStorage.getItem('mood');
+      const videoWatched = await AsyncStorage.getItem('videoWatched');
 
       setName(alias || ''); // For this page
 
-      console.log(alias, dob, goals, authToken, mood); // Logging when you enter the page: for easier development to see current user
+      console.log(alias, dob, goals, authToken, mood, videoWatched); // Logging when you enter the page: for easier development to see current user
     };
 
     fetchUserData();
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      <Pressable onPress={DevLogoutUser}>
-        <Text style={styles.greeter}>Hey, {name}!</Text>
-      </Pressable>
-      <DiaryHero />
-      <Section title="Quote of the Day">
-        <Quote />
-      </Section>
-      <Section title="Activities">
-        <Activities />
-      </Section>
+    <ScrollView>
+      <View style={styles.container}>
+        <Pressable onPress={DevLogoutUser}>
+          <Text style={styles.greeter}>Hey, {name}!</Text>
+        </Pressable>
+        <DiaryHero />
+        <Section title="Quote of the Day">
+          <Quote />
+        </Section>
+        <Section title="Activities">
+          <Activities />
+        </Section>
 
-      <Section title="Explore">
-        <Explore />
-      </Section>
+        <Section title="Explore">
+          <Explore />
+        </Section>
+      </View>
     </ScrollView>
   );
 }
@@ -53,16 +56,17 @@ function DiaryHero() {
   const handleMoodSelect = async (selectedMood: number) => {
     setMood(selectedMood);
     const currentDate = new Date().toISOString().split('T')[0]; // date formatted as YYYY-MM-DD
+    const currMood = await AsyncStorage.getItem('mood');
     await AsyncStorage.setItem(
       'mood',
-      JSON.stringify({date: currentDate, mood: selectedMood}),
+      currMood + JSON.stringify({date: currentDate, mood: selectedMood}),
     );
+    console.log(await AsyncStorage.getItem('mood'));
   };
 
   const styles = StyleSheet.create({
     container: {
-      paddingTop: 15,
-      paddingBottom: 30,
+      margin: 10,
       borderRadius: 15,
       backgroundColor: '#FDF8E7',
     },
@@ -88,84 +92,10 @@ function DiaryHero() {
   );
 }
 
-type ExploreCardProps = {
-  bgColor: string;
-  imgSrc: Image['props']['source'];
-  text: string;
-};
-
-function ExploreCard({bgColor, imgSrc, text}: ExploreCardProps) {
-  return (
-    <View
-      style={{
-        backgroundColor: bgColor,
-        borderRadius: 6,
-        marginRight: 15,
-        padding: 15,
-        width: 180,
-        height: 200,
-      }}
-    >
-      <Text
-        style={{
-          textAlign: 'right',
-          fontWeight: 'bold',
-          color: '#2A4E4C',
-        }}
-      >
-        {text}
-      </Text>
-      <Image
-        style={{
-          flexGrow: 1,
-        }}
-        source={imgSrc}
-      />
-    </View>
-  );
-}
-
-function Explore() {
-  const exploreCards: ExploreCardProps[] = [
-    {
-      text: 'Self',
-      bgColor: '#DDF1FE',
-      imgSrc: require('../../assets/explore-categories/self.svg'),
-    },
-    {
-      text: 'Self Help',
-      bgColor: '#DDE5FF',
-      imgSrc: require('../../assets/explore-categories/self_help.svg'),
-    },
-    {
-      text: 'Mental Health',
-      bgColor: '#DEF7E5',
-      imgSrc: require('../../assets/explore-categories/mental_health.svg'),
-    },
-    {
-      text: 'Lived Experience',
-      bgColor: '#FFE7E7',
-      imgSrc: require('../../assets/explore-categories/lived_experience.svg'),
-    },
-  ];
-  return (
-    <ScrollView horizontal={true}>
-      {exploreCards.map((x, i) => (
-        <ExploreCard
-          key={i}
-          bgColor={x.bgColor}
-          text={x.text}
-          imgSrc={x.imgSrc}
-        />
-      ))}
-    </ScrollView>
-  );
-}
-
 function Section({title, children}: PropsWithChildren & {title: string}) {
   const styles = StyleSheet.create({
     section: {
-      marginVertical: 30,
+      margin: 10,
     },
     title: {
       marginBottom: 10,
@@ -191,6 +121,7 @@ function DevLogoutUser() {
       'dob',
       'goals',
       'mood',
+      'videoWatched',
     ]); // Remove all user info
 
     router.replace('/login'); // Navigate to login setup screen again
@@ -201,13 +132,17 @@ function DevLogoutUser() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    marginTop: 20,
+    flex: 1,
+    alignItems: 'stretch',
+    marginLeft: 5,
+    marginRight: 5,
+    paddingTop: 5,
   },
   greeter: {
     color: '#765000',
     fontSize: 24,
     fontWeight: 'bold',
-    marginVertical: 20,
+    margin: 10,
+    paddingTop: 30,
   },
 });
