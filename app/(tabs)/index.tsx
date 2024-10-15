@@ -1,11 +1,11 @@
 import moment from 'moment';
-import {Image} from 'expo-image';
 import React, {useEffect, useState, type PropsWithChildren} from 'react';
 import {ScrollView, StyleSheet, Text, View, Pressable} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MoodScale from '@/components/MoodScale';
 import Quote from '@/components/Quote';
 import Activities from '@/components/Activities';
+import Explore from '@/components/Explore';
 import {router} from 'expo-router';
 
 export default function Index() {
@@ -56,10 +56,12 @@ function DiaryHero() {
   const handleMoodSelect = async (selectedMood: number) => {
     setMood(selectedMood);
     const currentDate = new Date().toISOString().split('T')[0]; // date formatted as YYYY-MM-DD
+    const currMood = await AsyncStorage.getItem('mood');
     await AsyncStorage.setItem(
       'mood',
-      JSON.stringify({date: currentDate, mood: selectedMood}),
+      currMood + JSON.stringify({date: currentDate, mood: selectedMood}),
     );
+    console.log(await AsyncStorage.getItem('mood'));
   };
 
   const styles = StyleSheet.create({
@@ -86,113 +88,6 @@ function DiaryHero() {
       <Text style={styles.dateLarge}>{moment().format('dddd')}</Text>
       <Text style={styles.dateSmall}>{moment().format('DD MMMM YYYY')}</Text>
       <MoodScale currentMood={mood} onSelectMood={handleMoodSelect} />
-    </View>
-  );
-}
-
-function Explore() {
-  const exploreImages = {
-    SelfCare: require('../../assets/explore-categories/self.svg'),
-    UnderstandingYourself: require('../../assets/explore-categories/understanding_yourself.svg'),
-    MentalHealth: require('../../assets/explore-categories/mental_health.svg'),
-    StoriesFromOthers: require('../../assets/explore-categories/others.svg'),
-  };
-
-  const styles = StyleSheet.create({
-    exploreColumn: {
-      flex: 1,
-      flexDirection: 'column',
-      gap: 10,
-    },
-    exploreRow: {
-      flex: 1,
-      flexDirection: 'row',
-      gap: 10,
-    },
-  });
-
-  return (
-    <View style={styles.exploreColumn}>
-      <View style={styles.exploreRow}>
-        <Pressable
-          onPress={() => router.push('/articles?category=selfcare')}
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            backgroundColor: '#DDF1FE',
-            height: 200,
-            padding: 5,
-          }}
-        >
-          <Text
-            style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
-          >
-            Self Care
-          </Text>
-          <Image style={{flexGrow: 1}} source={exploreImages.SelfCare} />
-        </Pressable>
-        <Pressable
-          onPress={() =>
-            router.push('/articles?category=understandingyourself')
-          }
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            backgroundColor: '#DDE5FF',
-            height: 200,
-            padding: 5,
-          }}
-        >
-          <Text
-            style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
-          >
-            Understanding Yourself
-          </Text>
-          <Image
-            style={{flexGrow: 1}}
-            source={exploreImages.UnderstandingYourself}
-          />
-        </Pressable>
-      </View>
-      <View style={styles.exploreRow}>
-        <Pressable
-          onPress={() => router.push('/articles?category=aboutmentalhealth')}
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            backgroundColor: '#DDF7E5',
-            height: 200,
-            padding: 5,
-          }}
-        >
-          <Text
-            style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
-          >
-            About Mental Health
-          </Text>
-          <Image style={{flexGrow: 1}} source={exploreImages.MentalHealth} />
-        </Pressable>
-        <Pressable
-          onPress={() => router.push('/articles?category=storiesfromothers')}
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            backgroundColor: '#FFE7E7',
-            height: 200,
-            padding: 5,
-          }}
-        >
-          <Text
-            style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
-          >
-            Stories From Others
-          </Text>
-          <Image
-            style={{flexGrow: 1}}
-            source={exploreImages.StoriesFromOthers}
-          />
-        </Pressable>
-      </View>
     </View>
   );
 }
