@@ -1,9 +1,21 @@
-import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {View, Text, Pressable, StyleSheet, BackHandler} from 'react-native';
 import {Image} from 'expo-image';
 import {router, Stack, useLocalSearchParams} from 'expo-router';
 import React from 'react';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 export default function Articles() {
+
+  async function changeOrientation() {
+    await ScreenOrientation.lockAsync(2); // Sets to ANY portrait => See https://docs.expo.dev/versions/latest/sdk/screen-orientation/#orientationlock
+  }
+
+  BackHandler.addEventListener('hardwareBackPress', function() {
+    changeOrientation();
+  })
+
+  changeOrientation();
+
   const {category} = useLocalSearchParams<{category?: string}>(); // get the category
   let headerTitle = '';
 
@@ -95,8 +107,8 @@ export default function Articles() {
       />
       <View style={{gap: 10, marginTop: 20}}>
         {ArticleList.filter(x => x.category === category).map(
-          ({title, id}, index) => (
-            <ArticleEntry key={index} title={title} id={`${id}`} />
+          ({category, title, id}, index) => (
+            <ArticleEntry category={category} key={index} title={title} id={`${id}`} />
           ),
         )}
       </View>
@@ -104,7 +116,7 @@ export default function Articles() {
   );
 }
 
-function ArticleEntry({title, id}: {title: string; id: string}) {
+function ArticleEntry({category, title, page=0, id}: {category: string, title: string; page: number, id: number}) {
   const styles = StyleSheet.create({
     article: {
       borderRadius: 12,
@@ -128,7 +140,7 @@ function ArticleEntry({title, id}: {title: string; id: string}) {
   return (
     <Pressable
       // @ts-ignore
-      onPress={() => router.push(`/thisarticle?title=${title}&id=${id}`)} // If it shows an error, ignore it - it works
+      onPress={() => router.push(`/thisarticle?category=${category}&title=${title}&page=${page}&id=${id}`)} // If it shows an error, ignore it - it works
       style={styles.article}
     >
       <Text style={styles.articleText}>{title}</Text>
