@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "requireFullScreen": true
     },
     "android": {
       "package": "com.safsbe.mentalhealthapp"
@@ -25,7 +26,21 @@
     },
     "plugins": [
       "expo-router",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-build-properties", {
+        "android": {
+          "usesCleartextTraffic": true
+        },
+        "ios": {
+          
+        }
+      }],
+      [
+        "expo-screen-orientation", {
+          "initialOrientation": "DEFAULT"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
