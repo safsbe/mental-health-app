@@ -21,7 +21,7 @@ export default function TabLayout() {
             <Image
               contentFit="contain"
               style={{width: size, height: size}}
-              source={require('../../assets/tab_icons/home.svg')}
+              source={require('../../../assets/tab_icons/home.svg')}
             />
           ),
         }}
@@ -34,7 +34,7 @@ export default function TabLayout() {
             <Image
               contentFit="contain"
               style={{width: size, height: size}}
-              source={require('../../assets/tab_icons/sos.svg')}
+              source={require('../../../assets/tab_icons/sos.svg')}
             />
           ),
         }}
@@ -47,7 +47,7 @@ export default function TabLayout() {
             <Image
               contentFit="contain"
               style={{width: size, height: size}}
-              source={require('../../assets/tab_icons/feedback.svg')}
+              source={require('../../../assets/tab_icons/feedback.svg')}
             />
           ),
         }}

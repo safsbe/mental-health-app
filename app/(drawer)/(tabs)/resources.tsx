@@ -13,13 +13,13 @@ export default function ResourcesScreen() {
 
       {/* Telegram Card */}
       <TelegramCard
-        image={require('../../assets/resources_tab/csscom_wellbeing_channel.svg')} //
+        image={require('../../../assets/resources_tab/csscom_wellbeing_channel.svg')} //
         title="CSSCOM Well-Being"
         description="Join our Telegram channel for a daily mental well-being boost"
         backgroundColor="#DEF7E5"
       />
       <TelegramCard
-        image={require('../../assets/resources_tab/mindline_sg.svg')} //
+        image={require('../../../assets/resources_tab/mindline_sg.svg')} //
         title="Mindline.sg"
         description="Current tips to cope ina competitive environment"
         backgroundColor="#DDF1FE"
