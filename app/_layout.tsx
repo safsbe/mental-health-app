@@ -62,7 +62,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={CustomTheme}>
       <Stack screenOptions={{headerShown: false}}>
-        <Stack.Screen name="(tabs)" options={{headerShown: false}} />
+        <Stack.Screen name="(drawer)" options={{headerShown: false}} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>
