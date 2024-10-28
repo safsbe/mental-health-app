@@ -6,7 +6,7 @@
     "prepare": "husky",
     "reset-project": "node ./scripts/reset-project.js",
     "build:binary-images": "node ./scripts/generate-binary-images.mjs",
-    "android:build-article-assets": "mkdir android/app/src/main/assets && cp -r assets/articleAssets android/app/src/main/assets && sed -i -e 's@../../assets@file:///android_asset@' android/app/src/main/assets/articleAssets/**/*.html",
+    "android:build-article-assets": "mkdir android/app/src/main/assets && cp -r assets/articleAssets android/app/src/main/assets && find -iname '*.html' -type f | xargs -I{} sed -e 's@src=\"../../assets@src=\"file:///android_asset@' -e 's@src=\"assets@src=\"file:///android_asset@' '{}'",
     "prebuild:common": "npm run build:binary-images",
     "preprebuild:android": "npm run prebuild:common",
     "prebuild:android": "expo prebuild --clean --platform=android && npm run android:build-article-assets",
