@@ -4,7 +4,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 export default function Activities() {
   const handlePress = () => {
-    router.push('/meditation');
+    router.push('/meditation/meditation');
   };
 
   return (

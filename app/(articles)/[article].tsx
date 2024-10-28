@@ -1,6 +1,6 @@
-import {View, Text, Pressable, StyleSheet, ScrollView, BackHandler, Animated, Button } from 'react-native';
+import {View, Text, Pressable, StyleSheet, ScrollView, BackHandler, Animated, Button, Platform } from 'react-native';
 import {Image} from 'expo-image';
-import {router, Stack, useLocalSearchParams} from 'expo-router';
+import {Href, router, Stack, useLocalSearchParams} from 'expo-router';
 import { DrawerContentScrollView, DrawerItem, createDrawerNavigator } from '@react-navigation/drawer';
 import React, {useRef, useMemo, useState} from 'react';
 import {WebView} from 'react-native-webview';
@@ -9,12 +9,13 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { HeaderBackButton } from '@react-navigation/elements';
 import PagerView, { PagerViewOnPageSelectedEventData, PageScrollStateChangedNativeEvent } from 'react-native-pager-view';
 import {Drawer} from 'react-native-drawer-layout';
+import { link } from 'fs';
 
 export default function ArticleView() {
-  const {category, title, page = 0, id = 0} = useLocalSearchParams<{category: string, title: string, page: string, id: string}>();
+  const {category, title, id = 0} = useLocalSearchParams<{category: string, title: string, id: string}>();
 
   console.log({title});
-  console.log({id}, id);
+  console.log({id});
 
   
   async function changeToLandscapeOrientation() {
@@ -31,35 +32,57 @@ export default function ArticleView() {
     {
       articleName: "mindfulpause",
       pages: [
-        require('../../assets/articleAssets/selfcare/mindfulpause/page1.html'),
-        require('../../assets/articleAssets/selfcare/mindfulpause/page2.html'),
-        require('../../assets/articleAssets/selfcare/mindfulpause/page3.html'),
-        require('../../assets/articleAssets/selfcare/mindfulpause/page4.html'),
-        require('../../assets/articleAssets/selfcare/mindfulpause/page5.html'),
-        require('../../assets/articleAssets/selfcare/mindfulpause/page6.html'),
-        require('../../assets/articleAssets/selfcare/mindfulpause/page7.html'),
-        require('../../assets/articleAssets/selfcare/mindfulpause/page8.html'),
-        require('../../assets/articleAssets/selfcare/mindfulpause/page9.html'),
-        require('../../assets/articleAssets/selfcare/mindfulpause/page10.html'),
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page1.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page1.html'}],
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page2.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page2.html'}],
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page3.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page3.html'}],
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page4.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page4.html'}],
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page5.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page5.html'}],
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page6.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page6.html'}],
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page7.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page7.html'}],
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page8.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page8.html'}],
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page9.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page9.html'}],
+        [require('../../assets/articleAssets/selfcare/mindfulpause/page10.html'), {uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page10.html'}],
       ]
     },
     {
       articleName: "understandingsleep",
       pages: [
-        require('../../assets/articleAssets/selfcare/understandingsleep/page1.html'),
-        require('../../assets/articleAssets/selfcare/understandingsleep/page2.html'),
-        require('../../assets/articleAssets/selfcare/understandingsleep/page3.html'),
-        require('../../assets/articleAssets/selfcare/understandingsleep/page4.html'),
-        require('../../assets/articleAssets/selfcare/understandingsleep/page5.html'),
-        require('../../assets/articleAssets/selfcare/understandingsleep/page6.html'),
-        require('../../assets/articleAssets/selfcare/understandingsleep/page7.html'),
-        require('../../assets/articleAssets/selfcare/understandingsleep/page8.html'),
-        require('../../assets/articleAssets/selfcare/understandingsleep/page9.html'),
-        require('../../assets/articleAssets/selfcare/understandingsleep/page10.html'),
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page1.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page1.html'}],
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page2.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page2.html'}],
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page3.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page3.html'}],
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page4.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page4.html'}],
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page5.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page5.html'}],
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page6.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page6.html'}],
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page7.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page7.html'}],
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page8.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page8.html'}],
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page9.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page9.html'}],
+        [require('../../assets/articleAssets/selfcare/understandingsleep/page10.html'), {uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page10.html'}],
       ]
     },
-    require('../../assets/articleAssets/selfcare/sleepqualitychecklist.html'),
-    require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype.html'),
+    {
+      articleName: "sleepqualitychecklist",
+      pages: [
+        [require('../../assets/articleAssets/selfcare/sleepqualitychecklist/page1.html'), {uri: 'file:///android_asset/articleAssets/selfcare/sleepqualitychecklist/page1.html'}],
+        [require('../../assets/articleAssets/selfcare/sleepqualitychecklist/page2.html'), {uri: 'file:///android_asset/articleAssets/selfcare/sleepqualitychecklist/page2.html'}],
+        [require('../../assets/articleAssets/selfcare/sleepqualitychecklist/page3.html'), {uri: 'file:///android_asset/articleAssets/selfcare/sleepqualitychecklist/page3.html'}],
+        [require('../../assets/articleAssets/selfcare/sleepqualitychecklist/page4.html'), {uri: 'file:///android_asset/articleAssets/selfcare/sleepqualitychecklist/page4.html'}],
+      ]
+    },
+    {
+      articleName: "knowyourpersonalitytype",
+      pages: [
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page1.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page1.html'}],
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page2.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page2.html'}],
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page3.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page3.html'}],
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page4.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page4.html'}],
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page5.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page5.html'}],
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page6.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page6.html'}],
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page7.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page7.html'}],
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page8.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page8.html'}],
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page9.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page9.html'}],
+        [require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page10.html'), {uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page10.html'}],
+      ]
+    },
     require('../../assets/articleAssets/understandingyourself/identifyandtameyouremotions.html'),
     require('../../assets/articleAssets/understandingyourself/attachmentstyle.html'),
     require('../../assets/articleAssets/understandingyourself/distresssigns.html'),
@@ -104,7 +127,7 @@ export default function ArticleView() {
     {
       id: 2,
       collection: "selfcare",
-      header: [],
+      header: [0, ],
     },
     {
       id: 3,
@@ -168,7 +191,7 @@ export default function ArticleView() {
 
   const pageDisplay = `${activePage+1} / ${articlePages}`;
 
-  function Section({header, category, title, pageIndex, id, active}: {header: string, category: string, title: string, pageIndex: number, id: number, active: boolean}) {
+  function Section({header, pageIndex}: {header: string, pageIndex: number}) {
 
     console.log(pageIndex);
 
@@ -200,6 +223,12 @@ export default function ArticleView() {
 
   // End Drawer
 
+  // Deep linking between Webview and React
+
+
+
+  // End Deep linking
+
   return (
     <View style={{flex: 1, flexDirection: "row", gap: 10}}>
       <Drawer
@@ -214,8 +243,9 @@ export default function ArticleView() {
             {// @ts-ignore
             categorySelectionHeaders[filterOption.collection].map((sectionTitle, index) => (
               // @ts-ignore
-              <Section header={sectionTitle} key={index} category={category} title={title} pageIndex={filterOption.header[index]} id={id}/> // For jumping to the right sections
+              <Section header={sectionTitle} key={index} pageIndex={filterOption.header[index]}/> // For jumping to the right sections
             ))}
+            <Section header={"End"} key={"end"} pageIndex={articleList[+id].pages.length - 1} />
           </View>
         )}>
         <View style={{flex: 1, flexDirection: "row", gap: 10}}>
@@ -251,13 +281,31 @@ export default function ArticleView() {
             // @ts-ignore
             onPageSelected={(e) => {setActivePage(e.nativeEvent.position)}}>
             { // @ts-ignore
-            articleList[id].pages.map((pageLink, index) => (
+            articleList[id].pages.map((pageLinks, index) => (
               <WebView
+                onShouldStartLoadWithRequest={(request) => {
+                  // console.log(request.url);
+                  alert(request.url);
+                  if (request.url.startsWith('internal://')) {
+                    let linkAddress = request.url.replace('internal://', '').replaceAll('%20', ' ');
+                    console.log(linkAddress);
+                    if (linkAddress.startsWith('/thisarticle')) {
+                      router.push(linkAddress as Href<string>)
+                    } else {
+                      changeToPortraitOrientation();
+                      router.replace(linkAddress as Href<string>)
+                    }
+                  };
+                  return false;
+                }}
                 originWhitelist={['*']}
                 key={`${index+1}`}
                 collapsable={false}
                 style={styles.webview}
-                source={pageLink}
+                allowFileAccess={true}
+                allowingReadAccessToURL='true'
+                source={Platform.OS === 'android' ? pageLinks[1] : pageLinks[0]}
+                //source={pageLinks[0]}
                 // @ts-ignore
                 onNavigationStateChange={handleNavigationChange}
                 scrollEnabled={false} // None of these work lol
