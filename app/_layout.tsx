@@ -3,11 +3,23 @@ import {DefaultTheme, Theme, ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 import {router, Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import {useEffect, useState} from 'react';
+import {createContext, useEffect, useState} from 'react';
 import 'react-native-reanimated';
 import {useColorScheme} from '@/hooks/useColorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
+import {SQLiteProvider, openDatabaseSync} from 'expo-sqlite';
+import {drizzle} from 'drizzle-orm/expo-sqlite';
+import {useMigrations} from 'drizzle-orm/expo-sqlite/migrator';
+import migrations from '@/drizzle/migrations';
+import {useDrizzleStudio} from 'expo-drizzle-studio-plugin';
+import {seed} from '@/db/seed';
+import {store} from '@/utils/store';
+import {Provider} from 'react-redux';
+import {DrizzleProvider} from '@/providers/drizzle';
+
+const expoDb = openDatabaseSync('main.db', {enableChangeListener: true});
+const db = drizzle(expoDb);
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -16,12 +28,27 @@ SplashScreen.preventAutoHideAsync();
 const CustomTheme: Theme = DefaultTheme;
 CustomTheme.colors.background = '#FFF';
 
+
 export default function RootLayout() {
+  useDrizzleStudio(expoDb);
+  const {success: dbMigrationSuccess, error: dbMigrationError} = useMigrations(db, migrations);
   const colorScheme = useColorScheme();
   const [isReady, setIsReady] = useState(false);
   const [loaded] = useFonts({
     Mulish_400Regular,
   });
+
+  useEffect(() => {
+    console.log("DB STAT - Success: " + dbMigrationSuccess);
+    console.log("DB STAT - Error " + dbMigrationError);
+
+    if (dbMigrationSuccess) {
+      seed({
+        db: db,
+        mode: 'reset',
+      });
+    }
+  }, [dbMigrationSuccess, dbMigrationError]);
 
   useEffect(() => {
     const checkUserData = async () => {
@@ -60,11 +87,15 @@ export default function RootLayout() {
   }
 
   return (
+    <Provider store={store}>
+      <DrizzleProvider value={db}>
     <ThemeProvider value={CustomTheme}>
       <Stack screenOptions={{headerShown: false}}>
         <Stack.Screen name="(tabs)" options={{headerShown: false}} />
         <Stack.Screen name="+not-found" />
       </Stack>
-    </ThemeProvider>
+      </ThemeProvider>
+      </DrizzleProvider>
+      </Provider>
   );
 }

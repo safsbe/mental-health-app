@@ -1,27 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
-import quotes from '../assets/quotes.json';
+import {quotes} from '@/db/schema';
 import {FontAwesome} from '@expo/vector-icons';
+import {DrizzleProvider, useDrizzle} from '@/providers/drizzle';
 
 const Quote = () => {
+  const db = useDrizzle();
   const [quote, setQuote] = useState('');
-
-  useEffect(() => {
-    const fetchQuote = () => {
-      const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
-      const todayQuote = quotes.find(
-        (q: {date: string}) => q.date === currentDate,
-      );
-
-      if (todayQuote) {
-        setQuote(todayQuote.quote);
-      } else {
-        setQuote('No quote for today.');
-      }
-    };
-
-    fetchQuote();
-  }, []);
+  db.select().from(quotes).limit(1).then(x => setQuote(x[0].text))
 
   return (
     <View style={styles.quoteContainer}>

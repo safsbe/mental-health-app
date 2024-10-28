@@ -48,17 +48,6 @@ export default function Index() {
 }
 
 function DiaryHero() {
-  const [mood, setMood] = useState(0);
-
-  const handleMoodSelect = async (selectedMood: number) => {
-    setMood(selectedMood);
-    const currentDate = new Date().toISOString().split('T')[0]; // date formatted as YYYY-MM-DD
-    await AsyncStorage.setItem(
-      'mood',
-      JSON.stringify({date: currentDate, mood: selectedMood}),
-    );
-  };
-
   const styles = StyleSheet.create({
     container: {
       paddingTop: 15,
@@ -83,7 +72,7 @@ function DiaryHero() {
     <View style={styles.container}>
       <Text style={styles.dateLarge}>{moment().format('dddd')}</Text>
       <Text style={styles.dateSmall}>{moment().format('DD MMMM YYYY')}</Text>
-      <MoodScale currentMood={mood} onSelectMood={handleMoodSelect} />
+      <MoodScale />
     </View>
   );
 }
