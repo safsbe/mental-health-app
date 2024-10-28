@@ -5,14 +5,13 @@ import React from 'react';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 export default function Articles() {
-
   async function changeOrientation() {
     await ScreenOrientation.lockAsync(2); // Sets to ANY portrait => See https://docs.expo.dev/versions/latest/sdk/screen-orientation/#orientationlock
   }
 
-  BackHandler.addEventListener('hardwareBackPress', function() {
+  BackHandler.addEventListener('hardwareBackPress', function () {
     changeOrientation();
-  })
+  });
 
   changeOrientation();
 
@@ -108,7 +107,12 @@ export default function Articles() {
       <View style={{gap: 10, marginTop: 20}}>
         {ArticleList.filter(x => x.category === category).map(
           ({category, title, id}, index) => (
-            <ArticleEntry category={category} title={title} id={`${id}`} key={index} />
+            <ArticleEntry
+              category={category}
+              title={title}
+              id={`${id}`}
+              key={index}
+            />
           ),
         )}
       </View>
@@ -116,7 +120,15 @@ export default function Articles() {
   );
 }
 
-function ArticleEntry({category, title, id}: {category: string, title: string; id: number}) {
+function ArticleEntry({
+  category,
+  title,
+  id,
+}: {
+  category: string;
+  title: string;
+  id: number;
+}) {
   const styles = StyleSheet.create({
     article: {
       borderRadius: 12,
@@ -140,7 +152,9 @@ function ArticleEntry({category, title, id}: {category: string, title: string; i
   return (
     <Pressable
       // @ts-ignore
-      onPress={() => router.push(`/thisarticle?category=${category}&title=${title}&id=${id}`)} // If it shows an error, ignore it - it works
+      onPress={() =>
+        router.push(`/thisarticle?category=${category}&title=${title}&id=${id}`)
+      } // If it shows an error, ignore it - it works
       //onPress={() => console.log(`/thisarticle?category=${category}&title=${title}&id=${id}`)}
       style={styles.article}
     >
