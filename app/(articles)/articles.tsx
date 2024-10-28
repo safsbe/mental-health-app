@@ -108,7 +108,7 @@ export default function Articles() {
       <View style={{gap: 10, marginTop: 20}}>
         {ArticleList.filter(x => x.category === category).map(
           ({category, title, id}, index) => (
-            <ArticleEntry category={category} key={index} title={title} id={`${id}`} />
+            <ArticleEntry category={category} title={title} id={`${id}`} key={index} />
           ),
         )}
       </View>
@@ -116,7 +116,7 @@ export default function Articles() {
   );
 }
 
-function ArticleEntry({category, title, page=0, id}: {category: string, title: string; page: number, id: number}) {
+function ArticleEntry({category, title, id}: {category: string, title: string; id: number}) {
   const styles = StyleSheet.create({
     article: {
       borderRadius: 12,
@@ -140,7 +140,8 @@ function ArticleEntry({category, title, page=0, id}: {category: string, title: s
   return (
     <Pressable
       // @ts-ignore
-      onPress={() => router.push(`/thisarticle?category=${category}&title=${title}&page=${page}&id=${id}`)} // If it shows an error, ignore it - it works
+      onPress={() => router.push(`/thisarticle?category=${category}&title=${title}&id=${id}`)} // If it shows an error, ignore it - it works
+      //onPress={() => console.log(`/thisarticle?category=${category}&title=${title}&id=${id}`)}
       style={styles.article}
     >
       <Text style={styles.articleText}>{title}</Text>
