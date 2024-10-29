@@ -1,15 +1,9 @@
 import {useState, useRef} from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Slider from '@react-native-community/slider';
 import {Audio} from 'expo-av';
 import {MaterialIcons} from '@expo/vector-icons';
+import {Image} from 'expo-image';
 
 export default function Meditation() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
@@ -19,12 +13,29 @@ export default function Meditation() {
   const [durationMillis, setDurationMillis] = useState(0);
   const [positionMillis, setPositionMillis] = useState(0);
   const soundRef = useRef<Audio.Sound | null>(null);
+  const [trackID, setTrackID] = useState<number>(0);
+  const tracks = [
+    {
+      title: 'Deep Breathing',
+      file: require('../../assets/meditation/audio/deep_breathing.mp3'),
+    },
+    {
+      title: 'Deep Breathing (IPPT)',
+      file: require('../../assets/meditation/audio/deep_breathing_ippt.mp3'),
+    },
+    {
+      title: 'Muscle Relaxation (Parody)',
+      file: require('../../assets/meditation/audio/muscle_relaxation_parody.mp3'),
+    },
+  ];
 
-  const loadAndPlaySound = async () => {
+  const loadAndPlaySound = async (trackID: number) => {
+    await handleStop();
     const {sound: newSound} = await Audio.Sound.createAsync(
-      require('../../assets/meditation/love_wins_all.mp3'), // Path to your song file
+      tracks[trackID].file,
     );
     setSound(newSound);
+    setTrackID(trackID);
     soundRef.current = newSound;
     newSound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
     await newSound.playAsync();
@@ -50,7 +61,7 @@ export default function Meditation() {
       setIsPlaying(false);
     } else {
       if (!sound) {
-        await loadAndPlaySound();
+        await loadAndPlaySound(trackID);
       } else {
         await sound.playAsync();
         setIsPlaying(true);
@@ -68,6 +79,7 @@ export default function Meditation() {
 
   const handleStop = async () => {
     await sound?.stopAsync();
+    await sound?.unloadAsync();
     setIsPlaying(false);
     setSliderValue(0);
     setPositionMillis(0);
@@ -121,13 +133,38 @@ export default function Meditation() {
         {/* <Button title="Stop" onPress={handleStop} /> */}
       </View>
       <View style={styles.audioChoiceContainer}>
-        <Text style={{...styles.pill, ...styles.pillActive}}>General</Text>
-        <Text style={styles.pill}>IPPT</Text>
+        {tracks.map(({title}, i) => (
+          <Text
+            key={title}
+            style={{
+              ...styles.pill,
+              ...(trackID === i ? styles.pillActive : {}),
+            }}
+            onPress={() => loadAndPlaySound(i)}
+          >
+            {title}
+          </Text>
+        ))}
       </View>
       <View style={styles.subtextContainer}>
-        <Text style={styles.subtext}>Reduce Stress</Text>
-        <Text style={styles.subtext}>Enhance Well-being</Text>
-        <Text style={styles.subtext}>Increase Productivity</Text>
+        <View style={styles.subtextItem}>
+          <Image
+            source={require('../../assets/meditation/icons/reduce_stress.svg')}
+          />
+          <Text style={styles.subtext}>Reduce Stress</Text>
+        </View>
+        <View style={styles.subtextItem}>
+          <Image
+            source={require('../../assets/meditation/icons/enhance_wellbeing.svg')}
+          />
+          <Text style={styles.subtext}>Enhance Well-being</Text>
+        </View>
+        <View style={styles.subtextItem}>
+          <Image
+            source={require('../../assets/meditation/icons/increase_productivity.svg')}
+          />
+          <Text style={styles.subtext}>Increase Productivity</Text>
+        </View>
       </View>
       <View>
         <Text style={{...styles.pill, ...styles.pillActive}}>Read more</Text>
@@ -186,6 +223,9 @@ const styles = StyleSheet.create({
   subtextContainer: {
     paddingVertical: 20,
   },
+  subtextItem: {
+    alignItems: 'stretch',
+  },
   subtext: {
     color: '#A5A5A5',
     fontSize: 16,
@@ -195,14 +235,19 @@ const styles = StyleSheet.create({
   audioChoiceContainer: {
     paddingVertical: 20,
     flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     gap: 6,
   },
   pill: {
     borderColor: '#A5A5A5',
     borderRadius: 52,
     borderWidth: 2,
+    marginVertical: 3,
     paddingVertical: 7,
     paddingHorizontal: 10,
+    color: '#FFF',
+    textAlign: 'center',
   },
   pillActive: {
     backgroundColor: '#A5A5A5',
