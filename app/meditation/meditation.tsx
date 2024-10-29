@@ -1,9 +1,18 @@
 import {useState, useRef} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+  BackHandler,
+} from 'react-native';
 import Slider from '@react-native-community/slider';
 import {Audio} from 'expo-av';
 import {MaterialIcons} from '@expo/vector-icons';
 import {Image} from 'expo-image';
+import {router} from 'expo-router';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 export default function Meditation() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
@@ -91,6 +100,16 @@ export default function Meditation() {
     return minutes + ':' + (Number(seconds) < 10 ? '0' : '') + seconds;
   };
 
+  async function changeOrientation() {
+    await ScreenOrientation.lockAsync(2); // Sets to ANY portrait
+  }
+
+  BackHandler.addEventListener('hardwareBackPress', function () {
+    changeOrientation();
+  });
+
+  changeOrientation();
+
   return (
     <View style={styles.container}>
       <View>
@@ -166,9 +185,15 @@ export default function Meditation() {
           <Text style={styles.subtext}>Increase Productivity</Text>
         </View>
       </View>
-      <View>
+      <Pressable
+        onPress={() =>
+          router.push(
+            '/thisarticle?category=Self Care&title=Mindful Pause&id=0',
+          )
+        }
+      >
         <Text style={{...styles.pill, ...styles.pillActive}}>Read more</Text>
-      </View>
+      </Pressable>
     </View>
   );
 }
