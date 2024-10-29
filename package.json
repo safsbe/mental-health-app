@@ -15,7 +15,7 @@
     "prebuild:android:apk": "npm run prebuild:android",
     "build:android:apk": "cd android && ./gradlew assembleRelease",
     "prewatch:common": "npm run prebuild:common",
-    "prewatch:android": "npm run prewatch:common && npm run android:build-article-assets",
+    "prewatch:android": "npm run prewatch:common && npm run prebuild:android",
     "watch:android": "expo run:android",
     "prewatch:ios": "npm run prewatch:common",
     "watch:ios": "expo run:ios",
