@@ -9,6 +9,7 @@ export default function Articles() {
     await ScreenOrientation.lockAsync(2); // Sets to ANY portrait => See https://docs.expo.dev/versions/latest/sdk/screen-orientation/#orientationlock
   }
 
+  // @ts-ignore
   BackHandler.addEventListener('hardwareBackPress', function () {
     changeOrientation();
   });
@@ -43,32 +44,32 @@ export default function Articles() {
     },
     {
       category: 'understandingyourself',
-      title: 'Identify & Tame Your Emotions',
+      title: 'Identify and Tame Your Emotions',
       id: 4,
     },
     {
       category: 'understandingyourself',
-      title: 'Attachment Style',
+      title: 'What is Attachment Style',
       id: 5,
     },
     {
       category: 'understandingyourself',
-      title: 'Distress signs',
+      title: 'Distress Signs',
       id: 6,
     },
     {
       category: 'understandingyourself',
-      title: 'Eustress',
+      title: 'Eustress – Good Stress',
       id: 7,
     },
     {
       category: 'aboutmentalhealth',
-      title: 'ADHD',
+      title: 'Attention Deficit Hyperactivity Disorder (ADHD)',
       id: 8,
     },
     {
       category: 'aboutmentalhealth',
-      title: 'ASD',
+      title: 'Autism Spectrum Disorder (ASD)',
       id: 9,
     },
     {
@@ -110,7 +111,7 @@ export default function Articles() {
             <ArticleEntry
               category={category}
               title={title}
-              id={`${id}`}
+              id={Number(id)}
               key={index}
             />
           ),
@@ -151,8 +152,8 @@ function ArticleEntry({
 
   return (
     <Pressable
-      // @ts-ignore
       onPress={() =>
+        // @ts-ignore
         router.push(`/thisarticle?category=${category}&title=${title}&id=${id}`)
       } // If it shows an error, ignore it - it works
       //onPress={() => console.log(`/thisarticle?category=${category}&title=${title}&id=${id}`)}
