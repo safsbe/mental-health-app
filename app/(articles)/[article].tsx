@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {Image} from 'expo-image';
 import {Href, router, Stack, useLocalSearchParams} from 'expo-router';
+import * as Linking from 'expo-linking';
 import {
   DrawerContentScrollView,
   DrawerItem,
@@ -259,29 +260,468 @@ export default function ArticleView() {
             uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page8.html',
           },
         ],
+      ],
+    },
+    {
+      articleName: 'identifytameemotions',
+      pages: [
         [
-          require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page9.html'),
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page1.html'),
           {
-            uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page9.html',
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page1.html',
           },
         ],
         [
-          require('../../assets/articleAssets/understandingyourself/knowyourpersonalitytype/page10.html'),
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page2.html'),
           {
-            uri: 'file:///android_asset/articleAssets/understandingyourself/knowyourpersonalitytype/page10.html',
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page10.html',
           },
         ],
       ],
     },
-    require('../../assets/articleAssets/understandingyourself/identifyandtameyouremotions.html'),
-    require('../../assets/articleAssets/understandingyourself/attachmentstyle.html'),
-    require('../../assets/articleAssets/understandingyourself/distresssigns.html'),
-    require('../../assets/articleAssets/understandingyourself/eustress.html'),
-    require('../../assets/articleAssets/aboutmentalhealth/adhd.html'),
-    require('../../assets/articleAssets/aboutmentalhealth/asd.html'),
-    require('../../assets/articleAssets/aboutmentalhealth/bipolar.html'),
-    require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy.html'),
-    //drequire('../../assets/articleAssets/storiesfromothers/helplines.html'),
+    {
+      articleName: 'attachmentstyle',
+      pages: [
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page10.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page11.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page12.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page12.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/attachmentstyle/page13.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/attachmentstyle/page13.html',
+          },
+        ],
+      ],
+    },
+    {
+      articleName: 'distresssigns',
+      pages: [
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/distresssigns/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/distresssigns/page10.html',
+          },
+        ],
+      ],
+    },
+    {
+      articleName: 'eustress',
+      pages: [
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page10.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page11.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/understandingyourself/eustress/page12.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/eustress/page12.html',
+          },
+        ],
+      ],
+    },
+    {
+      articleName: 'adhd',
+      pages: [
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page10.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page11.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adhd/page12.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page12.html',
+          },
+        ],
+      ],
+    },
+    {
+      articleName: 'asd',
+      pages: [
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page10.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/asd/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page11.html',
+          },
+        ],
+      ],
+    },
+    {
+      articleName: 'bipolar',
+      pages: [
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page1.html',
+          },
+        ],
+      ],
+    },
+    {
+      articleName: 'whatispsychotherapy',
+      pages: [
+        [
+          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page1.html',
+          },
+        ],
+      ],
+    },
     {
       articleName: 'helplines',
       pages: [
@@ -310,67 +750,67 @@ export default function ArticleView() {
 
   const articleSectionPageNumbers = [
     {
-      id: 0,
+      id: 0, // Mindful Pause
       collection: 'selfcare',
       header: [0, 2, 4], // page numbers for respective sections listed above @ categorySelectionHeaders
     },
     {
-      id: 1,
+      id: 1, // Understanding Sleep
       collection: 'selfcare',
       header: [0, 1, 7],
     },
     {
-      id: 2,
+      id: 2, // Sleep Quality Checklist
       collection: 'selfcare',
       header: [0],
     },
     {
-      id: 3,
+      id: 3, // Know Your Personality Type
       collection: 'understandingyourself',
-      header: [],
+      header: [0, 1, 7],
     },
     {
-      id: 4,
+      id: 4, // Identify and Tame Your Emotions
       collection: 'understandingyourself',
-      header: [],
+      header: [0, 1, 4],
     },
     {
-      id: 5,
+      id: 5, // What is Attachment Style
       collection: 'understandingyourself',
-      header: [],
+      header: [0, 1, 10],
     },
     {
-      id: 6,
+      id: 6, // Distress Signs
       collection: 'understandingyourself',
-      header: [],
+      header: [0, 1, 4],
     },
     {
-      id: 7,
+      id: 7, // Eustress - Good Stress
       collection: 'understandingyourself',
-      header: [],
+      header: [0, 1, 5],
     },
     {
-      id: 8,
+      id: 8, // ADHD
+      collection: 'aboutmentalhealth',
+      header: [0, 1, 3, 5, 7],
+    },
+    {
+      id: 9, // ASD
       collection: 'aboutmentalhealth',
       header: [],
     },
     {
-      id: 9,
+      id: 10, // Bipolar
       collection: 'aboutmentalhealth',
       header: [],
     },
     {
-      id: 10,
+      id: 11, // What is Psychotherapy
       collection: 'aboutmentalhealth',
       header: [],
     },
     {
-      id: 11,
-      collection: 'aboutmentalhealth',
-      header: [],
-    },
-    {
-      id: 12,
+      id: 12, // Helplines
       collection: 'storiesfromothers',
       header: [],
     },
@@ -508,7 +948,7 @@ export default function ArticleView() {
                 <WebView
                   onShouldStartLoadWithRequest={request => {
                     // console.log(request.url);
-                    alert(request.url);
+                    // alert(request.url); // Debugging
                     if (request.url.startsWith('internal://')) {
                       let linkAddress = request.url
                         .replace('internal://', '')
@@ -520,6 +960,8 @@ export default function ArticleView() {
                         changeToPortraitOrientation();
                         router.replace(linkAddress as Href<string>);
                       }
+                    } else if (request.url.startsWith('https://')) {
+                      Linking.openURL(request.url);
                     }
                     return false;
                   }}
@@ -529,10 +971,10 @@ export default function ArticleView() {
                   style={styles.webview}
                   allowFileAccess={true}
                   allowingReadAccessToURL="true"
-                  source={
-                    Platform.OS === 'android' ? pageLinks[1] : pageLinks[0]
-                  }
-                  //source={pageLinks[0]}
+                  // source={
+                  //   Platform.OS === 'android' ? pageLinks[1] : pageLinks[0]
+                  // }
+                  source={pageLinks[0]} // Use this when prototyping to see immediate changes without rebuilding apk
                   // @ts-ignore
                   onNavigationStateChange={handleNavigationChange}
                   scrollEnabled={false} // None of these work lol
