@@ -11,8 +11,9 @@ import Slider from '@react-native-community/slider';
 import {Audio} from 'expo-av';
 import {MaterialIcons} from '@expo/vector-icons';
 import {Image} from 'expo-image';
-import {router} from 'expo-router';
+import {router, Stack} from 'expo-router';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import {HeaderBackButton} from '@react-navigation/elements';
 
 export default function Meditation() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
@@ -111,97 +112,119 @@ export default function Meditation() {
   changeOrientation();
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.titleSubtle}>Take a</Text>
-        <Text style={styles.titleEmphasis}>Mindful Pause</Text>
-        <Text style={styles.titleSubtle}>
-          Life is a<Text style={styles.boldText}> marathon</Text>
-        </Text>
-        <Text style={styles.titleSubtle}>
-          Not a<Text style={styles.boldText}> sprint</Text>
-        </Text>
-      </View>
-      <View style={styles.controlContainer}>
-        <TouchableOpacity
-          onPress={handlePlayPause}
-          style={styles.playPauseButton}
-        >
-          <MaterialIcons
-            name={isPlaying ? 'pause' : 'play-arrow'}
-            size={96}
-            color="#ffffff"
-          />
-        </TouchableOpacity>
-        <Text>
-          {getTimeMins(positionMillis)}/{getTimeMins(durationMillis)}
-        </Text>
-        <Slider
-          style={styles.slider}
-          minimumValue={0}
-          maximumValue={1}
-          value={sliderValue}
-          onValueChange={handleSliderChange}
-          minimumTrackTintColor="#1EB1FC"
-          maximumTrackTintColor="#000000"
-          thumbTintColor="#1EB1FC"
-        />
-        <Text style={styles.titleSubtle}>
-          {Math.floor(durationMillis / 60000)} mins
-        </Text>
-        {/* <Button title="Stop" onPress={handleStop} /> */}
-      </View>
-      <View style={styles.audioChoiceContainer}>
-        {tracks.map(({title}, i) => (
-          <Text
-            key={title}
-            style={{
-              ...styles.pill,
-              ...(trackID === i ? styles.pillActive : {}),
-            }}
-            onPress={() => loadAndPlaySound(i)}
-          >
-            {title}
+    <View style={{height: '100%'}}>
+      <Stack.Screen
+        options={{
+          // @ts-ignore
+          headerStyle: {
+            backgroundColor: '#595F59',
+          },
+          headerTitle: '',
+          headerShown: true,
+          headerShadowVisible: false,
+          headerLeft: props => (
+            <HeaderBackButton
+              {...props}
+              // @ts-ignore
+              onPress={() => router.back()}
+            />
+          ),
+        }}
+      />
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.titleSubtle}>Take a</Text>
+          <Text style={styles.titleEmphasis}>Mindful Pause</Text>
+          <Text style={styles.titleSubtle}>
+            Life is a<Text style={styles.boldText}> marathon</Text>
           </Text>
-        ))}
+          <Text style={styles.titleSubtle}>
+            Not a<Text style={styles.boldText}> sprint</Text>
+          </Text>
+        </View>
+        <View style={styles.controlContainer}>
+          <TouchableOpacity
+            onPress={handlePlayPause}
+            style={styles.playPauseButton}
+          >
+            <MaterialIcons
+              name={isPlaying ? 'pause' : 'play-arrow'}
+              size={96}
+              color="#ffffff"
+            />
+          </TouchableOpacity>
+          <Text>
+            {getTimeMins(positionMillis)}/{getTimeMins(durationMillis)}
+          </Text>
+          <Slider
+            style={styles.slider}
+            minimumValue={0}
+            maximumValue={1}
+            value={sliderValue}
+            onValueChange={handleSliderChange}
+            minimumTrackTintColor="#1EB1FC"
+            maximumTrackTintColor="#000000"
+            tapToSeek={true}
+            thumbTintColor="#1EB1FC"
+          />
+          <Text style={styles.titleSubtle}>
+            {Math.floor(durationMillis / 60000)} mins
+          </Text>
+          {/* <Button title="Stop" onPress={handleStop} /> */}
+        </View>
+        <View style={styles.audioChoiceContainer}>
+          {tracks.map(({title}, i) => (
+            <Text
+              key={title}
+              style={{
+                ...styles.pill,
+                ...(trackID === i ? styles.pillActive : {}),
+              }}
+              onPress={() => loadAndPlaySound(i)}
+            >
+              {title}
+            </Text>
+          ))}
+        </View>
+        <View style={styles.subtextContainer}>
+          <View style={styles.subtextItem}>
+            <Image
+              source={require('../../assets/meditation/icons/reduce_stress.svg')}
+            />
+            <Text style={styles.subtext}>Reduce Stress</Text>
+          </View>
+          <View style={styles.subtextItem}>
+            <Image
+              source={require('../../assets/meditation/icons/enhance_wellbeing.svg')}
+            />
+            <Text style={styles.subtext}>Enhance Well-being</Text>
+          </View>
+          <View style={styles.subtextItem}>
+            <Image
+              source={require('../../assets/meditation/icons/increase_productivity.svg')}
+            />
+            <Text style={styles.subtext}>Increase Productivity</Text>
+          </View>
+        </View>
+        <Pressable
+          onPress={() =>
+            router.push(
+              '/thisarticle?category=Self Care&title=Mindful Pause&id=0',
+            )
+          }
+        >
+          <Text style={{...styles.pill, ...styles.pillActive}}>Read more</Text>
+        </Pressable>
       </View>
-      <View style={styles.subtextContainer}>
-        <View style={styles.subtextItem}>
-          <Image
-            source={require('../../assets/meditation/icons/reduce_stress.svg')}
-          />
-          <Text style={styles.subtext}>Reduce Stress</Text>
-        </View>
-        <View style={styles.subtextItem}>
-          <Image
-            source={require('../../assets/meditation/icons/enhance_wellbeing.svg')}
-          />
-          <Text style={styles.subtext}>Enhance Well-being</Text>
-        </View>
-        <View style={styles.subtextItem}>
-          <Image
-            source={require('../../assets/meditation/icons/increase_productivity.svg')}
-          />
-          <Text style={styles.subtext}>Increase Productivity</Text>
-        </View>
-      </View>
-      <Pressable
-        onPress={() =>
-          router.push(
-            '/thisarticle?category=Self Care&title=Mindful Pause&id=0',
-          )
-        }
-      >
-        <Text style={{...styles.pill, ...styles.pillActive}}>Read more</Text>
-      </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
-    padding: 16,
+    // paddingTop: '5%',
+    paddingHorizontal: 16,
+    paddingBottom: '5%',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -227,7 +250,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   slider: {
-    width: '100%',
+    width: 200,
     marginVertical: 20,
   },
   boldText: {
@@ -266,13 +289,14 @@ const styles = StyleSheet.create({
   },
   pill: {
     borderColor: '#A5A5A5',
-    borderRadius: 52,
+    borderRadius: 15,
     borderWidth: 2,
     marginVertical: 3,
     paddingVertical: 7,
     paddingHorizontal: 10,
     color: '#FFF',
     textAlign: 'center',
+    overflow: 'hidden',
   },
   pillActive: {
     backgroundColor: '#A5A5A5',
