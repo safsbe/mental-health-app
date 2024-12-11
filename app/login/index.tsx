@@ -48,12 +48,23 @@ export default function Login() {
             For when you are feeling something...
           </Text>
           <View style={styles.authOptions}>
-            <Text style={{...styles.btn, ...styles.btnPrimary}}>Login</Text>
             <Text
-              style={{...styles.btn, ...styles.btnSecondary}}
+              style={styles.loginButton}
+              // onPress={() => router.push('/')}  // Replace with proper link once its been set up
+            >
+              Login
+            </Text>
+            <Text
+              style={styles.guestButton}
               onPress={() => router.push('/onboarding')}
             >
               Guest
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text>No account? </Text>
+            <Text style={styles.signUp} onPress={() => router.push('/signup')}>
+              Sign up
             </Text>
           </View>
         </View>
@@ -87,19 +98,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexWrap: 'wrap',
   },
-  btn: {
+  loginButton: {
     margin: 10,
     paddingVertical: 10,
     paddingHorizontal: 30,
     minWidth: '10%',
-    borderRadius: 8,
+    borderRadius: 10,
     borderWidth: 1,
     textAlign: 'center',
-  },
-  btnPrimary: {
     backgroundColor: '#2A4E4C',
     borderColor: '#2A4E4C',
     color: '#FFF',
+    overflow: 'hidden',
+  },
+  guestButton: {
+    margin: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    minWidth: '10%',
+    borderRadius: 10,
+    borderWidth: 1,
+    textAlign: 'center',
+  },
+  signUp: {
+    color: '#2A4E4C',
   },
   video: {
     backgroundColor: 'black',

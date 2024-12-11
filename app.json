@@ -14,7 +14,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "requireFullScreen": true
+      "requireFullScreen": true,
+      "bundleIdentifier": "com.safsbe.mentalhealthapp"
     },
     "android": {
       "package": "com.safsbe.mentalhealthapp"
@@ -28,16 +29,17 @@
       "expo-router",
       "expo-secure-store",
       [
-        "expo-build-properties", {
-        "android": {
-          "usesCleartextTraffic": true
-        },
-        "ios": {
-          
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          },
+          "ios": {}
         }
-      }],
+      ],
       [
-        "expo-screen-orientation", {
+        "expo-screen-orientation",
+        {
           "initialOrientation": "DEFAULT"
         }
       ]

@@ -3,17 +3,19 @@ import {Image} from 'expo-image';
 import {router, Stack, useLocalSearchParams} from 'expo-router';
 import React from 'react';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import {HeaderBackButton} from '@react-navigation/elements';
 
 export default function Articles() {
   async function changeOrientation() {
     await ScreenOrientation.lockAsync(2); // Sets to ANY portrait => See https://docs.expo.dev/versions/latest/sdk/screen-orientation/#orientationlock
   }
 
+  // @ts-ignore
   BackHandler.addEventListener('hardwareBackPress', function () {
     changeOrientation();
   });
 
-  changeOrientation();
+  // changeOrientation();
 
   const {category} = useLocalSearchParams<{category?: string}>(); // get the category
   let headerTitle = '';
@@ -43,37 +45,37 @@ export default function Articles() {
     },
     {
       category: 'understandingyourself',
-      title: 'Identify & Tame Your Emotions',
+      title: 'Identify and Tame Your Emotions',
       id: 4,
     },
     {
       category: 'understandingyourself',
-      title: 'Attachment Style',
+      title: 'What is Attachment Style',
       id: 5,
     },
     {
       category: 'understandingyourself',
-      title: 'Distress signs',
+      title: 'Distress Signs',
       id: 6,
     },
     {
       category: 'understandingyourself',
-      title: 'Eustress',
+      title: 'Eustress – Good Stress',
       id: 7,
     },
     {
       category: 'aboutmentalhealth',
-      title: 'ADHD',
+      title: 'Attention Deficit Hyperactivity Disorder (ADHD)',
       id: 8,
     },
     {
       category: 'aboutmentalhealth',
-      title: 'ASD',
+      title: 'Autism Spectrum Disorder (ASD)',
       id: 9,
     },
     {
       category: 'aboutmentalhealth',
-      title: 'Bipolar',
+      title: 'Bipolar Disorder',
       id: 10,
     },
     {
@@ -102,6 +104,13 @@ export default function Articles() {
           // @ts-ignore
           title: categories[category],
           headerTitleStyle: {fontWeight: 'bold'},
+          headerLeft: props => (
+            <HeaderBackButton
+              {...props}
+              // @ts-ignore
+              onPress={() => router.back()}
+            />
+          ),
         }}
       />
       <View style={{gap: 10, marginTop: 20}}>
@@ -110,7 +119,7 @@ export default function Articles() {
             <ArticleEntry
               category={category}
               title={title}
-              id={`${id}`}
+              id={Number(id)}
               key={index}
             />
           ),
@@ -151,8 +160,8 @@ function ArticleEntry({
 
   return (
     <Pressable
-      // @ts-ignore
       onPress={() =>
+        // @ts-ignore
         router.push(`/thisarticle?category=${category}&title=${title}&id=${id}`)
       } // If it shows an error, ignore it - it works
       //onPress={() => console.log(`/thisarticle?category=${category}&title=${title}&id=${id}`)}

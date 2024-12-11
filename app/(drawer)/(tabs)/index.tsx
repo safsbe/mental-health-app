@@ -7,6 +7,8 @@ import Quote from '@/components/Quote';
 import Activities from '@/components/Activities';
 import Explore from '@/components/Explore';
 import {router} from 'expo-router';
+import {getNativeSourceAndFullInitialStatusForLoadAsync} from 'expo-av/build/AV';
+import {parse} from 'date-fns';
 
 export default function Index() {
   const [name, setName] = useState('');
@@ -53,15 +55,54 @@ export default function Index() {
 function DiaryHero() {
   const [mood, setMood] = useState(0);
 
+  // const handleMoodSelect = async (selectedMood: number) => {
+  //   setMood(selectedMood);
+  //   const currentDate = new Date().toISOString().split('T')[0]; // date formatted as YYYY-MM-DD
+  //   const currMood = await AsyncStorage.getItem('mood');
+  //   await AsyncStorage.setItem(
+  //     'mood',
+  //     currMood + JSON.stringify({date: currentDate, mood: selectedMood}),
+  //   );
+  //   console.log(await AsyncStorage.getItem('mood'));
+  // };
+
   const handleMoodSelect = async (selectedMood: number) => {
     setMood(selectedMood);
     const currentDate = new Date().toISOString().split('T')[0]; // date formatted as YYYY-MM-DD
     const currMood = await AsyncStorage.getItem('mood');
-    await AsyncStorage.setItem(
-      'mood',
-      currMood + JSON.stringify({date: currentDate, mood: selectedMood}),
-    );
-    console.log(await AsyncStorage.getItem('mood'));
+
+    if (currMood == null) {
+      await AsyncStorage.setItem(
+        'mood',
+        JSON.stringify([{date: currentDate, mood: selectedMood}]),
+      );
+    } else {
+      // console.log(currMood); // Mood before button press
+
+      const parsedCurrMood = JSON.parse(currMood);
+      // @ts-ignore
+      const otherResultArray = parsedCurrMood.filter(
+        x => x.date !== currentDate,
+      );
+
+      // console.log('parsedCurrMood:', parsedCurrMood);
+      // console.log('otherResultArray', otherResultArray);
+
+      const todayNewEntry = {
+        date: currentDate,
+        mood: selectedMood,
+      };
+
+      // console.log('todayNewEntry:', todayNewEntry);
+
+      otherResultArray.push(todayNewEntry); // add todays value to the moods from other days except the previous value for today
+
+      // console.log('new otherResultArray:', otherResultArray);
+
+      await AsyncStorage.setItem('mood', JSON.stringify(otherResultArray));
+    }
+
+    console.log('mood:', await AsyncStorage.getItem('mood'));
   };
 
   const styles = StyleSheet.create({
