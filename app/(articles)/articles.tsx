@@ -3,6 +3,7 @@ import {Image} from 'expo-image';
 import {router, Stack, useLocalSearchParams} from 'expo-router';
 import React from 'react';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import {HeaderBackButton} from '@react-navigation/elements';
 
 export default function Articles() {
   async function changeOrientation() {
@@ -14,7 +15,7 @@ export default function Articles() {
     changeOrientation();
   });
 
-  changeOrientation();
+  // changeOrientation();
 
   const {category} = useLocalSearchParams<{category?: string}>(); // get the category
   let headerTitle = '';
@@ -74,7 +75,7 @@ export default function Articles() {
     },
     {
       category: 'aboutmentalhealth',
-      title: 'Bipolar',
+      title: 'Bipolar Disorder',
       id: 10,
     },
     {
@@ -103,6 +104,13 @@ export default function Articles() {
           // @ts-ignore
           title: categories[category],
           headerTitleStyle: {fontWeight: 'bold'},
+          headerLeft: props => (
+            <HeaderBackButton
+              {...props}
+              // @ts-ignore
+              onPress={() => router.back()}
+            />
+          ),
         }}
       />
       <View style={{gap: 10, marginTop: 20}}>
