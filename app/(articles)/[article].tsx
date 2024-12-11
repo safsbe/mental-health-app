@@ -19,7 +19,7 @@ import {
 } from '@react-navigation/drawer';
 import React, {useRef, useMemo, useState} from 'react';
 import {WebView} from 'react-native-webview';
-import {FontAwesome6} from '@expo/vector-icons';
+import {FontAwesome6, Octicons} from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import {HeaderBackButton} from '@react-navigation/elements';
 import PagerView, {
@@ -28,6 +28,7 @@ import PagerView, {
 } from 'react-native-pager-view';
 import {Drawer} from 'react-native-drawer-layout';
 import {link} from 'fs';
+import {setStatusBarNetworkActivityIndicatorVisible} from 'expo-status-bar';
 
 export default function ArticleView() {
   const {
@@ -36,25 +37,25 @@ export default function ArticleView() {
     id = 0,
   } = useLocalSearchParams<{category: string; title: string; id: string}>();
 
-  console.log({title});
-  console.log({id});
+  // console.log({title}, {id});
 
-  async function changeToLandscapeOrientation() {
-    await ScreenOrientation.lockAsync(5); // Sets to ANY landscape => See https://docs.expo.dev/versions/latest/sdk/screen-orientation/#orientationlock
-  }
+  // async function changeToLandscapeOrientation() {
+  //   await ScreenOrientation.lockAsync(5); // Sets to ANY landscape => See https://docs.expo.dev/versions/latest/sdk/screen-orientation/#orientationlock
+  // }
 
-  async function changeToPortraitOrientation() {
-    await ScreenOrientation.lockAsync(2); // Sets to ANY portrait => See https://docs.expo.dev/versions/latest/sdk/screen-orientation/#orientationlock
-  }
+  // async function changeToPortraitOrientation() {
+  //   await ScreenOrientation.lockAsync(2); // Sets to ANY portrait => See https://docs.expo.dev/versions/latest/sdk/screen-orientation/#orientationlock
+  // }
 
-  changeToLandscapeOrientation();
+  // changeToLandscapeOrientation(); // will not need this with redesign
 
   const articleList = [
     {
       articleName: 'mindfulpause',
       pages: [
         [
-          require('../../assets/articleAssets/selfcare/mindfulpause/page1.html'),
+          //require('../../assets/articleAssets/selfcare/mindfulpause/page1.html'),
+          require('@/assets/articleAssets/selfcare/mindfulpause/page1.html'),
           {
             uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page1.html',
           },
@@ -704,9 +705,63 @@ export default function ArticleView() {
       articleName: 'bipolar',
       pages: [
         [
-          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page1.html'),
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page1.html'),
           {
-            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page1.html',
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page10.html',
           },
         ],
       ],
@@ -715,9 +770,81 @@ export default function ArticleView() {
       articleName: 'whatispsychotherapy',
       pages: [
         [
-          require('../../assets/articleAssets/understandingyourself/identifytameemotions/page1.html'),
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page1.html'),
           {
-            uri: 'file:///android_asset/articleAssets/understandingyourself/identifytameemotions/page1.html',
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page10.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page11.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page12.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page12.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page13.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page13.html',
           },
         ],
       ],
@@ -725,12 +852,78 @@ export default function ArticleView() {
     {
       articleName: 'helplines',
       pages: [
-        require('../../assets/articleAssets/storiesfromothers/helplines/page1.html'),
-        require('../../assets/articleAssets/storiesfromothers/helplines/page2.html'),
-        require('../../assets/articleAssets/storiesfromothers/helplines/page3.html'),
-        require('../../assets/articleAssets/storiesfromothers/helplines/page4.html'),
-        require('../../assets/articleAssets/storiesfromothers/helplines/page5.html'),
-        require('../../assets/articleAssets/storiesfromothers/helplines/page6.html'),
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page10.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page11.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/storiesfromothers/helplines/page12.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page12.html',
+          },
+        ],
       ],
     },
   ];
@@ -822,12 +1015,35 @@ export default function ArticleView() {
   // @ts-ignore
   const articlePages = articleList[id].pages.length;
 
-  console.log(`Current Page: ${activePage + 1} | Total Pages: ${articlePages}`);
+  // console.log(`Current Page: ${activePage + 1} | Total Pages: ${articlePages}`);
 
   const pageDisplay = `${activePage + 1} / ${articlePages}`;
 
+  function NewPageDisplay({totalPages}: {totalPages: number}) {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          gap: 4,
+          marginVertical: 15,
+        }}
+      >
+        {[...Array(totalPages).keys()].map((e, key) => (
+          <View key={key}>
+            {e <= activePage ? (
+              <Octicons name="dot-fill" size={20} color="#765000" />
+            ) : (
+              <Octicons name="dot-fill" size={20} color="#EEE5D4" />
+            )}
+          </View>
+        ))}
+      </View>
+    );
+  }
+
   function Section({header, pageIndex}: {header: string; pageIndex: number}) {
-    console.log(pageIndex);
+    // console.log(pageIndex);
 
     return (
       <View
@@ -837,6 +1053,18 @@ export default function ArticleView() {
             : styles.sectionButton
         }
       >
+        {
+          activePage > pageIndex ? (
+            <Octicons name="check" size={24} color="#27B600" />
+          ) : (
+            <Octicons
+              name="check"
+              size={24}
+              color="#ffffff"
+              style={{opacity: 0}}
+            />
+          ) // Hidden anyways
+        }
         <Text
           style={
             activePage === pageIndex
@@ -858,7 +1086,7 @@ export default function ArticleView() {
     const {url, target} = newNavState;
     if (!url) return;
 
-    console.log(target);
+    // console.log(target);
   };
 
   const filterOption = articleSectionPageNumbers.filter(x => x.id === +id)[0];
@@ -869,11 +1097,11 @@ export default function ArticleView() {
 
   const [open, setOpen] = useState(false);
 
+  // bugged react-native-webview
+
+  const [webkey, setWebkey] = useState(0);
+
   // End Drawer
-
-  // Deep linking between Webview and React
-
-  // End Deep linking
 
   return (
     <View style={{flex: 1, flexDirection: 'row', gap: 10}}>
@@ -886,28 +1114,56 @@ export default function ArticleView() {
         renderDrawerContent={() => (
           // This shit is inside the drawer
           <View style={styles.sectionGroup}>
-            {
-              // @ts-ignore
-              categorySelectionHeaders[filterOption.collection].map(
-                (sectionTitle, index) => (
-                  // @ts-ignore
-                  <Section
-                    header={sectionTitle}
-                    key={index}
-                    pageIndex={filterOption.header[index]}
-                  /> // For jumping to the right sections
-                ),
-              )
-            }
-            <Section
-              header={'End'}
-              key={'end'}
-              pageIndex={articleList[+id].pages.length - 1}
-            />
+            <View style={styles.pageCompletedCounter}>
+              <Text style={styles.pageCompletedCounterText}>
+                <Text style={{fontWeight: 'bold'}}>
+                  {activePage + 1} / {articlePages}
+                </Text>{' '}
+                Pages Completed
+              </Text>
+            </View>
+            <View
+              style={{
+                display: 'flex',
+                flex: 1,
+                width: '100%',
+                borderTopWidth: 1,
+                borderColor: '#A5A5A5',
+                paddingVertical: 5,
+              }}
+            ></View>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                alignItems: 'flex-start',
+                gap: 10,
+              }}
+            >
+              {
+                // @ts-ignore
+                categorySelectionHeaders[filterOption.collection].map(
+                  (sectionTitle, index) => (
+                    // @ts-ignore
+                    <Section
+                      header={sectionTitle}
+                      key={index}
+                      pageIndex={filterOption.header[index]}
+                    /> // For jumping to the right sections
+                  ),
+                )
+              }
+              <Section
+                header={'End'}
+                key={'end'}
+                pageIndex={articleList[+id].pages.length - 1}
+              />
+            </View>
           </View>
         )}
       >
-        <View style={{flex: 1, flexDirection: 'row', gap: 10}}>
+        <View style={{flex: 1, flexDirection: 'column'}}>
           <Stack.Screen
             options={{
               title: title,
@@ -916,7 +1172,10 @@ export default function ArticleView() {
                 <HeaderBackButton
                   {...props}
                   // @ts-ignore
-                  onPress={() => changeToPortraitOrientation() && router.back()}
+                  onPress={() =>
+                    //changeToPortraitOrientation() &&
+                    router.back()
+                  }
                 />
               ),
               headerRight: () => (
@@ -933,6 +1192,7 @@ export default function ArticleView() {
               <Section header={sectionTitle} key={index} category={category} title={title} pageIndex={filterOption.header[index]} id={id}/> // For jumping to the right sections
             ))}
           </View> */}
+          <NewPageDisplay totalPages={articlePages} />
           <PagerView
             initialPage={0}
             style={{flex: 1}}
@@ -945,52 +1205,80 @@ export default function ArticleView() {
             {
               // @ts-ignore
               articleList[id].pages.map((pageLinks, index) => (
-                <WebView
-                  onShouldStartLoadWithRequest={request => {
-                    // console.log(request.url);
-                    // alert(request.url); // Debugging
-                    if (request.url.startsWith('internal://')) {
-                      let linkAddress = request.url
-                        .replace('internal://', '')
-                        .replaceAll('%20', ' ');
-                      console.log(linkAddress);
-                      if (linkAddress.startsWith('/thisarticle')) {
-                        router.push(linkAddress as Href<string>);
-                      } else {
-                        changeToPortraitOrientation();
-                        router.replace(linkAddress as Href<string>);
-                      }
-                    } else if (request.url.startsWith('https://')) {
-                      Linking.openURL(request.url);
-                    }
-                    return false;
+                <View
+                  style={{
+                    flex: 1,
                   }}
-                  originWhitelist={['*']}
                   key={`${index + 1}`}
-                  collapsable={false}
-                  style={styles.webview}
-                  allowFileAccess={true}
-                  allowingReadAccessToURL="true"
-                  // source={
-                  //   Platform.OS === 'android' ? pageLinks[1] : pageLinks[0]
-                  // }
-                  source={pageLinks[0]} // Use this when prototyping to see immediate changes without rebuilding apk
-                  // @ts-ignore
-                  onNavigationStateChange={handleNavigationChange}
-                  scrollEnabled={false} // None of these work lol
-                  overScrollMode="never" // None of these work lol
-                  bounces={false} // iOS feature
-                  scalesPageToFit={false} // None of these work lol
-                  androidLayerType="hardware"
-                  setBuiltInZoomControls={false}
-                  showsVerticalScrollIndicator={false}
-                  //injectedJavaScriptBeforeContentLoaded={}
-                  //onScroll={}
-                />
+                >
+                  {/* <NewPageDisplay totalPages={articlePages} /> */}
+                  <WebView
+                    onShouldStartLoadWithRequest={request => {
+                      // console.log(request.url);
+                      // alert(request.url); // Debugging
+                      if (request.url.startsWith('internal://')) {
+                        let linkAddress = request.url
+                          .replace('internal://', '')
+                          .replaceAll('%20', ' ');
+                        console.log(linkAddress);
+                        if (linkAddress.startsWith('/thisarticle')) {
+                          router.push(linkAddress as Href<string>);
+                        } else {
+                          // changeToPortraitOrientation();
+                          router.replace(linkAddress as Href<string>);
+                        }
+                      } else if (request.url.startsWith('https://')) {
+                        Linking.openURL(request.url);
+                      } else if (request.url.startsWith('tel:')) {
+                        Linking.openURL(request.url);
+                      } else if (request.url.startsWith('http://')) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                      return true;
+                    }}
+                    originWhitelist={[
+                      'file://*',
+                      'https://*',
+                      'internal://*',
+                      'http://*',
+                    ]}
+                    // originWhitelist={['*']}
+                    // key={`${index + 1}`}
+                    collapsable={false}
+                    style={styles.webview}
+                    allowFileAccess={true}
+                    allowingReadAccessToURL="true"
+                    allowFileAccessFromFileURLs={true}
+                    allowUniversalAccessFromFileURLs={true}
+                    // source={
+                    //   Platform.OS === 'android' ? pageLinks[1] : pageLinks[0]
+                    // }
+                    source={pageLinks[0]} // Use this when prototyping to see immediate changes without rebuilding apk
+                    limitsNavigationsToAppBoundDomains={true}
+                    useWebKit={true}
+                    cacheEnabled={true}
+                    // pagingEnabled={true}
+                    // @ts-ignore
+                    onNavigationStateChange={handleNavigationChange} // doesnt do shit
+                    scrollEnabled={false} // None of these work lol
+                    overScrollMode="never" // None of these work lol
+                    bounces={false} // iOS feature
+                    scalesPageToFit={false} // None of these work lol
+                    androidLayerType="hardware"
+                    setBuiltInZoomControls={false}
+                    showsVerticalScrollIndicator={false}
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    //injectedJavaScriptBeforeContentLoaded={}
+                    //onScroll={}
+                  />
+                </View>
               ))
             }
           </PagerView>
-          <View>
+          {/* <View>
             <View
               style={{
                 backgroundColor: '#BBBBBB9E',
@@ -1004,7 +1292,7 @@ export default function ArticleView() {
             >
               <Text style={{fontSize: 16}}>{pageDisplay}</Text>
             </View>
-          </View>
+          </View> */}
         </View>
       </Drawer>
     </View>
@@ -1015,6 +1303,7 @@ const styles = StyleSheet.create({
   webview: {
     maxHeight: '100%',
     height: '100%',
+    // backgroundColor: '#A6B2C1', // debug
   },
   navigationBar: {
     maxHeight: '10%',
@@ -1033,17 +1322,9 @@ const styles = StyleSheet.create({
     maxWidth: '20%',
     height: '80%',
   },
-  pageNumber: {
-    flex: 1,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: '#D5C5B5', // debug
-    maxWidth: '25%',
-    height: '80%',
-  },
   sectionGroup: {
-    flexDirection: 'row',
+    display: 'flex',
+    flexDirection: 'column',
     height: 'auto',
     // width: "15%",
     marginTop: 10,
@@ -1055,37 +1336,50 @@ const styles = StyleSheet.create({
     // backgroundColor: '#C6C6C7', // debug
   },
   sectionButton: {
+    display: 'flex',
+    justifyContent: 'center',
     width: '90%',
     paddingHorizontal: 5,
-    paddingVertical: 8,
+    paddingVertical: 2,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'grey',
     // backgroundColor: '#A5A5A5', // debug
   },
   sectionButtonActive: {
-    backgroundColor: 'grey',
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: '#F0E1C3',
     width: '90%',
     paddingHorizontal: 5,
-    paddingVertical: 8,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'grey',
+    paddingVertical: 2,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
     // backgroundColor: '#A5A5A5', // debug
   },
   sectionButtonText: {
     fontSize: 16,
     color: 'grey',
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'right',
+    justifyContent: 'center',
   },
   sectionButtonTextActive: {
     fontSize: 16,
     color: 'white',
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'right',
+    justifyContent: 'center',
+  },
+  pageCompletedCounter: {
+    display: 'flex',
+    width: '100%',
+    paddingBottom: 5,
+  },
+  pageCompletedCounterText: {
+    textAlign: 'right',
+    paddingLeft: '5%',
+    fontSize: 16,
   },
   drawer: {
-    width: '20%',
+    width: '60%',
   },
 });
