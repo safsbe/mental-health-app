@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {router} from 'expo-router';
 import Goals from '@/components/Goals';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 const goalTitles = [
   'Break Bad Habits',
@@ -38,6 +39,12 @@ export default function Onboarding() {
     Array(6).fill(false),
   ); // Track selected goals
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+
+  async function lockApplicationPortrait() {
+    await ScreenOrientation.lockAsync(2);
+  }
+
+  lockApplicationPortrait();
 
   const handleSave = async () => {
     const selectedGoalTitles = goalTitles.filter(
@@ -67,7 +74,7 @@ export default function Onboarding() {
       );
       await AsyncStorage.setItem('authToken', 'guest'); // Moved from login page to here.
 
-      router.replace('/(tabs)'); // Navigate to tabs after saving
+      router.replace('/(drawer)/(tabs)'); // Navigate to tabs after saving
     } catch (error) {
       Alert.alert('Error', 'Failed to save data');
     }
