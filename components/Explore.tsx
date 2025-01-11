@@ -41,10 +41,7 @@ export default function Explore() {
           >
             Self Care
           </Text>
-          <Image
-            style={{flexGrow: 1}}
-            source={exploreImages.SelfCare} 
-          />
+          <Image style={{flexGrow: 1}} source={exploreImages.SelfCare} />
         </Pressable>
         <Pressable
           onPress={() =>
@@ -85,10 +82,7 @@ export default function Explore() {
           >
             About Mental Health
           </Text>
-          <Image 
-            style={{flexGrow: 1}}
-            source={exploreImages.MentalHealth} 
-          />
+          <Image style={{flexGrow: 1}} source={exploreImages.MentalHealth} />
         </Pressable>
         <Pressable
           onPress={() => router.push('/articles?category=storiesfromothers')}
