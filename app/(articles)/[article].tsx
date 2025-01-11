@@ -1053,30 +1053,46 @@ export default function ArticleView() {
             : styles.sectionButton
         }
       >
-        {
-          activePage > pageIndex ? (
-            <Octicons name="check" size={24} color="#27B600" />
-          ) : (
-            <Octicons
-              name="check"
-              size={24}
-              color="#ffffff"
-              style={{opacity: 0}}
-            />
-          ) // Hidden anyways
-        }
-        <Text
-          style={
-            activePage === pageIndex
-              ? styles.sectionButtonTextActive
-              : styles.sectionButtonText
-          }
-          // @ts-ignore
-          // onPress={() => router.navigate(`/thisarticle?category=${category}&title=${title}&page=${pageIndex}&id=${id}`)} style={styles.sectionTitleText}>{header}</Text>
-          onPress={() => ref.current?.setPageWithoutAnimation(pageIndex)}
+        <View
+          style={{
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'row',
+          }}
         >
-          {header}
-        </Text>
+          <Text
+            style={
+              activePage === pageIndex
+                ? styles.sectionButtonTextActive
+                : styles.sectionButtonText
+            }
+            // @ts-ignore
+            // onPress={() => router.navigate(`/thisarticle?category=${category}&title=${title}&page=${pageIndex}&id=${id}`)} style={styles.sectionTitleText}>{header}</Text>
+            onPress={() => ref.current?.setPageWithoutAnimation(pageIndex)}
+          >
+            {header}
+          </Text>
+          {
+            activePage > pageIndex ? (
+              <Octicons
+                name="check"
+                size={24}
+                color="#27B600"
+                style={{paddingTop: 5, paddingHorizontal: 20}}
+              />
+            ) : (
+              <Octicons
+                name="check"
+                size={24}
+                color="#ffffff"
+                style={{
+                  opacity: 0,
+                  paddingHorizontal: 20,
+                }}
+              />
+            ) // Hidden anyways
+          }
+        </View>
       </View>
     );
   }
@@ -1125,16 +1141,18 @@ export default function ArticleView() {
             <View
               style={{
                 display: 'flex',
-                flex: 1,
+                maxHeight: 10,
                 width: '100%',
                 borderTopWidth: 1,
                 borderColor: '#A5A5A5',
                 paddingVertical: 5,
-              }}
+                // backgroundColor: '#BBBBBB'
+              }} // For the black line separating the sections
             ></View>
             <View
               style={{
                 display: 'flex',
+                flex: 1,
                 flexDirection: 'column',
                 width: '100%',
                 alignItems: 'flex-start',
@@ -1146,19 +1164,45 @@ export default function ArticleView() {
                 categorySelectionHeaders[filterOption.collection].map(
                   (sectionTitle, index) => (
                     // @ts-ignore
-                    <Section
-                      header={sectionTitle}
-                      key={index}
-                      pageIndex={filterOption.header[index]}
-                    /> // For jumping to the right sections
+                    <View
+                      style={
+                        activePage === filterOption.header[index]
+                          ? styles.sectionContainerActive
+                          : styles.sectionContainer
+                      }
+                    >
+                      <Text
+                        style={{
+                          display: 'flex',
+                          fontSize: 18,
+                          fontWeight: 'bold',
+                          alignSelf: 'center',
+                          marginLeft: 15,
+                          marginRight: 10,
+                        }}
+                      >
+                        {index + 1}
+                      </Text>
+                      <Section
+                        header={sectionTitle}
+                        key={index}
+                        pageIndex={filterOption.header[index]}
+                      />
+                    </View> // For jumping to the right sections
                   ),
                 )
               }
-              <Section
-                header={'End'}
-                key={'end'}
-                pageIndex={articleList[+id].pages.length - 1}
-              />
+              <View
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  borderTopWidth: 1,
+                  borderColor: '#A5A5A5',
+                  paddingVertical: 5,
+                  marginTop: 10,
+                  // backgroundColor: '#BBBBBB'
+                }} // For the black line separating the sections
+              ></View>
             </View>
           </View>
         )}
@@ -1214,7 +1258,7 @@ export default function ArticleView() {
                   {/* <NewPageDisplay totalPages={articlePages} /> */}
                   <WebView
                     onShouldStartLoadWithRequest={request => {
-                      // console.log(request.url);
+                      console.log(request.url);
                       // alert(request.url); // Debugging
                       if (request.url.startsWith('internal://')) {
                         let linkAddress = request.url
@@ -1232,6 +1276,8 @@ export default function ArticleView() {
                       } else if (request.url.startsWith('tel:')) {
                         Linking.openURL(request.url);
                       } else if (request.url.startsWith('http://')) {
+                        return true;
+                      } else if (request.url.startsWith('file://')) {
                         return true;
                       } else {
                         return false;
@@ -1252,10 +1298,10 @@ export default function ArticleView() {
                     allowingReadAccessToURL="true"
                     allowFileAccessFromFileURLs={true}
                     allowUniversalAccessFromFileURLs={true}
-                    // source={
-                    //   Platform.OS === 'android' ? pageLinks[1] : pageLinks[0]
-                    // }
-                    source={pageLinks[0]} // Use this when prototyping to see immediate changes without rebuilding apk
+                    source={
+                      Platform.OS === 'android' ? pageLinks[1] : pageLinks[0]
+                    }
+                    // source={pageLinks[0]} // Use this when prototyping to see immediate changes without rebuilding apk
                     limitsNavigationsToAppBoundDomains={true}
                     useWebKit={true}
                     cacheEnabled={true}
@@ -1324,6 +1370,7 @@ const styles = StyleSheet.create({
   },
   sectionGroup: {
     display: 'flex',
+    flex: 1,
     flexDirection: 'column',
     height: 'auto',
     // width: "15%",
@@ -1335,39 +1382,60 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     // backgroundColor: '#C6C6C7', // debug
   },
+  sectionContainerActive: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    width: '100%',
+    maxHeight: 40,
+    alignItems: 'flex-end',
+    marginLeft: 10,
+    gap: 5,
+    backgroundColor: '#F0E1C3',
+    borderTopLeftRadius: 25,
+    borderBottomLeftRadius: 25,
+  },
+  sectionContainer: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    width: '100%',
+    maxHeight: 40,
+    alignItems: 'flex-end',
+    marginLeft: 10,
+    gap: 5,
+  },
   sectionButton: {
     display: 'flex',
+    flex: 1,
     justifyContent: 'center',
-    width: '90%',
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderRadius: 10,
+    alignContent: 'center',
     // backgroundColor: '#A5A5A5', // debug
   },
   sectionButtonActive: {
     display: 'flex',
+    flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#F0E1C3',
-    width: '90%',
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
+    alignContent: 'center',
     // backgroundColor: '#A5A5A5', // debug
   },
   sectionButtonText: {
+    display: 'flex',
+    flex: 1,
     fontSize: 16,
-    color: 'grey',
-    fontWeight: 'bold',
-    textAlign: 'right',
+    // fontWeight: 'bold',
+    textAlign: 'left',
     justifyContent: 'center',
+    alignSelf: 'center',
   },
   sectionButtonTextActive: {
+    display: 'flex',
+    flex: 1,
     fontSize: 16,
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'right',
+    // fontWeight: 'bold',
+    textAlign: 'left',
     justifyContent: 'center',
+    alignSelf: 'center',
   },
   pageCompletedCounter: {
     display: 'flex',
@@ -1375,7 +1443,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   pageCompletedCounterText: {
-    textAlign: 'right',
+    textAlign: 'left',
     paddingLeft: '5%',
     fontSize: 16,
   },

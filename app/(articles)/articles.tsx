@@ -25,67 +25,80 @@ export default function Articles() {
   const ArticleList = [
     {
       category: 'selfcare',
-      title: 'Mindful Pause',
+      titleLong: 'Mindful Pause',
+      titleShort: 'Mindful Pause',
       id: 0,
     },
     {
       category: 'selfcare',
-      title: 'Understanding Sleep',
+      titleLong: 'Understanding Sleep',
+      titleShort: 'Understanding Sleep',
       id: 1,
     },
     {
       category: 'selfcare',
-      title: 'Sleep Quality Checklist',
+      titleLong: 'Sleep Quality Checklist',
+      titleShort: 'Sleep Quality Checklist',
       id: 2,
     },
     {
       category: 'understandingyourself',
-      title: 'Know Your Personality Type',
+      titleLong: 'Know Your Personality Type',
+      titleShort: 'Personality Types',
       id: 3,
     },
     {
       category: 'understandingyourself',
-      title: 'Identify and Tame Your Emotions',
+      titleLong: 'Identify and Tame Your Emotions',
+      titleShort: 'Identify and Tame Emotions',
       id: 4,
     },
     {
       category: 'understandingyourself',
-      title: 'What is Attachment Style',
+      titleLong: 'What is Attachment Style',
+      titleShort: 'What is Attachment Style',
       id: 5,
     },
     {
       category: 'understandingyourself',
-      title: 'Distress Signs',
+      titleLong: 'Distress Signs',
+      titleShort: 'Distress Signs',
       id: 6,
     },
     {
       category: 'understandingyourself',
-      title: 'Eustress – Good Stress',
+      titleLong: 'Eustress – Good Stress',
+      titleShort: 'Eustress – Good Stress',
       id: 7,
     },
     {
       category: 'aboutmentalhealth',
-      title: 'Attention Deficit Hyperactivity Disorder (ADHD)',
+      titleLong: 'Attention Deficit Hyperactivity Disorder',
+      titleShort: 'ADHD',
       id: 8,
     },
     {
       category: 'aboutmentalhealth',
-      title: 'Autism Spectrum Disorder (ASD)',
+      titleLong: 'Autism Spectrum Disorder',
+      titleShort: 'ASD',
       id: 9,
     },
     {
       category: 'aboutmentalhealth',
-      title: 'Bipolar Disorder',
+      titleLong: 'Bipolar Disorder',
+      titleShort: 'Bipolar Disorder',
       id: 10,
     },
     {
       category: 'aboutmentalhealth',
-      title: 'What is Psychotherapy',
+      titleLong: 'What is Psychotherapy',
+      titleShort: 'What is Psychotherapy',
       id: 11,
     },
     {
       category: 'storiesfromothers',
-      title: 'Helplines',
+      titleLong: 'Helplines',
+      titleShort: 'Helplines',
       id: 12,
     },
   ];
@@ -115,10 +128,11 @@ export default function Articles() {
       />
       <View style={{gap: 10, marginTop: 20}}>
         {ArticleList.filter(x => x.category === category).map(
-          ({category, title, id}, index) => (
+          ({category, titleLong, titleShort, id}, index) => (
             <ArticleEntry
               category={category}
-              title={title}
+              titleLong={titleLong}
+              titleShort={titleShort}
               id={Number(id)}
               key={index}
             />
@@ -131,11 +145,13 @@ export default function Articles() {
 
 function ArticleEntry({
   category,
-  title,
+  titleLong,
+  titleShort,
   id,
 }: {
   category: string;
-  title: string;
+  titleLong: string;
+  titleShort: string;
   id: number;
 }) {
   const styles = StyleSheet.create({
@@ -162,12 +178,14 @@ function ArticleEntry({
     <Pressable
       onPress={() =>
         // @ts-ignore
-        router.push(`/thisarticle?category=${category}&title=${title}&id=${id}`)
+        router.push(
+          `/thisarticle?category=${category}&title=${titleShort}&id=${id}`,
+        )
       } // If it shows an error, ignore it - it works
       //onPress={() => console.log(`/thisarticle?category=${category}&title=${title}&id=${id}`)}
       style={styles.article}
     >
-      <Text style={styles.articleText}>{title}</Text>
+      <Text style={styles.articleText}>{titleLong}</Text>
     </Pressable>
   );
 }
