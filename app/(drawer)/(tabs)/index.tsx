@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     marginLeft: 5,
     marginRight: 5,
-    paddingTop: 5,
   },
   greeter: {
     color: '#765000',

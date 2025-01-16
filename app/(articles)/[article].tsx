@@ -54,8 +54,7 @@ export default function ArticleView() {
       articleName: 'mindfulpause',
       pages: [
         [
-          //require('../../assets/articleAssets/selfcare/mindfulpause/page1.html'),
-          require('@/assets/articleAssets/selfcare/mindfulpause/page1.html'),
+          require('@/assets/articleAssets/selfcare/mindfulpause/page1.html'), // does the @ work? idk need to test with compiled ver
           {
             uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page1.html',
           },
@@ -616,18 +615,6 @@ export default function ArticleView() {
             uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page10.html',
           },
         ],
-        [
-          require('../../assets/articleAssets/aboutmentalhealth/adhd/page11.html'),
-          {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page11.html',
-          },
-        ],
-        [
-          require('../../assets/articleAssets/aboutmentalhealth/adhd/page12.html'),
-          {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adhd/page12.html',
-          },
-        ],
       ],
     },
     {
@@ -1023,18 +1010,36 @@ export default function ArticleView() {
     return (
       <View
         style={{
+          display: 'flex',
+          flex: 1,
           flexDirection: 'row',
           justifyContent: 'center',
-          gap: 4,
+          alignSelf: 'center',
+          gap: 5,
           marginVertical: 15,
+          maxHeight: 10,
+          // backgroundColor: 'blue', // debug
+          maxWidth: '80%',
         }}
       >
         {[...Array(totalPages).keys()].map((e, key) => (
-          <View key={key}>
+          <View
+            key={key}
+            style={{
+              display: 'flex',
+              flex: 1,
+            }}
+          >
             {e <= activePage ? (
-              <Octicons name="dot-fill" size={20} color="#765000" />
+              <Pressable
+                style={{flex: 1, borderRadius: 100, backgroundColor: '#765000'}}
+                onPress={() => ref.current?.setPageWithoutAnimation(key)}
+              />
             ) : (
-              <Octicons name="dot-fill" size={20} color="#EEE5D4" />
+              <Pressable
+                style={{flex: 1, borderRadius: 100, backgroundColor: '#EEE5D4'}}
+                onPress={() => ref.current?.setPageWithoutAnimation(key)}
+              />
             )}
           </View>
         ))}
@@ -1255,7 +1260,6 @@ export default function ArticleView() {
                   }}
                   key={`${index + 1}`}
                 >
-                  {/* <NewPageDisplay totalPages={articlePages} /> */}
                   <WebView
                     onShouldStartLoadWithRequest={request => {
                       console.log(request.url);
@@ -1324,21 +1328,6 @@ export default function ArticleView() {
               ))
             }
           </PagerView>
-          {/* <View>
-            <View
-              style={{
-                backgroundColor: '#BBBBBB9E',
-                position: 'absolute',
-                top: 5,
-                right: 5,
-                zIndex: 3,
-                borderRadius: 5,
-                padding: 1,
-              }}
-            >
-              <Text style={{fontSize: 16}}>{pageDisplay}</Text>
-            </View>
-          </View> */}
         </View>
       </Drawer>
     </View>
