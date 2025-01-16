@@ -113,6 +113,18 @@ export default function ArticleView() {
             uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page10.html',
           },
         ],
+        [
+          require('../../assets/articleAssets/selfcare/mindfulpause/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page11.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/mindfulpause/page12.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/mindfulpause/page12.html',
+          },
+        ],
       ],
     },
     {
