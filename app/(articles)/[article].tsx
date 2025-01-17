@@ -190,6 +190,18 @@ export default function ArticleView() {
             uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page10.html',
           },
         ],
+        [
+          require('../../assets/articleAssets/selfcare/understandingsleep/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page10.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/understandingsleep/page12.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/understandingsleep/page12.html',
+          },
+        ],
       ],
     },
     {
@@ -925,6 +937,124 @@ export default function ArticleView() {
         ],
       ],
     },
+    {
+      articleName: 'selfcare',
+      pages: [
+        [
+          require('../../assets/articleAssets/selfcare/selfcare/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/selfcare/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/selfcare/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/selfcare/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/selfcare/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/selfcare/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/selfcare/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/selfcare/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/selfcare/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/selfcare/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/selfcare/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/selfcare/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/selfcare/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/selfcare/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/selfcare/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/selfcare/page8.html',
+          },
+        ],
+      ],
+    },
+    {
+      articleName: 'theartoftaskprioritisation',
+      pages: [
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/selfcare/theartoftaskprioritisation/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/selfcare/theartoftaskprioritisation/page10.html',
+          },
+        ],
+      ],
+    },
   ];
 
   const categorySelectionHeaders = {
@@ -944,7 +1074,12 @@ export default function ArticleView() {
     {
       id: 0, // Mindful Pause
       collection: 'selfcare',
-      header: [0, 2, 4], // page numbers for respective sections listed above @ categorySelectionHeaders
+      header: [0, 1, 4], // page numbers for respective sections listed above @ categorySelectionHeaders
+    },
+    {
+      id: 13, // Self Care'
+      collection: 'selfcare',
+      header: [0, 1, 5],
     },
     {
       id: 1, // Understanding Sleep
@@ -954,7 +1089,12 @@ export default function ArticleView() {
     {
       id: 2, // Sleep Quality Checklist
       collection: 'selfcare',
-      header: [0],
+      header: [-1, -1, -1],
+    },
+    {
+      id: 14, // The Art of Task Prioritisation
+      collection: 'selfcare',
+      header: [0, 1, 4],
     },
     {
       id: 3, // Know Your Personality Type

@@ -31,6 +31,12 @@ export default function Articles() {
     },
     {
       category: 'selfcare',
+      titleLong: 'Self Care',
+      titleShort: 'Self Care',
+      id: 13,
+    },
+    {
+      category: 'selfcare',
       titleLong: 'Understanding Sleep',
       titleShort: 'Understanding Sleep',
       id: 1,
@@ -40,6 +46,12 @@ export default function Articles() {
       titleLong: 'Sleep Quality Checklist',
       titleShort: 'Sleep Quality Checklist',
       id: 2,
+    },
+    {
+      category: 'selfcare',
+      titleLong: 'The Art of Task Prioritisation',
+      titleShort: 'Task Prioritisation',
+      id: 14,
     },
     {
       category: 'understandingyourself',
