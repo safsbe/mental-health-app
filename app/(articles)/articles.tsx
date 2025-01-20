@@ -24,61 +24,61 @@ export default function Articles() {
 
   const ArticleList = [
     {
-      category: 'selfcare',
+      category: 'selfhelp',
       titleLong: 'Mindful Pause',
       titleShort: 'Mindful Pause',
       id: 0,
     },
     {
-      category: 'selfcare',
+      category: 'selfhelp',
       titleLong: 'Self Care',
       titleShort: 'Self Care',
       id: 13,
     },
     {
-      category: 'selfcare',
+      category: 'selfhelp',
       titleLong: 'Understanding Sleep',
       titleShort: 'Understanding Sleep',
       id: 1,
     },
     {
-      category: 'selfcare',
+      category: 'selfhelp',
       titleLong: 'Sleep Quality Checklist',
       titleShort: 'Sleep Quality Checklist',
       id: 2,
     },
     {
-      category: 'selfcare',
+      category: 'selfhelp',
       titleLong: 'The Art of Task Prioritisation',
       titleShort: 'Task Prioritisation',
       id: 14,
     },
     {
-      category: 'understandingyourself',
-      titleLong: 'Know Your Personality Type',
-      titleShort: 'Personality Types',
+      category: 'aboutself',
+      titleLong: 'Know Your Personality',
+      titleShort: 'Know Your Personality',
       id: 3,
     },
     {
-      category: 'understandingyourself',
+      category: 'aboutself',
       titleLong: 'Identify and Tame Your Emotions',
       titleShort: 'Identify and Tame Emotions',
       id: 4,
     },
     {
-      category: 'understandingyourself',
+      category: 'aboutself',
       titleLong: 'What is Attachment Style',
       titleShort: 'What is Attachment Style',
       id: 5,
     },
     {
-      category: 'understandingyourself',
+      category: 'aboutself',
       titleLong: 'Distress Signs',
       titleShort: 'Distress Signs',
       id: 6,
     },
     {
-      category: 'understandingyourself',
+      category: 'aboutself',
       titleLong: 'Eustress – Good Stress',
       titleShort: 'Eustress – Good Stress',
       id: 7,
@@ -116,8 +116,8 @@ export default function Articles() {
   ];
 
   const categories = {
-    selfcare: 'About Self-Care',
-    understandingyourself: 'Understanding Yourself',
+    selfhelp: 'About Self-Care',
+    aboutself: 'Understanding Yourself',
     aboutmentalhealth: 'About Mental Health',
     storiesfromothers: 'Stories From Others',
   };
