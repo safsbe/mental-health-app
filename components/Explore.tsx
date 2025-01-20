@@ -4,8 +4,8 @@ import {Image} from 'expo-image';
 
 export default function Explore() {
   const exploreImages = {
-    SelfCare: require('../assets/explore-categories/self.svg'),
-    UnderstandingYourself: require('../assets/explore-categories/understanding_yourself.svg'),
+    selfhelp: require('../assets/explore-categories/self.svg'),
+    aboutself: require('../assets/explore-categories/understanding_yourself.svg'),
     MentalHealth: require('../assets/explore-categories/mental_health.svg'),
     StoriesFromOthers: require('../assets/explore-categories/others.svg'),
   };
@@ -27,7 +27,7 @@ export default function Explore() {
     <View style={styles.exploreColumn}>
       <View style={styles.exploreRow}>
         <Pressable
-          onPress={() => router.push('/articles?category=selfcare')}
+          onPress={() => router.push('/articles?category=selfhelp')}
           style={{
             flex: 1,
             flexDirection: 'column',
@@ -39,14 +39,12 @@ export default function Explore() {
           <Text
             style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
           >
-            Self Care
+            About Self Help
           </Text>
-          <Image style={{flexGrow: 1}} source={exploreImages.SelfCare} />
+          <Image style={{flexGrow: 1}} source={exploreImages.selfhelp} />
         </Pressable>
         <Pressable
-          onPress={() =>
-            router.push('/articles?category=understandingyourself')
-          }
+          onPress={() => router.push('/articles?category=aboutself')}
           style={{
             flex: 1,
             flexDirection: 'column',
@@ -58,12 +56,9 @@ export default function Explore() {
           <Text
             style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
           >
-            Understanding Yourself
+            About Self
           </Text>
-          <Image
-            style={{flexGrow: 1}}
-            source={exploreImages.UnderstandingYourself}
-          />
+          <Image style={{flexGrow: 1}} source={exploreImages.aboutself} />
         </Pressable>
       </View>
       <View style={styles.exploreRow}>
