@@ -62,7 +62,7 @@ export default function Articles() {
     {
       category: 'aboutself',
       titleLong: 'Identify and Tame Your Emotions',
-      titleShort: 'Identify and Tame Emotions',
+      titleShort: 'Identify and Tame Emotion',
       id: 4,
     },
     {

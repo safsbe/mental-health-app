@@ -355,6 +355,18 @@ export default function ArticleView() {
             uri: 'file:///android_asset/articleAssets/aboutself/identifytameemotions/page10.html',
           },
         ],
+        [
+          require('../../assets/articleAssets/aboutself/identifytameemotions/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutself/identifytameemotions/page11.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutself/identifytameemotions/page12.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutself/identifytameemotions/page12.html',
+          },
+        ],
       ],
     },
     {
@@ -432,12 +444,6 @@ export default function ArticleView() {
             uri: 'file:///android_asset/articleAssets/aboutself/attachmentstyle/page12.html',
           },
         ],
-        [
-          require('../../assets/articleAssets/aboutself/attachmentstyle/page13.html'),
-          {
-            uri: 'file:///android_asset/articleAssets/aboutself/attachmentstyle/page13.html',
-          },
-        ],
       ],
     },
     {
@@ -501,6 +507,12 @@ export default function ArticleView() {
           require('../../assets/articleAssets/aboutself/distresssigns/page10.html'),
           {
             uri: 'file:///android_asset/articleAssets/aboutself/distresssigns/page10.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutself/distresssigns/page11.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutself/distresssigns/page11.html',
           },
         ],
       ],
@@ -1110,7 +1122,7 @@ export default function ArticleView() {
     {
       id: 4, // Identify and Tame Your Emotions
       collection: 'aboutself',
-      header: [0, 1, 4],
+      header: [0, 1, 5],
     },
     {
       id: 5, // What is Attachment Style
