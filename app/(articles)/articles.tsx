@@ -103,6 +103,12 @@ export default function Articles() {
     },
     {
       category: 'aboutmentalhealth',
+      titleLong: 'Depression',
+      titleShort: 'Depression',
+      id: 16,
+    },
+    {
+      category: 'aboutmentalhealth',
       titleLong: 'Anxiety',
       titleShort: 'Anxiety',
       id: 15,
