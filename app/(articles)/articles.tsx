@@ -103,6 +103,12 @@ export default function Articles() {
     },
     {
       category: 'aboutmentalhealth',
+      titleLong: 'Anxiety',
+      titleShort: 'Anxiety',
+      id: 15,
+    },
+    {
+      category: 'aboutmentalhealth',
       titleLong: 'What is Psychotherapy',
       titleShort: 'What is Psychotherapy',
       id: 11,
