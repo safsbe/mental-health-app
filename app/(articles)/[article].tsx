@@ -722,12 +722,6 @@ export default function ArticleView() {
             uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page10.html',
           },
         ],
-        [
-          require('../../assets/articleAssets/aboutmentalhealth/asd/page11.html'),
-          {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/asd/page11.html',
-          },
-        ],
       ],
     },
     {
@@ -1212,7 +1206,7 @@ export default function ArticleView() {
     {
       id: 9, // ASD
       collection: 'aboutmentalhealth',
-      header: [0],
+      header: [0, 1, 5, 6, 8],
     },
     {
       id: 10, // Bipolar
@@ -1510,15 +1504,18 @@ export default function ArticleView() {
                           .replaceAll('%20', ' ');
                         console.log(linkAddress);
                         if (linkAddress.startsWith('/thisarticle')) {
-                          router.push(linkAddress as Href<string>);
+                          router.replace(linkAddress as Href<string>);
+                          // previously set to router.push but that creates errors when returning
                         } else {
                           // changeToPortraitOrientation();
                           router.replace(linkAddress as Href<string>);
                         }
                       } else if (request.url.startsWith('https://')) {
                         Linking.openURL(request.url);
+                        return false; // makes sure it doesnt open embedded in the app
                       } else if (request.url.startsWith('tel:')) {
                         Linking.openURL(request.url);
+                        return false;
                       } else if (request.url.startsWith('http://')) {
                         return true;
                       } else if (request.url.startsWith('file://')) {
