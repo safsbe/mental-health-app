@@ -1126,6 +1126,59 @@ export default function ArticleView() {
         ],
       ],
     },
+    {
+      articleName: 'anxiety',
+      pages: [
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/depression/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/depression/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/depression/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/depression/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/depression/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/depression/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/depression/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/depression/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/depression/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/depression/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/depression/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/depression/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/depression/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/depression/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/depression/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/depression/page8.html',
+          },
+        ],
+      ],
+    },
   ];
 
   const categorySelectionHeaders = {
@@ -1206,6 +1259,11 @@ export default function ArticleView() {
       id: 10, // Bipolar
       collection: 'aboutmentalhealth',
       header: [0, 1, 4, 6, 7],
+    },
+    {
+      id: 16, // Depression
+      collection: 'aboutmentalhealth',
+      header: [0, 1, 3, 4, 5],
     },
     {
       id: 15, // Anxiety
