@@ -1073,6 +1073,71 @@ export default function ArticleView() {
         ],
       ],
     },
+    {
+      articleName: 'anxiety',
+      pages: [
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/anxiety/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/anxiety/page10.html',
+          },
+        ],
+      ],
+    },
   ];
 
   const categorySelectionHeaders = {
@@ -1147,22 +1212,27 @@ export default function ArticleView() {
     {
       id: 9, // ASD
       collection: 'aboutmentalhealth',
-      header: [],
+      header: [0],
     },
     {
       id: 10, // Bipolar
       collection: 'aboutmentalhealth',
-      header: [],
+      header: [0],
+    },
+    {
+      id: 15, // Anxiety
+      collection: 'aboutmentalhealth',
+      header: [0, 1, 4, 6, 7],
     },
     {
       id: 11, // What is Psychotherapy
       collection: 'aboutmentalhealth',
-      header: [],
+      header: [0],
     },
     {
       id: 12, // Helplines
       collection: 'storiesfromothers',
-      header: [],
+      header: [0],
     },
   ];
 
