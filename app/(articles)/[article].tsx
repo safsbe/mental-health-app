@@ -781,12 +781,6 @@ export default function ArticleView() {
             uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page9.html',
           },
         ],
-        [
-          require('../../assets/articleAssets/aboutmentalhealth/bipolar/page10.html'),
-          {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/bipolar/page10.html',
-          },
-        ],
       ],
     },
     {
@@ -1211,7 +1205,7 @@ export default function ArticleView() {
     {
       id: 10, // Bipolar
       collection: 'aboutmentalhealth',
-      header: [0],
+      header: [0, 1, 4, 6, 7],
     },
     {
       id: 15, // Anxiety
