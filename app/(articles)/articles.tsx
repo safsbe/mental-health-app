@@ -115,6 +115,18 @@ export default function Articles() {
     },
     {
       category: 'aboutmentalhealth',
+      titleLong: 'Adjustment',
+      titleShort: 'Adjustment',
+      id: 17,
+    },
+    {
+      category: 'aboutmentalhealth',
+      titleLong: 'Obsessive Compulsive Disorder (OCD)',
+      titleShort: 'OCD',
+      id: 18,
+    },
+    {
+      category: 'aboutmentalhealth',
       titleLong: 'What is Psychotherapy',
       titleShort: 'What is Psychotherapy',
       id: 11,

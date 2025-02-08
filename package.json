@@ -1,7 +1,7 @@
 {
   "name": "@safsbe/mental-health-app",
   "main": "expo-router/entry",
-  "version": "0.1.0",
+  "version": "0.7.2",
   "scripts": {
     "prepare": "husky",
     "reset-project": "node ./scripts/reset-project.js",
