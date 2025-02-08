@@ -1179,6 +1179,136 @@ export default function ArticleView() {
         ],
       ],
     },
+    {
+      articleName: 'adjustment',
+      pages: [
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/adjustment/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/adjustment/page10.html',
+          },
+        ],
+      ],
+    },
+    {
+      articleName: 'ocd',
+      pages: [
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page8.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page9.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/ocd/page10.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/ocd/page10.html',
+          },
+        ],
+      ],
+    },
   ];
 
   const categorySelectionHeaders = {
@@ -1269,6 +1399,16 @@ export default function ArticleView() {
       id: 15, // Anxiety
       collection: 'aboutmentalhealth',
       header: [0, 1, 4, 6, 7],
+    },
+    {
+      id: 17, // Adjustment
+      collection: 'aboutmentalhealth',
+      header: [0, 1, 4, 5, 6],
+    },
+    {
+      id: 18, // OCD
+      collection: 'aboutmentalhealth',
+      header: [0, 1, 3, 6, 7],
     },
     {
       id: 11, // What is Psychotherapy
