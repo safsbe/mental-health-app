@@ -54,6 +54,12 @@ export default function Articles() {
       id: 14,
     },
     {
+      category: 'selfhelp',
+      titleLong: 'What is Psychotherapy',
+      titleShort: 'What is Psychotherapy',
+      id: 11,
+    },
+    {
       category: 'aboutself',
       titleLong: 'Know Your Personality',
       titleShort: 'Know Your Personality',
@@ -124,12 +130,6 @@ export default function Articles() {
       titleLong: 'Obsessive Compulsive Disorder (OCD)',
       titleShort: 'OCD',
       id: 18,
-    },
-    {
-      category: 'aboutmentalhealth',
-      titleLong: 'What is Psychotherapy',
-      titleShort: 'What is Psychotherapy',
-      id: 11,
     },
     {
       category: 'others',

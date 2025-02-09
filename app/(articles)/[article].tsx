@@ -787,81 +787,63 @@ export default function ArticleView() {
       articleName: 'whatispsychotherapy',
       pages: [
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page1.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page1.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page1.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page1.html',
           },
         ],
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page2.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page2.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page2.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page2.html',
           },
         ],
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page3.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page3.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page3.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page3.html',
           },
         ],
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page4.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page4.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page4.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page4.html',
           },
         ],
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page5.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page5.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page5.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page5.html',
           },
         ],
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page6.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page6.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page6.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page6.html',
           },
         ],
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page7.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page7.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page7.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page7.html',
           },
         ],
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page8.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page8.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page8.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page8.html',
           },
         ],
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page9.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page9.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page9.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page9.html',
           },
         ],
         [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page10.html'),
+          require('../../assets/articleAssets/selfhelp/whatispsychotherapy/page10.html'),
           {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page10.html',
-          },
-        ],
-        [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page11.html'),
-          {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page11.html',
-          },
-        ],
-        [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page12.html'),
-          {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page12.html',
-          },
-        ],
-        [
-          require('../../assets/articleAssets/aboutmentalhealth/whatispsychotherapy/page13.html'),
-          {
-            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/whatispsychotherapy/page13.html',
+            uri: 'file:///android_asset/articleAssets/selfhelp/whatispsychotherapy/page10.html',
           },
         ],
       ],
@@ -1351,6 +1333,11 @@ export default function ArticleView() {
       header: [0, 1, 4],
     },
     {
+      id: 11, // What is Psychotherapy
+      collection: 'selfhelp',
+      header: [0, 1, 8],
+    },
+    {
       id: 3, // Know Your Personality Type
       collection: 'aboutself',
       header: [0, 1, 7],
@@ -1409,11 +1396,6 @@ export default function ArticleView() {
       id: 18, // OCD
       collection: 'aboutmentalhealth',
       header: [0, 1, 3, 6, 7],
-    },
-    {
-      id: 11, // What is Psychotherapy
-      collection: 'aboutmentalhealth',
-      header: [0],
     },
     {
       id: 12, // Helplines
