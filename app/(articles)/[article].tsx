@@ -1291,6 +1291,59 @@ export default function ArticleView() {
         ],
       ],
     },
+    {
+      articleName: 'whatisburnout',
+      pages: [
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/burnout/page1.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page1.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/burnout/page2.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page2.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/burnout/page3.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page3.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/burnout/page4.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page4.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/burnout/page5.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page5.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/burnout/page6.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page6.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/burnout/page7.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page7.html',
+          },
+        ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/burnout/page8.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page8.html',
+          },
+        ],
+      ],
+    },
   ];
 
   const categorySelectionHeaders = {
@@ -1396,6 +1449,11 @@ export default function ArticleView() {
       id: 18, // OCD
       collection: 'aboutmentalhealth',
       header: [0, 1, 3, 6, 7],
+    },
+    {
+      id: 19, // What is Burnout
+      collection: 'aboutmentalhealth',
+      header: [0, 1, 2, 4, 6],
     },
     {
       id: 12, // Helplines
