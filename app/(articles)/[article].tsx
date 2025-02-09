@@ -870,75 +870,75 @@ export default function ArticleView() {
       articleName: 'helplines',
       pages: [
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page1.html'),
+          require('../../assets/articleAssets/others/helplines/page1.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page1.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page1.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page2.html'),
+          require('../../assets/articleAssets/others/helplines/page2.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page2.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page2.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page3.html'),
+          require('../../assets/articleAssets/others/helplines/page3.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page3.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page3.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page4.html'),
+          require('../../assets/articleAssets/others/helplines/page4.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page4.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page4.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page5.html'),
+          require('../../assets/articleAssets/others/helplines/page5.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page5.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page5.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page6.html'),
+          require('../../assets/articleAssets/others/helplines/page6.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page6.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page6.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page7.html'),
+          require('../../assets/articleAssets/others/helplines/page7.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page7.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page7.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page8.html'),
+          require('../../assets/articleAssets/others/helplines/page8.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page8.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page8.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page9.html'),
+          require('../../assets/articleAssets/others/helplines/page9.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page9.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page9.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page10.html'),
+          require('../../assets/articleAssets/others/helplines/page10.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page10.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page10.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page11.html'),
+          require('../../assets/articleAssets/others/helplines/page11.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page11.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page11.html',
           },
         ],
         [
-          require('../../assets/articleAssets/storiesfromothers/helplines/page12.html'),
+          require('../../assets/articleAssets/others/helplines/page12.html'),
           {
-            uri: 'file:///android_asset/articleAssets/storiesfromothers/helplines/page12.html',
+            uri: 'file:///android_asset/articleAssets/others/helplines/page12.html',
           },
         ],
       ],
@@ -1321,7 +1321,7 @@ export default function ArticleView() {
       'Impact on NS',
       'Treatment',
     ],
-    storiesfromothers: ['TL:DR'],
+    others: ['TL:DR'],
   };
 
   const articleSectionPageNumbers = [
@@ -1417,7 +1417,7 @@ export default function ArticleView() {
     },
     {
       id: 12, // Helplines
-      collection: 'storiesfromothers',
+      collection: 'others',
       header: [0],
     },
   ];

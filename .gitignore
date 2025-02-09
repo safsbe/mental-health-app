@@ -16,6 +16,7 @@ npm-debug.*
 web-build/
 android/
 ios/
+.eslintcache
 # macOS
 .DS_Store
 .vscode
