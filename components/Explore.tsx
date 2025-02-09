@@ -7,7 +7,7 @@ export default function Explore() {
     selfhelp: require('../assets/explore-categories/self.svg'),
     aboutself: require('../assets/explore-categories/understanding_yourself.svg'),
     MentalHealth: require('../assets/explore-categories/mental_health.svg'),
-    StoriesFromOthers: require('../assets/explore-categories/others.svg'),
+    others: require('../assets/explore-categories/others.svg'),
   };
 
   const styles = StyleSheet.create({
@@ -80,7 +80,7 @@ export default function Explore() {
           <Image style={{flexGrow: 1}} source={exploreImages.MentalHealth} />
         </Pressable>
         <Pressable
-          onPress={() => router.push('/articles?category=storiesfromothers')}
+          onPress={() => router.push('/articles?category=others')}
           style={{
             flex: 1,
             flexDirection: 'column',
@@ -92,12 +92,9 @@ export default function Explore() {
           <Text
             style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
           >
-            Stories From Others
+            Others
           </Text>
-          <Image
-            style={{flexGrow: 1}}
-            source={exploreImages.StoriesFromOthers}
-          />
+          <Image style={{flexGrow: 1}} source={exploreImages.others} />
         </Pressable>
       </View>
     </View>

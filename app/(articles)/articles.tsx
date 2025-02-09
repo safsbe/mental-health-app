@@ -132,7 +132,7 @@ export default function Articles() {
       id: 11,
     },
     {
-      category: 'storiesfromothers',
+      category: 'others',
       titleLong: 'Helplines',
       titleShort: 'Helplines',
       id: 12,
@@ -140,10 +140,10 @@ export default function Articles() {
   ];
 
   const categories = {
-    selfhelp: 'About Self-Care',
-    aboutself: 'Understanding Yourself',
+    selfhelp: 'About Self Help',
+    aboutself: 'About Self',
     aboutmentalhealth: 'About Mental Health',
-    storiesfromothers: 'Stories From Others',
+    others: 'Others',
   };
 
   return (
