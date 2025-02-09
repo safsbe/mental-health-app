@@ -132,6 +132,12 @@ export default function Articles() {
       id: 18,
     },
     {
+      category: 'aboutmentalhealth',
+      titleLong: 'What is Burnout',
+      titleShort: 'What is Burnout',
+      id: 19,
+    },
+    {
       category: 'others',
       titleLong: 'Helplines',
       titleShort: 'Helplines',
