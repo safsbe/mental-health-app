@@ -111,7 +111,7 @@ export default function SOSScreen() {
       {/* Contact Card for SOS*/}
       <ContactCard
         organisation="Samaritans of Singapore"
-        phoneNumber="63892222"
+        phoneNumber="1767"
         details="24/7Hrs"
         mode="flat"
       />

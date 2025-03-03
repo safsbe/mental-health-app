@@ -17,12 +17,14 @@ export default function ResourcesScreen() {
         title="CSSCOM Well-Being"
         description="Join our Telegram channel for a daily mental well-being boost"
         backgroundColor="#DEF7E5"
+        link="http://go.gov.sg/wbc"
       />
       <TelegramCard
         image={require('../../../assets/resources_tab/mindline_sg.svg')} //
         title="Mindline.sg"
         description="Current tips to cope ina competitive environment"
         backgroundColor="#DDF1FE"
+        link="https://t.me/letstalkbymindline"
       />
       {/* <Text style={styles.smallText}>Useful Contacts</Text>
       <ContactCard
