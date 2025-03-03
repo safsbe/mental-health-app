@@ -1,12 +1,14 @@
 import {Image} from 'expo-image';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesome} from '@expo/vector-icons'; // For Telegram icon
+import {Href, router} from 'expo-router';
 
 type TelegramCardProps = {
   image: {uri: string};
   title: string;
   description: string;
   backgroundColor: string;
+  link: string;
 };
 
 function TelegramCard({
@@ -14,9 +16,13 @@ function TelegramCard({
   title,
   description,
   backgroundColor = '#9BD8AC',
+  link,
 }: TelegramCardProps) {
   return (
-    <View style={[styles.card, {backgroundColor}]}>
+    <TouchableOpacity
+      style={[styles.card, {backgroundColor}]}
+      onPress={() => router.push(link as Href<string>)}
+    >
       {/* Image on the left */}
       <Image source={image} style={styles.image} />
 
@@ -32,7 +38,7 @@ function TelegramCard({
       <TouchableOpacity style={styles.telegramIcon}>
         <FontAwesome name="telegram" size={28} />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 }
 
