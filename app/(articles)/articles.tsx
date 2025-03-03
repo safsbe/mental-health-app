@@ -204,9 +204,10 @@ function ArticleEntry({
       overflow: 'hidden',
       marginLeft: 20,
       marginRight: 20,
+      paddingVertical: 6,
       alignItems: 'center',
       justifyContent: 'center',
-      height: 32,
+      height: 'auto',
       backgroundColor: 'white',
     },
     articleText: {
