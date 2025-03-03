@@ -37,7 +37,7 @@ export default function Index() {
           <Text style={styles.greeter}>Hey, {name}!</Text>
         </Pressable>
         <DiaryHero />
-        <Section title="Quote of the Day">
+        <Section title="Recommended Read">
           <Quote />
         </Section>
         <Section title="Activities">
