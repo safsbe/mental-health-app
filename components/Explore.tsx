@@ -37,7 +37,7 @@ export default function Explore() {
           }}
         >
           <Text
-            style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
+            style={{textAlign: 'center', fontWeight: 'bold', color: '#2A4E4C'}}
           >
             About Self Help
           </Text>
@@ -54,7 +54,7 @@ export default function Explore() {
           }}
         >
           <Text
-            style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
+            style={{textAlign: 'center', fontWeight: 'bold', color: '#2A4E4C'}}
           >
             About Self
           </Text>
@@ -73,7 +73,7 @@ export default function Explore() {
           }}
         >
           <Text
-            style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
+            style={{textAlign: 'center', fontWeight: 'bold', color: '#2A4E4C'}}
           >
             About Mental Health
           </Text>
@@ -90,7 +90,7 @@ export default function Explore() {
           }}
         >
           <Text
-            style={{textAlign: 'right', fontWeight: 'bold', color: '#2A4E4C'}}
+            style={{textAlign: 'center', fontWeight: 'bold', color: '#2A4E4C'}}
           >
             Others
           </Text>
