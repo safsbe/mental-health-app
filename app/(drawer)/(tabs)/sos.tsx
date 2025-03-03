@@ -116,14 +116,6 @@ export default function SOSScreen() {
         mode="flat"
       />
 
-      {/* Contact Card for NCH*/}
-      <ContactCard
-        organisation="National Care Helpline"
-        phoneNumber="+1800 202 6868"
-        details="Daily 8am-12am"
-        mode="flat"
-      />
-
       {/* Contact Card for SRS*/}
       <ContactCard
         organisation="Silver Ribbon Singapore"
@@ -132,7 +124,7 @@ export default function SOSScreen() {
         mode="flat"
       />
 
-      <Text style={styles.leftText}>Services Helpline</Text>
+      <Text style={styles.leftText}>Services' Counselling Helpline</Text>
 
       <ContactCard
         organisation="Singapore Armed Forces"

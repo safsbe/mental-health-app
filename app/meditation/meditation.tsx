@@ -188,6 +188,9 @@ export default function Meditation() {
         </View>
         <View style={styles.subtextContainer}>
           <View style={styles.subtextItem}>
+            <Text style={styles.subtextHeader}>Possible Benefits</Text>
+          </View>
+          <View style={styles.subtextItem}>
             <Image
               source={require('../../assets/meditation/icons/reduce_stress.svg')}
             />
@@ -273,6 +276,13 @@ const styles = StyleSheet.create({
   },
   subtextItem: {
     alignItems: 'stretch',
+  },
+  subtextHeader: {
+    color: '#A5A5A5',
+    fontSize: 20,
+    lineHeight: 20,
+    paddingVertical: 4,
+    textDecorationLine: 'underline',
   },
   subtext: {
     color: '#A5A5A5',

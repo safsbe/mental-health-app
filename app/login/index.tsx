@@ -45,7 +45,7 @@ export default function Login() {
             source={require('../../assets/auth/hero_graphic.gif')}
           />
           <Text style={{textAlign: 'center'}}>
-            For when you are feeling something...
+            For when you are in need of mental health support
           </Text>
           <View style={styles.authOptions}>
             <Text
@@ -63,7 +63,11 @@ export default function Login() {
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text>No account? </Text>
-            <Text style={styles.signUp} onPress={() => router.push('/signup')}>
+            <Text
+              style={styles.signUp}
+              // onPress={() => router.push('/signup')} // Replace with proper link once its been set up
+              onPress={() => console.log('')}
+            >
               Sign up
             </Text>
           </View>
