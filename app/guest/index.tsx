@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -7,38 +7,21 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import {router} from 'expo-router';
-import Goals from '@/components/Goals';
+import {router, Stack} from 'expo-router';
 import * as ScreenOrientation from 'expo-screen-orientation';
-
-const goalTitles = [
-  'Break Bad Habits',
-  'Learn More',
-  'Keep Calm',
-  'Form Good Habits',
-  'Manage Stress',
-  'Journalling',
-];
-const goalImage = require('../../assets/placeholders/400x400.svg');
-const goalImages = [
-  goalImage,
-  goalImage,
-  goalImage,
-  goalImage,
-  goalImage,
-  goalImage,
-];
+import {HeaderBackButton} from '@react-navigation/elements';
+import RNPickerSelect from 'react-native-picker-select';
 
 export default function Onboarding() {
   const [alias, setAlias] = useState<string>('');
-  const [dob, setDob] = useState<Date>(new Date());
-  const [selectedGoals, setSelectedGoals] = useState<boolean[]>(
-    Array(6).fill(false),
-  ); // Track selected goals
-  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+  const [purpose, setPurpose] = useState<string>('');
+  const [appKnowledge, setAppKnowledge] = useState<string>('');
+  const pickerRef1 = useRef();
+  const pickerRef2 = useRef();
+  const [testState, setTestState] = useState<string>('');
 
   async function lockApplicationPortrait() {
     await ScreenOrientation.lockAsync(2);
@@ -47,14 +30,7 @@ export default function Onboarding() {
   lockApplicationPortrait();
 
   const handleSave = async () => {
-    const selectedGoalTitles = goalTitles.filter(
-      (_, index) => selectedGoals[index],
-    );
-    const selectedGoalImages = goalImages.filter(
-      (_, index) => selectedGoals[index],
-    );
-
-    if (!alias || !dob || selectedGoalTitles.length === 0) {
+    if (!alias || !purpose) {
       Alert.alert(
         'Error',
         'Please fill all fields and select at least one goal',
@@ -64,14 +40,8 @@ export default function Onboarding() {
 
     try {
       await AsyncStorage.setItem('alias', alias);
-      await AsyncStorage.setItem('dob', dob.toISOString());
-      await AsyncStorage.setItem(
-        'goals',
-        JSON.stringify({
-          titles: selectedGoalTitles,
-          images: selectedGoalImages,
-        }),
-      );
+      await AsyncStorage.setItem('purpose', purpose);
+      await AsyncStorage.setItem('appKnowledge', appKnowledge);
       await AsyncStorage.setItem('authToken', 'guest'); // Moved from login page to here.
 
       router.replace('/(drawer)/(tabs)'); // Navigate to tabs after saving
@@ -80,59 +50,105 @@ export default function Onboarding() {
     }
   };
 
-  const handleGoalSelect = (index: number) => {
-    const updatedSelectedGoals = [...selectedGoals];
-    updatedSelectedGoals[index] = !updatedSelectedGoals[index]; // Toggle goal selection
-    setSelectedGoals(updatedSelectedGoals);
-  };
+  function resetInputs() {
+    // This function strategically breaks something to reset the dropdowns and clear their options (I think)
+
+    // @ts-ignore
+    pickerRef1.current.state.selectedItem = pickerRef1.current.state.items[0];
+    // @ts-ignore
+    pickerRef2.current.state.selectedItem = pickerRef2.current.state.items[0];
+
+    setAlias('');
+
+    // console.log(pickerRef1.current.state.selectedItem);
+
+    // @ts-ignore
+    setTestState(pickerRef1.current.state);
+    // @ts-ignore
+    setTestState(pickerRef2.current.state);
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcomeText}>Welcome! Let's get to know you</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your name"
-        value={alias}
-        onChangeText={setAlias}
+    <ScrollView>
+      <Stack.Screen
+        options={{
+          // @ts-ignore
+          title: 'Continue As Guest',
+          headerTitleStyle: {fontWeight: 'bold'},
+          headerLeft: props => (
+            <HeaderBackButton
+              {...props}
+              // @ts-ignore
+              onPress={() => router.back()}
+            />
+          ),
+        }}
       />
+      <View style={styles.container}>
+        <Text style={styles.welcomeText}>Welcome! Let's get to know you</Text>
 
-      <TouchableOpacity
-        onPress={() => setShowDatePicker(true)}
-        style={styles.datePicker}
-      >
-        <Text>{dob ? dob.toDateString() : 'Select Date of Birth'}</Text>
-      </TouchableOpacity>
+        <Text style={styles.questionText}>1. What should we call you?</Text>
 
-      {showDatePicker && (
-        <DateTimePicker
-          value={dob}
-          mode="date"
-          display="default"
-          onChange={(event, selectedDate) => {
-            setShowDatePicker(false);
-            if (selectedDate) {
-              setDob(selectedDate);
-            }
-          }}
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your name / alias"
+          value={alias}
+          onChangeText={setAlias}
         />
-      )}
 
-      {/* Goals Components */}
-      <View style={styles.goalsContainer}>
-        {goalTitles.map((title, index) => (
-          <Goals
-            key={index}
-            title={title}
-            image={goalImages[index]}
-            isSelected={selectedGoals[index]}
-            onSelect={() => handleGoalSelect(index)}
+        <Text style={styles.questionText}>
+          2. What is your purpose of using this app?
+        </Text>
+
+        <View style={styles.input}>
+          <RNPickerSelect
+            // @ts-ignore
+            ref={pickerRef1}
+            itemKey={testState}
+            onValueChange={value => setPurpose(value)}
+            items={[
+              {label: 'Break Bad Habits', value: 'Break Bad Habits'},
+              {label: 'Form Good Habits', value: 'Form Good Habits'},
+              {label: 'Manage Stress', value: 'Manage Stress'},
+              {label: 'Journalling', value: 'Journalling'},
+              {label: 'Others', value: 'Others'},
+            ]}
           />
-        ))}
-      </View>
+        </View>
 
-      <Button title="Next" onPress={handleSave} />
-    </View>
+        <Text style={styles.questionText}>
+          3. How did you hear of this app? (Optional)
+        </Text>
+
+        <View style={styles.input}>
+          <RNPickerSelect
+            // @ts-ignore
+            ref={pickerRef2}
+            itemKey={testState}
+            onValueChange={value => setAppKnowledge(value)}
+            items={[
+              {label: 'Superiors', value: 'Superiors'},
+              {label: 'Friends', value: 'Friends'},
+              {label: 'DPPH', value: 'DPPH'},
+              {
+                label: 'CSSCOM Well-Being Channel',
+                value: 'CSSCOM Well-Being Channel',
+              },
+              {label: 'Others', value: 'Others'},
+            ]}
+          />
+        </View>
+
+        <View style={styles.finalButtonContainer}>
+          <Text style={styles.clearButton} onPress={() => resetInputs()}>
+            Clear
+          </Text>
+          <Text style={styles.nextButton} onPress={handleSave}>
+            Next
+          </Text>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -143,10 +159,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
+  questionText: {
+    paddingVertical: 10,
+    fontSize: 16,
+    alignSelf: 'flex-start',
+  },
   welcomeText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 40,
     marginBottom: 20,
   },
   input: {
@@ -157,18 +177,33 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 5,
   },
-  datePicker: {
-    width: '100%',
-    padding: 15,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    marginBottom: 20,
-  },
-  goalsContainer: {
+  finalButtonContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: 20,
+  },
+  clearButton: {
+    margin: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    minWidth: '10%',
+    borderRadius: 10,
+    borderWidth: 1,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#765000',
+    borderColor: '#765000',
+  },
+  nextButton: {
+    margin: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    minWidth: '10%',
+    borderRadius: 10,
+    borderWidth: 1,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    borderColor: '#2A4E4C',
+    color: '#2A4E4C',
   },
 });
