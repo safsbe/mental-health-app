@@ -16,15 +16,15 @@ export default function Index() {
   useEffect(() => {
     const fetchUserData = async () => {
       const alias = await AsyncStorage.getItem('alias');
-      const dob = await AsyncStorage.getItem('dob');
-      const goals = await AsyncStorage.getItem('goals');
+      const purpose = await AsyncStorage.getItem('purpose');
+      const appKnowledge = await AsyncStorage.getItem('appKnowledge');
       const authToken = await AsyncStorage.getItem('authToken');
       const mood = await AsyncStorage.getItem('mood');
       const videoWatched = await AsyncStorage.getItem('videoWatched');
 
       setName(alias || ''); // For this page
 
-      console.log(alias, dob, goals, authToken, mood, videoWatched); // Logging when you enter the page: for easier development to see current user
+      console.log(alias, purpose, appKnowledge, authToken, mood, videoWatched); // Logging when you enter the page: for easier development to see current user
     };
 
     fetchUserData();
@@ -159,8 +159,8 @@ function DevLogoutUser() {
     await AsyncStorage.multiRemove([
       'alias',
       'authToken',
-      'dob',
-      'goals',
+      'purpose',
+      'appKnowledge',
       'mood',
       'videoWatched',
     ]); // Remove all user info
