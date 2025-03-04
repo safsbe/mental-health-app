@@ -165,7 +165,7 @@ function DevLogoutUser() {
       'videoWatched',
     ]); // Remove all user info
 
-    router.replace('/login'); // Navigate to login setup screen again
+    router.replace('/start'); // Navigate to login setup screen again
   };
 
   removeUserData();
