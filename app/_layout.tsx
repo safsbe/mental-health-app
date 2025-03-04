@@ -60,7 +60,7 @@ export default function RootLayout() {
         console.log(alias, dob, goals, authToken);
 
         if (!authToken) {
-          router.replace('/login');
+          router.replace('/start');
         } else if (!alias || !dob || !goals) {
           router.replace('/onboarding');
         } else {
