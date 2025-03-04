@@ -56,7 +56,7 @@ export default function Login() {
             </Text>
             <Text
               style={styles.guestButton}
-              onPress={() => router.push('/onboarding')}
+              onPress={() => router.push('/guest')}
             >
               Guest
             </Text>
