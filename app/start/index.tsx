@@ -50,7 +50,13 @@ export default function Login() {
           <View style={styles.authOptions}>
             <Text
               style={styles.loginButton}
-              // onPress={() => router.push('/')}  // Replace with proper link once its been set up
+              // onPress={() => router.push('/login')} // Not fully functioning yet, use command below for beta v0.7.2. instead
+              onPress={() =>
+                Alert.alert(
+                  'Error',
+                  'This feature is not available yet as part of this application version, please try again in future versions!',
+                )
+              }
             >
               Login
             </Text>
