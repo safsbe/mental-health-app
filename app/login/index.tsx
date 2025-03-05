@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthSession from 'expo-auth-session';
 import {ResizeMode, Video} from 'expo-av';
 import {Image} from 'expo-image';
 import {router} from 'expo-router';
@@ -31,6 +32,20 @@ export default function Login() {
   };
 
   checkVideoWatched();
+
+  // START AuthSesssion
+
+  const redirectUri = AuthSession.makeRedirectUri();
+  const discovery = AuthSession.useAutoDiscovery('https://auth.dev.lumin.itserv.com.sg');
+  const [request, result, promptAsync] = AuthSession.useAuthRequest(
+    {
+      clientId: 'native.code',
+      redirectUri,
+      scopes: ['openid'],
+    },
+    discovery);
+  
+  // END AuthSession
 
   return (
     <View>
