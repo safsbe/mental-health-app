@@ -37,6 +37,10 @@ export default function Meditation() {
       title: 'Muscle Relaxation (Parody)',
       file: require('../../assets/meditation/audio/muscle_relaxation_parody.mp3'),
     },
+    {
+      title: 'Progressive Muscle Relaxation',
+      file: require('../../assets/meditation/audio/progressive_muscle_relaxation.mp3'),
+    },
   ];
 
   const loadAndPlaySound = async (trackID: number) => {
