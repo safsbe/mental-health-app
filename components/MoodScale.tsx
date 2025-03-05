@@ -27,7 +27,9 @@ export default function MoodScale({
               source={img}
               style={{
                 ...styles.moodImage,
-                ...(currentMood + 1 == index ? styles.moodImageActive : {}),
+                ...(currentMood - 1 == index
+                  ? styles.moodImageActive
+                  : styles.moodImageInactive),
               }}
             />
           </TouchableOpacity>
@@ -39,10 +41,9 @@ export default function MoodScale({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
+    paddingTop: 10,
   },
   moodContainer: {
-    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -57,6 +58,9 @@ const styles = StyleSheet.create({
     opacity: 30,
   },
   moodImageActive: {
-    opacity: 100,
+    opacity: 1,
+  },
+  moodImageInactive: {
+    opacity: 0.4,
   },
 });

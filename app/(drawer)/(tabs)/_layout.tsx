@@ -1,17 +1,75 @@
-import {Tabs} from 'expo-router';
+import {useEffect, useState} from 'react';
+import {Tabs, router} from 'expo-router';
 import {Image} from 'expo-image';
+import {Text} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {useColorScheme} from '@/hooks/useColorScheme';
+import {HeaderBackButton} from '@react-navigation/elements';
+import {MaterialIcons} from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [name, setName] = useState<string>('');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const alias = await AsyncStorage.getItem('alias');
+
+      setName(alias || '');
+    };
+
+    fetchUserData();
+  }, []);
+
+  function DevLogoutUser() {
+    const removeUserData = async () => {
+      await AsyncStorage.multiRemove([
+        'alias',
+        'authToken',
+        'purpose',
+        'appKnowledge',
+        'mood',
+        'videoWatched',
+      ]); // Remove all user info
+
+      router.replace('/start'); // Navigate to login setup screen again
+    };
+
+    removeUserData();
+  }
 
   return (
     <Tabs
       screenOptions={{
         //tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         tabBarActiveTintColor: 'black',
-        headerShown: false,
+        headerShown: true,
+        headerLeft: props => (
+          <MaterialIcons
+            name="menu"
+            size={32}
+            color="#765000"
+            style={{marginLeft: 15}}
+            {...props}
+            // @ts-ignore
+            onPress={() => router.back()}
+          />
+        ),
+        headerTitleAlign: 'left',
+        headerTitle: props => (
+          <Text
+            {...props}
+            onPress={() => DevLogoutUser()}
+            style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: '#765000',
+            }}
+          >
+            Hey {name}!
+          </Text>
+        ),
       }}
     >
       <Tabs.Screen

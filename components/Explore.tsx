@@ -7,7 +7,7 @@ export default function Explore() {
     selfhelp: require('../assets/explore-categories/self.svg'),
     aboutself: require('../assets/explore-categories/understanding_yourself.svg'),
     MentalHealth: require('../assets/explore-categories/mental_health.svg'),
-    others: require('../assets/explore-categories/others.svg'),
+    others: require('../assets/explore-categories/others.png'),
   };
 
   const styles = StyleSheet.create({
@@ -34,10 +34,11 @@ export default function Explore() {
             backgroundColor: '#DDF1FE',
             height: 200,
             padding: 5,
+            borderRadius: 10,
           }}
         >
           <Text
-            style={{textAlign: 'center', fontWeight: 'bold', color: '#2A4E4C'}}
+            style={{textAlign: 'center', fontWeight: 'bold', color: '#765000'}}
           >
             About Self Help
           </Text>
@@ -51,10 +52,11 @@ export default function Explore() {
             backgroundColor: '#DDE5FF',
             height: 200,
             padding: 5,
+            borderRadius: 10,
           }}
         >
           <Text
-            style={{textAlign: 'center', fontWeight: 'bold', color: '#2A4E4C'}}
+            style={{textAlign: 'center', fontWeight: 'bold', color: '#765000'}}
           >
             About Self
           </Text>
@@ -70,10 +72,11 @@ export default function Explore() {
             backgroundColor: '#DDF7E5',
             height: 200,
             padding: 5,
+            borderRadius: 10,
           }}
         >
           <Text
-            style={{textAlign: 'center', fontWeight: 'bold', color: '#2A4E4C'}}
+            style={{textAlign: 'center', fontWeight: 'bold', color: '#765000'}}
           >
             About Mental Health
           </Text>
@@ -87,14 +90,18 @@ export default function Explore() {
             backgroundColor: '#FFE7E7',
             height: 200,
             padding: 5,
+            borderRadius: 10,
           }}
         >
           <Text
-            style={{textAlign: 'center', fontWeight: 'bold', color: '#2A4E4C'}}
+            style={{textAlign: 'center', fontWeight: 'bold', color: '#765000'}}
           >
             Others
           </Text>
-          <Image style={{flexGrow: 1}} source={exploreImages.others} />
+          <Image
+            style={{flexGrow: 1, width: '120%', alignSelf: 'center'}}
+            source={exploreImages.others}
+          />
         </Pressable>
       </View>
     </View>

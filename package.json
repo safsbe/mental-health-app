@@ -18,8 +18,8 @@
     "prewatch:android": "npm run prewatch:common && npm run prebuild:android",
     "watch:android": "expo run:android",
     "prewatch:ios": "npm run prewatch:common",
-    "watch:ios": "expo run:ios",
-    "watch:ios:device": "expo run:ios --device",
+    "watch:ios": "npm run copy-ios-assets && expo run:ios",
+    "watch:ios:device": "npm run copy-ios-assets && expo run:ios --device",
     "prewatch:web": "npm run prewatch:common",
     "watch:web": "expo start --web",
     "test": "jest",
@@ -32,7 +32,8 @@
     "lint:check": "npm run eslint && npm run prettier:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
     "android": "expo run:android",
-    "ios": "expo run:ios"
+    "ios": "expo run:ios",
+    "copy-ios-assets": "cp -r assets/ ios/assets/"
   },
   "dependencies": {
     "@expo-google-fonts/mulish": "^0.2.3",
