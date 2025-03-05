@@ -15,7 +15,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import {HeaderBackButton} from '@react-navigation/elements';
 import RNPickerSelect from 'react-native-picker-select';
 
-export default function Onboarding() {
+export default function GuestStart() {
   const [alias, setAlias] = useState<string>('');
   const [purpose, setPurpose] = useState<string>('');
   const [appKnowledge, setAppKnowledge] = useState<string>('');
@@ -100,10 +100,11 @@ export default function Onboarding() {
           2. What is your purpose of using this app?
         </Text>
 
-        <View style={styles.input}>
+        <View style={styles.pickerContainer}>
           <RNPickerSelect
             // @ts-ignore
             ref={pickerRef1}
+            style={pickerStyles}
             itemKey={testState}
             onValueChange={value => setPurpose(value)}
             items={[
@@ -120,10 +121,11 @@ export default function Onboarding() {
           3. How did you hear of this app? (Optional)
         </Text>
 
-        <View style={styles.input}>
+        <View style={styles.pickerContainer}>
           <RNPickerSelect
             // @ts-ignore
             ref={pickerRef2}
+            style={pickerStyles}
             itemKey={testState}
             onValueChange={value => setAppKnowledge(value)}
             items={[
@@ -177,6 +179,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 5,
   },
+  pickerContainer: {
+    width: '100%',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 20,
+    borderRadius: 5,
+  },
   finalButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -205,5 +214,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     borderColor: '#2A4E4C',
     color: '#2A4E4C',
+  },
+});
+
+const pickerStyles = StyleSheet.create({
+  inputIOS: {
+    margin: 10,
+  },
+  inputAndroid: {
+    margin: 10,
   },
 });

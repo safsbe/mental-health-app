@@ -48,21 +48,22 @@ export default function RootLayout() {
   useEffect(() => {
     const checkUserData = async () => {
       try {
-        const [alias, dob, goals, authToken] = await Promise.allSettled([
-          AsyncStorage.getItem('alias'),
-          AsyncStorage.getItem('dob'),
-          AsyncStorage.getItem('goals'),
-          AsyncStorage.getItem('authToken'), // Switch this to proper SecureStore.
-        ]).then(x =>
-          x.map(v => (v.status === 'fulfilled' ? v.value : undefined)),
-        );
+        const [alias, purpose, appKnowledge, authToken] =
+          await Promise.allSettled([
+            AsyncStorage.getItem('alias'),
+            AsyncStorage.getItem('purpose'),
+            AsyncStorage.getItem('appKnowledge'),
+            AsyncStorage.getItem('authToken'), // Switch this to proper SecureStore.
+          ]).then(x =>
+            x.map(v => (v.status === 'fulfilled' ? v.value : undefined)),
+          );
 
-        console.log(alias, dob, goals, authToken);
+        console.log(alias, purpose, appKnowledge, authToken);
 
         if (!authToken) {
           router.replace('/start');
-        } else if (!alias || !dob || !goals) {
-          router.replace('/onboarding');
+        } else if (!alias || !purpose) {
+          router.replace('/guest');
         } else {
           setIsReady(true); // Data exists, app can proceed
         }
