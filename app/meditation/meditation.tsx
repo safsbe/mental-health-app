@@ -1,5 +1,7 @@
-import {useState, useRef} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import {
+  AppState,
+  AppStateStatus,
   View,
   Text,
   StyleSheet,
@@ -43,6 +45,21 @@ export default function Meditation() {
     },
   ];
 
+  useEffect(() => {
+    if (!isPlaying) sound?.pauseAsync();
+  }, [isPlaying]);
+
+  useEffect(() => {
+    const appStateChangeHandler = (nextState: AppStateStatus) => {
+      if (nextState === 'background') forcePause();
+    };
+    const subscription = AppState.addEventListener(
+      'change',
+      appStateChangeHandler,
+    );
+    return () => subscription.remove();
+  }, []);
+
   const loadAndPlaySound = async (trackID: number) => {
     await handleStop();
     const {sound: newSound} = await Audio.Sound.createAsync(
@@ -83,6 +100,12 @@ export default function Meditation() {
     }
   };
 
+  const forcePause = async () => {
+    console.log('forcePause');
+    await sound?.pauseAsync();
+    setIsPlaying(false);
+  };
+
   const handleSliderChange = async (value: number) => {
     if (sound && durationMillis) {
       const position = value * durationMillis;
@@ -111,6 +134,7 @@ export default function Meditation() {
 
   BackHandler.addEventListener('hardwareBackPress', function () {
     changeOrientation();
+    return null;
   });
 
   changeOrientation();
