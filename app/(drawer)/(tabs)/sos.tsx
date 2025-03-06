@@ -87,22 +87,24 @@ export default function SOSScreen() {
       <Text style={styles.largeText}>We're here to help.</Text>
 
       {/* Text placeholder2 */}
-      <Text style={styles.text}>You will remain anonymous</Text>
+      <Text style={styles.text}>You will remain anonymous.</Text>
 
       {/* SOS Button */}
       <SOSButton />
 
       <Text style={styles.text}>
-        The button will bing up your phone's dialer but will not call
+        The button will bring up your phone's dialer but will not call
         imediately.
       </Text>
 
       {/* Contact Cards for General Mental  */}
+      <Text style={styles.subHeader}>More Helplines</Text>
+
       <Text style={styles.leftText}>General Mental Well-Being</Text>
 
       {/* Contact Card for IMH*/}
       <ContactCard
-        organisation="Insititute of Mental Health"
+        organisation="Institute of Mental Health"
         phoneNumber="63892222"
         details="24/7Hrs"
         mode="flat"
@@ -153,23 +155,33 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingTop: 50,
+    paddingTop: 10,
     paddingHorizontal: 20,
     paddingBottom: 30,
   },
   largeText: {
     fontSize: 30,
-    marginBottom: 8,
     textAlign: 'center',
   },
   text: {
     color: '#A5A5A5',
     fontSize: 14,
     marginBottom: 20,
+    width: '80%',
+    textAlign: 'center',
   },
   leftText: {
     fontSize: 18,
-    marginBottom: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
+    color: '#2A4E4C',
     alignSelf: 'flex-start', // Align text to the left
+    textDecorationLine: 'underline',
+  },
+  subHeader: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#2A4E4C',
+    alignSelf: 'flex-start',
   },
 });
