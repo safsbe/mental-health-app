@@ -41,7 +41,6 @@ export default function Index() {
         <Section title="Activities">
           <Activities />
         </Section>
-
         <Section title="Explore">
           <Explore />
         </Section>
