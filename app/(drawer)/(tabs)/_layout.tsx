@@ -7,6 +7,7 @@ import {useColorScheme} from '@/hooks/useColorScheme';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {MaterialIcons} from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -39,6 +40,8 @@ export default function TabLayout() {
     removeUserData();
   }
 
+  const navigation = useNavigation();
+
   return (
     <Tabs
       screenOptions={{
@@ -53,7 +56,7 @@ export default function TabLayout() {
             style={{marginLeft: 15}}
             {...props}
             // @ts-ignore
-            onPress={() => router.back()}
+            onPress={() => navigation.openDrawer()}
           />
         ),
         headerTitleAlign: 'left',
