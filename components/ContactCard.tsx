@@ -40,8 +40,8 @@ function ContactCard({
 const styles = StyleSheet.create({
   cardFlat: {
     width: '100%',
-    marginBottom: 20,
-    padding: 10,
+    marginTop: 5,
+    paddingBottom: 10,
   },
   cardRaised: {
     width: '100%',
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
   },
   orgText: {
     fontSize: 18,
-    fontWeight: 'bold',
   },
   detailsText: {
     fontSize: 13,
