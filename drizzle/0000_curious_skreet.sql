@@ -1,0 +1,14 @@
+CREATE TABLE `DIARY_ENTRIES` (
+	`ENTRY_DATE` text PRIMARY KEY NOT NULL,
+	`UPDATED_ON` text NOT NULL,
+	`MOOD_RATING` integer
+);
+--> statement-breakpoint
+CREATE TABLE `DIARY_MOMENTS` (
+	`ENTRY_ID` text NOT NULL,
+	`id` integer NOT NULL,
+	`type` integer,
+	FOREIGN KEY (`ENTRY_ID`) REFERENCES `DIARY_ENTRIES`(`ENTRY_DATE`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `DIARY_MOMENTS_ENTRY_ID_id_unique` ON `DIARY_MOMENTS` (`ENTRY_ID`,`id`);

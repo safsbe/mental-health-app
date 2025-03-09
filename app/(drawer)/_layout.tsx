@@ -17,6 +17,12 @@ export default function Layout() {
         }}
       />
       <Drawer.Screen
+        name="diary-edit"
+        options={{
+          drawerLabel: 'Diary',
+        }}
+      />
+      <Drawer.Screen
         name="profile"
         options={{
           drawerLabel: 'Profile',
