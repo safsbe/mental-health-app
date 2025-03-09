@@ -4,10 +4,17 @@ import {useFonts} from 'expo-font';
 import {router, Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect, useState} from 'react';
+import {Provider as ReduxProvider} from 'react-redux';
 import 'react-native-reanimated';
 import {useColorScheme} from '@/hooks/useColorScheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {store} from '@/utils/store';
 import React from 'react';
+
+import {expoDb, db} from '@/db';
+import {useDrizzleStudio} from 'expo-drizzle-studio-plugin';
+import {useMigrations} from 'drizzle-orm/expo-sqlite/migrator';
+import migrations from '@/drizzle/migrations';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -17,6 +24,21 @@ const CustomTheme: Theme = DefaultTheme;
 CustomTheme.colors.background = '#FFF';
 
 export default function RootLayout() {
+  // database
+  useDrizzleStudio(expoDb);
+  const {success: dbMigrationSuccess, error: dbMigrationError} = useMigrations(
+    db,
+    migrations,
+  );
+  useEffect(() => {
+    if (dbMigrationSuccess) {
+      console.log('Database migration successful.');
+    } else {
+      console.error('Database migration failed.');
+    }
+  });
+  // END database
+
   const colorScheme = useColorScheme();
   const [isReady, setIsReady] = useState(false);
   const [loaded] = useFonts({
@@ -60,11 +82,13 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={CustomTheme}>
-      <Stack screenOptions={{headerShown: false}}>
-        <Stack.Screen name="(drawer)" options={{headerShown: false}} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <ReduxProvider store={store}>
+      <ThemeProvider value={CustomTheme}>
+        <Stack screenOptions={{headerShown: false}}>
+          <Stack.Screen name="(drawer)" options={{headerShown: false}} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </ThemeProvider>
+    </ReduxProvider>
   );
 }

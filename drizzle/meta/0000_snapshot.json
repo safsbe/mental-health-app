@@ -1,0 +1,103 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "c147340e-119e-41c3-9b2e-ee794f6ed685",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "DIARY_ENTRIES": {
+      "name": "DIARY_ENTRIES",
+      "columns": {
+        "ENTRY_DATE": {
+          "name": "ENTRY_DATE",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "UPDATED_ON": {
+          "name": "UPDATED_ON",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "MOOD_RATING": {
+          "name": "MOOD_RATING",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "DIARY_MOMENTS": {
+      "name": "DIARY_MOMENTS",
+      "columns": {
+        "ENTRY_ID": {
+          "name": "ENTRY_ID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "DIARY_MOMENTS_ENTRY_ID_id_unique": {
+          "name": "DIARY_MOMENTS_ENTRY_ID_id_unique",
+          "columns": [
+            "ENTRY_ID",
+            "id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "DIARY_MOMENTS_ENTRY_ID_DIARY_ENTRIES_ENTRY_DATE_fk": {
+          "name": "DIARY_MOMENTS_ENTRY_ID_DIARY_ENTRIES_ENTRY_DATE_fk",
+          "tableFrom": "DIARY_MOMENTS",
+          "tableTo": "DIARY_ENTRIES",
+          "columnsFrom": [
+            "ENTRY_ID"
+          ],
+          "columnsTo": [
+            "ENTRY_DATE"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}
