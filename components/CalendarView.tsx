@@ -5,7 +5,7 @@ import MonthCalendar from './MonthCalendar';
 import YearCalendar from './YearCalendar';
 import MoodGraph from './MoodGraph';
 
-const CalendarView = () => {
+export default function CalendarView() {
   const [view, setView] = useState<'week' | 'month' | 'year'>('week');
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split('T')[0],
@@ -84,7 +84,7 @@ const CalendarView = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -128,5 +128,3 @@ const styles = StyleSheet.create({
     color: '#666',
   },
 });
-
-export default CalendarView;

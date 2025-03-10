@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: 10,
-    paddingHorizontal: 20,
+    marginHorizontal: 15,
     paddingBottom: 30,
   },
   largeText: {

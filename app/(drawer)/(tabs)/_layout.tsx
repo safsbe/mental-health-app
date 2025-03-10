@@ -4,7 +4,6 @@ import {Image} from 'expo-image';
 import {Text} from 'react-native';
 import {Colors} from '@/constants/Colors';
 import {useColorScheme} from '@/hooks/useColorScheme';
-import {HeaderBackButton} from '@react-navigation/elements';
 import {MaterialIcons} from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
