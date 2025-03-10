@@ -471,7 +471,7 @@ export default function Diary() {
               justifyContent: 'center',
               height: '100%',
             }}
-            onPress={() => router.push('/(drawer)/diary-edit')}
+            onPress={() => router.push('/diary-edit')}
           >
             <Text>Edit</Text>
           </Pressable>

@@ -60,7 +60,7 @@ export default function DiaryEdit() {
     return (
       <ScrollView>
         <Text>Error loading diary entry.</Text>
-        <Text>{JSON.strngify(activeEntryError, undefined, 4)}</Text>
+        <Text>{JSON.stringify(activeEntryError, undefined, 4)}</Text>
       </ScrollView>
     );
   } else if (workingEntry) {
