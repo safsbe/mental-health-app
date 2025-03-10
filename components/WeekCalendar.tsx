@@ -1,11 +1,36 @@
-import {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {useEffect, useState, useRef, useMemo} from 'react';
+import {View, StyleSheet, Text} from 'react-native';
 import {
   CalendarProvider,
   DateData,
   Calendar as RNCalendar,
   WeekCalendar,
+  LocaleConfig,
 } from 'react-native-calendars';
+import GetWeek from './GetWeek';
+
+LocaleConfig.locales['en'] = {
+  monthNames: [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ],
+  monthNamesShort: [],
+  dayNames: [''],
+  dayNamesShort: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+  today: 'Today',
+};
+
+LocaleConfig.defaultLocale = 'en';
 
 type MoodData = {
   date: string;
@@ -22,69 +47,77 @@ const moodColors = {
 };
 
 type CalendarViewProps = {
-  moodData: MoodData[];
   onDayPress: (date: string) => void; // New prop for handling day press
+  callBack: (data: string[]) => void; // Pass data back to parent NewCalendarView
 };
 
-const CalendarView = ({moodData, onDayPress}: CalendarViewProps) => {
-  const [markedDates, setMarkedDates] = useState<{
-    [key: string]: {
-      disabled: string;
-      startingDay: boolean;
-      color: string;
-      endingDay: boolean;
+export default function CalendarView({
+  onDayPress,
+  callBack,
+}: CalendarViewProps) {
+  const [selected, setSelected] = useState('');
+
+  const markedDates = useMemo(() => {
+    return {
+      [selected]: {
+        selected: true,
+        disableTouchEvent: true,
+      },
     };
-  }>({});
-  useEffect(() => {
-    const newMarkedDates: {[key: string]: {color: string; textColor: string}} =
-      {};
+  }, [selected]);
 
-    moodData.forEach(({date, mood}) => {
-      const formattedDate = date; // Ensure the date is in YYYY-MM-DD format
-      newMarkedDates[formattedDate] = {
-        marked: true,
-        startingDay: true,
-        color: moodColors[mood],
-        endingDay: true,
-        //dotColor: moodColors[mood] || moodColors.default,
-        //selectedColor: '#ffffff', // White text for contrast
-      };
-    });
+  // console.log(markedDates);
 
-    setMarkedDates(newMarkedDates);
-  }, [moodData]);
-  console.log(markedDates);
+  const [width, setWidth] = useState<number>();
+
+  const createSelected = () => {
+    markedDates[selected] = {
+      selected: true,
+      disableTouchEvent: true,
+    };
+  };
+
+  createSelected();
+
+  const ref = useRef();
+
   return (
-    <CalendarProvider
-      date={new Date().toISOString().split('T')[0]} // Set the default selected date as today
-      onDateChanged={date => onDayPress(date)} // Call the parent onDayPress when the date is changed
-    >
-      <View style={styles.container}>
+    <View onLayout={e => setWidth(e.nativeEvent.layout.width)}>
+      <CalendarProvider
+        date={new Date().toISOString().split('T')[0]} // Set the default selected date as today
+        onDateChanged={date => callBack(GetWeek(date))} // Call the parent onDayPress when the date is changed
+      >
         <WeekCalendar
+          // @ts-ignore
+          ref={ref}
+          key={width} // For rerendering the calendar on width change // See this: https://github.com/wix/react-native-calendars/issues/2327#issuecomment-2276606500
+          calendarWidth={width}
           firstDay={1}
           markedDates={markedDates}
+          allowShadow={false}
           onDayPress={day => onDayPress(day.dateString)} // Handle the day press events
           theme={{
-            backgroundColor: '#ffffff',
-            calendarBackground: '#ffffff',
-            textSectionTitleColor: '#000000',
-            dayTextColor: '#2d4150',
-            todayTextColor: '#00adf5',
-            selectedDayBackgroundColor: '#00adf5',
-            selectedDayTextColor: '#ffffff',
+            backgroundColor: 'white',
+            calendarBackground: 'white',
+            textSectionTitleColor: '#A5A5A5',
+            todayTextColor: 'black', // override default color
+            dayTextColor: 'black',
+            textDayFontWeight: 'bold',
+            // todayTextColor: 'white',
+            // todayBackgroundColor: '#765000',
+            selectedDayBackgroundColor: '#765000',
+            selectedDayTextColor: 'white',
             dotColor: '#00adf5',
           }}
         />
-      </View>
-    </CalendarProvider>
+      </CalendarProvider>
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
+    // flex: 1,
+    // padding: 10,
   },
 });
-
-export default CalendarView;

@@ -124,7 +124,7 @@ function DiaryHero() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.diaryLinkText} onPress={() => router.push('/')}>
+      <Text style={styles.diaryLinkText} onPress={() => router.push('/diary')}>
         View Diary
       </Text>
       <Text style={styles.dateLarge}>{moment().format('dddd')}</Text>

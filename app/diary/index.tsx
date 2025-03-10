@@ -1,29 +1,51 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useState, useEffect, useRef} from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {Graph} from '@/components/Graph';
+import {router, Stack} from 'expo-router';
+import CalendarView from '@/components/CalendarView';
+import NewCalendarView from '@/components/NewCalendarView';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {format} from 'date-fns';
+import GetWeek from '@/components/GetWeek';
+import {Image} from 'expo-image';
+import {SleepHoursGraph} from '@/components/SleepGraph';
 
-function GraphSection({title, subtitle, children}) {
+function GraphSection({title, subtitle, subtitle2, children}) {
   const styles = StyleSheet.create({
     root: {
-      alignItems: 'center',
-      maxWidth: 400,
-      marginVertical: 30,
+      display: 'flex',
+      flex: 1,
+      width: '100%',
+      marginTop: 15,
     },
     title: {
       color: '#765000',
       fontWeight: 'bold',
-      fontSize: 24,
-      alignSelf: 'stretch',
+      fontSize: 20,
     },
     subtitle: {
       color: '#765000',
-      fontSize: 16,
+      fontSize: 14,
+      alignSelf: 'stretch ',
+    },
+    subtitle2: {
+      color: '#765000',
+      fontSize: 14,
       alignSelf: 'stretch',
     },
     chartContainer: {
-      marginTop: 30,
-      height: 200,
-      width: 300,
+      display: 'flex',
+      flex: 1,
+      width: '100%',
+      marginVertical: 10,
       alignItems: 'center',
+      alignSelf: 'center',
     },
   });
 
@@ -31,6 +53,11 @@ function GraphSection({title, subtitle, children}) {
     <View style={styles.root}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.subtitle}>{subtitle}</Text>
+      {subtitle2 ? (
+        <Text style={styles.subtitle2}>{subtitle2}</Text>
+      ) : (
+        <Text style={{marginTop: -14}}></Text>
+      )}
       <View style={styles.chartContainer}>{children}</View>
     </View>
   );
@@ -46,19 +73,20 @@ type InsightsProps = {
 export function Insights({insights}: InsightsProps) {
   const styles = StyleSheet.create({
     root: {
-      borderRadius: 12,
-      paddingVertical: 12,
-      paddingHorizontal: 12,
+      marginTop: 15,
+      borderRadius: 15,
+      paddingVertical: 15,
+      paddingHorizontal: 10,
       backgroundColor: '#765000',
     },
     title: {
       color: '#FFF',
       fontWeight: 'bold',
-      fontSize: 20,
+      fontSize: 16,
     },
     text: {
       color: '#FFF',
-      fontSize: 16,
+      fontSize: 14,
     },
     insight: {
       flexDirection: 'row',
@@ -78,31 +106,128 @@ export function Insights({insights}: InsightsProps) {
   );
 }
 
-type Recommendation = {
-  title: string;
-  backgroundColor: string;
-  image: object;
-  onPress?: object;
-};
+function Option({text, imageType}: {text: string; imageType: number}) {
+  const imageOptions = [
+    require('../../assets/quickRecommendation/aboutself.png'),
+    require('../../assets/quickRecommendation/meditation.png'),
+    require('../../assets/quickRecommendation/activities.png'),
+  ];
 
-type RecommendationsProps = {
-  recommendations: Recommendation[];
-};
+  const styles = StyleSheet.create({
+    containerAboutSelf: {
+      flex: 1,
+      flexDirection: 'column',
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#A1AEFF',
+      borderRadius: 20,
+      borderWidth: 0.4,
+      borderColor: 'white',
+    },
+    containerMeditation: {
+      flex: 1,
+      flexDirection: 'column',
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#AEFFA1',
+      borderRadius: 20,
+      borderWidth: 0.4,
+      borderColor: 'white',
+    },
+    containerActivities: {
+      flex: 1,
+      flexDirection: 'column',
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#FFE7E7',
+      borderRadius: 20,
+      borderWidth: 0.4,
+      borderColor: 'white',
+    },
+    text: {
+      textAlign: 'center',
+      fontSize: 12,
+      fontWeight: 'bold',
+    },
+    image: {
+      width: 64,
+      height: 64,
+      alignSelf: 'center',
+      objectFit: 'contain',
+    },
+  });
 
-function Recommendations({recommendations}: RecommendationsProps) {
+  var imageSelectedOption = imageOptions[0]; // set default to first value
+  var containerStyle = styles.containerAboutSelf;
+  var redirect: () => void;
+  var routes = ['/', '/meditation/meditation/', '/'];
+
+  switch (imageType) {
+    case 0: {
+      imageSelectedOption = imageOptions[0];
+      containerStyle = styles.containerAboutSelf;
+
+      break;
+    }
+    case 1: {
+      imageSelectedOption = imageOptions[1];
+      containerStyle = styles.containerMeditation;
+
+      break;
+    }
+    case 2: {
+      imageSelectedOption = imageOptions[2];
+      containerStyle = styles.containerActivities;
+
+      break;
+    }
+  }
+
+  return (
+    <View style={containerStyle}>
+      <TouchableOpacity
+        style={{
+          flex: 1,
+          display: 'flex',
+          height: 'auto',
+          paddingTop: 5,
+          paddingBottom: 10,
+          gap: 5,
+        }}
+        onPress={() =>
+          // @ts-ignore
+          router.push(routes[imageType])
+        }
+      >
+        <Text style={styles.text}>{text}</Text>
+        <Image style={styles.image} source={imageSelectedOption} />
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+function Recommendations() {
   const styles = StyleSheet.create({
     root: {
-      marginVertical: 30,
+      marginTop: 15,
+      display: 'flex',
+      flex: 1,
     },
     title: {
+      paddingBottom: 5,
       color: '#765000',
       fontWeight: 'bold',
-      fontSize: 24,
-      alignSelf: 'stretch',
+      fontSize: 16,
+      alignSelf: 'center',
     },
     recommendationContainer: {
+      paddingTop: 10,
+      flex: 1,
+      display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      width: '85%',
+      alignSelf: 'center',
+      gap: 15,
     },
     recommendation: {
       borderRadius: 30,
@@ -120,32 +245,104 @@ function Recommendations({recommendations}: RecommendationsProps) {
     <View style={styles.root}>
       <Text style={styles.title}>Recommended</Text>
       <View style={styles.recommendationContainer}>
-        {recommendations.map(({title, image, backgroundColor}, i) => (
-          <View
-            key={i}
-            style={Object.assign({backgroundColor}, styles.recommendation)}
-          >
-            <Text style={styles.recommendationText}>{title}</Text>
-          </View>
-        ))}
+        <Option text="How to feel better article" imageType={0} />
+        <Option text="Try Deep     Breathing" imageType={1} />
+        <Option text="Anxiety and Panic attack" imageType={2} />
       </View>
     </View>
   );
 }
 
-export default function Demo() {
-  const styles = StyleSheet.create({
-    root: {
-      backgroundColor: '#FFF',
-      margin: 20,
-    },
-    title: {
-      fontSize: 30,
-      textAlign: 'center',
-      color: '#756000',
-      fontWeight: 'bold',
-    },
-  });
+// Set the default days on the graph to be correct
+
+const today = new Date(Date.now());
+const week = GetWeek(today);
+
+var defaultDayNumbers = [];
+
+for (var i = 0; i < 7; i++) {
+  defaultDayNumbers.push(week[i].getDate());
+}
+
+// GLOBAL VARIABLE USED TO HOLD THE MOST UPDATED MOOD VALUE OF THE CURRENTLY CHOSEN WEEK
+
+var parsedAsyncMoodData = new Array();
+// var parsedAsyncRestData = new Array;
+
+async function getDataFromAsync() {
+  const asyncMoodData = await AsyncStorage.getItem('mood');
+  // const asyncRestData = await AsyncStorage.getItem('rest');
+
+  parsedAsyncMoodData = JSON.parse(asyncMoodData);
+  // const parsedAsyncRestData = JSON.parse(asyncRestData);
+
+  return parsedAsyncMoodData;
+}
+
+// ALL EMPTY IN CASE FAILURE TO LOAD DATA
+
+var defaultScaleData = [-1, -1, -1, -1, -1, -1, -1];
+
+export default function Diary() {
+  const [dayNumbers, setDayNumbers] = useState<number[]>(defaultDayNumbers);
+  const [scaleData, setScaleData] = useState<number[]>(defaultScaleData);
+  const tempKey = useRef([]);
+
+  // LORD KNOWS WHY THEF FOLLOWING WORKS I DONT EVEN UNDERSTAND IT MYSELF BUT PLEASE FOR THE LOVE OF GOD DO NOT TOUCH IT UNLESS YOU UNDERSTAND
+
+  useEffect(() => {
+    var internalValueNow = [];
+
+    getDataFromAsync().then(() => {
+      internalValueNow = parsedAsyncMoodData;
+      const data = getDefaultDiaryData(internalValueNow);
+
+      tempKey.current = data;
+
+      // console.log('deep effect called')
+      // console.log(tempKey.current)
+
+      setScaleData(tempKey.current);
+      // console.log('teset?')
+    });
+
+    // console.log('effect called');
+  }, []);
+
+  // DO NOT TOUCH ABOVE
+
+  // BELOW TWO FUNCTIONS GO WITH USE EFFECT
+
+  function checkDayDataFromAsync(type: string, date: Date, _DATA) {
+    // options for type are 'mood'/'rest'
+    const formattedDate = date.toISOString().split('T')[0];
+
+    if (type === 'mood') {
+      const check = _DATA.filter(x => x.date === formattedDate);
+
+      if (check.length === 0) {
+        // No data on that day
+        return -1;
+      } else {
+        // console.log('else triggered')
+        return check[0].mood - 1;
+      }
+    } else if (type === 'rest') {
+      // Implement later when theres rest data
+    }
+  }
+
+  function getDefaultDiaryData(_DATA) {
+    var data = [];
+
+    for (var i = 0; i < 7; i++) {
+      data.push(checkDayDataFromAsync('mood', week[i], _DATA));
+    }
+
+    return data;
+  }
+
+  // STYLING STUFF
 
   const recommendations: Recommendation[] = [
     {
@@ -165,37 +362,69 @@ export default function Demo() {
     },
   ];
 
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: '#FFF',
+      marginHorizontal: 15,
+      flex: 1,
+    },
+  });
+
+  // TRIGGERS WHEN SCROLLING THE DIFFERENT WEEKS
+
+  const handleCallBackToDiary = (data: string[]) => {
+    // example 'data' value: ["3 Mar 2025", "4 Mar 2025", "5 Mar 2025", "6 Mar 2025", "7 Mar 2025", "8 Mar 2025", "9 Mar 2025"]
+
+    var result = [];
+    var dayNumbersArray = [];
+
+    // Call to update if theres any changes in asyncstorage
+    getDataFromAsync().then(() => {
+      for (var i = 0; i < 7; i++) {
+        var temp = new Date(data[i]);
+
+        dayNumbersArray.push(temp.getDate());
+        result.push(checkDayDataFromAsync('mood', temp, parsedAsyncMoodData));
+      }
+
+      setDayNumbers(dayNumbersArray);
+      setScaleData(result);
+    });
+  };
+
   return (
-    <ScrollView style={styles.root}>
-      <Text style={styles.title}>My Diary</Text>
-      <GraphSection title="Mood 😄" subtitle="Your mood has been Great">
-        <Graph
-          style={{
-            pointColors: pointColors,
-          }}
-          scales={scalesData}
-        />
+    <ScrollView style={styles.container}>
+      <NewCalendarView callBackToDiary={handleCallBackToDiary} />
+      <GraphSection
+        title="Mood 😄"
+        subtitle="Your mood has been Great"
+        subtitle2=""
+      >
+        <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
       </GraphSection>
       <GraphSection
         title="Restfulness Level"
         subtitle="Your restfulness: Fluctuated"
+        subtitle2=""
       >
-        <Graph
-          style={{
-            pointColors: pointColors,
-          }}
-          scales={scalesData}
-        />
+        <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
+      </GraphSection>
+      <GraphSection
+        title="Sleep Hours"
+        subtitle="Your sleep hour: Fluctuated"
+        subtitle2="Average duration: 9.3 hours"
+      >
+        <SleepHoursGraph dayNumbers={dayNumbers} />
       </GraphSection>
       <Insights
         insights={[
           {
-            trend: 'up',
-            text: 'lorem',
+            trend: '',
+            text: '',
           },
           {
-            trend: 'down',
-            text: 'ipsum',
+            trend: '',
+            text: 'There are no insights currently. Check back again later!',
           },
         ]}
       />
@@ -214,7 +443,7 @@ const pointColors = [
   '#FADC8D',
 ];
 
-const scalesData = [
+const exampleSleepHoursGraphScaleData = [
   {
     point: 50,
     label: 'M',
