@@ -1,123 +1,168 @@
+import {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-export type GraphProps = {
-  style?: CommonStyleProps;
-  min?: number;
-  max?: number;
-  scales: ScaleProps[];
-};
+function ScaleBlock({value = -1}: {value: number}) {
+  var color = '';
+  var radius = 0;
 
-type CommonStyleProps = {
-  pointColors?: string[];
-  pointHeight?: number;
-  pointColor?: string;
-  slideWidth?: number;
-  slideGap?: number;
-  slideColor?: string;
-};
-
-type ScaleProps = {
-  style?: CommonStyleProps;
-  point: number;
-  label?: string;
-  label2?: string;
-  color?: string;
-  min?: number;
-  max?: number;
-  highlight?: boolean;
-};
-
-function Scale({
-  style,
-  label,
-  label2,
-  point,
-  color,
-  min,
-  max,
-  highlight,
-}: ScaleProps) {
-  const slideColor = style?.slideColor || '#F7F7F7';
-  const slideWidth = style?.slideWidth || 25;
-  const pointHeight = style?.pointHeight || 25;
-  const pointColor = color || 'red';
-  min = min || 0;
-  max = max || 100;
-  const pointPosition = `${((point - min) / max) * 100}%`;
+  switch (value) {
+    case 0: {
+      color = '#FA9C93';
+      radius = 6;
+      break;
+    }
+    case 1: {
+      color = '#FADC8D';
+      radius = 6;
+      break;
+    }
+    case 2: {
+      color = '#8DFAB7';
+      radius = 6;
+      break;
+    }
+    case 3: {
+      color = '#8DD0FA';
+      radius = 6;
+      break;
+    }
+    case 4: {
+      color = '#8DB0FA';
+      radius = 6;
+      break;
+    }
+    default: {
+      color = '#F7F7F7';
+      radius = 0;
+      break;
+    }
+  }
 
   const styles = StyleSheet.create({
-    slideOuter: {
-      height: '100%',
-      alignItems: 'center',
-    },
-    slideInner: {
-      backgroundColor: slideColor,
-      borderRadius: 6,
-      width: slideWidth,
-      flexGrow: 1,
-    },
-    point: {
-      position: 'absolute',
-      // @ts-ignore
-      bottom: pointPosition,
-      backgroundColor: pointColor,
-      borderRadius: 6,
-      height: pointHeight,
-      width: '100%',
-    },
-    label: {
-      fontSize: 20,
-    },
-    label2: {
-      fontSize: 20,
-      fontWeight: 900,
-    },
-    labelHighlight: {
-      borderWidth: 3,
-      borderColor: '#DDD',
-      borderRadius: 5000,
+    block: {
+      height: 24,
+      width: 24,
+      backgroundColor: color,
+      borderRadius: radius,
     },
   });
 
+  return <View style={styles.block}></View>;
+}
+
+function Scale({value = -1}: {value: number}) {
+  const list = [];
+  // const
+
+  if (value >= -1 && value <= 4) {
+    for (var i = 0; i < 5; i++) {
+      if (i === value) {
+        list.unshift(i); // colored box
+      } else {
+        list.unshift(-1); // uncolored box
+      }
+    }
+  } else {
+    console.log('ERROR: INVALID VALUE RECEIVED');
+  }
+
+  const styles = StyleSheet.create({
+    scaleContainer: {
+      display: 'flex',
+      flex: 1,
+      maxWidth: 24,
+    },
+  });
+
+  // console.log(list);
+
   return (
-    <View style={styles.slideOuter}>
-      <View style={styles.slideInner}>
-        <View style={styles.point} />
-      </View>
-      <Text style={styles.label}>{label ? label : ' '}</Text>
-      <Text
-        style={{...styles.label2, ...(highlight ? styles.labelHighlight : {})}}
-      >
-        {label2 ? label2 : ' '}
-      </Text>
+    <View style={styles.scaleContainer}>
+      {list.map((value, index) => (
+        <ScaleBlock key={index} value={value} />
+      ))}
     </View>
   );
 }
 
-export function Graph({style, scales, min, max}: GraphProps) {
+function getDefaultDayNumbers() {
+  const today = new Date(Date.now());
+  const dayOfWeek = today.getDay();
+
+  var result = [];
+
+  for (var i = 0; i < dayOfWeek - 1; i++) {
+    var temp = new Date(
+      new Date().setDate(new Date().getDate() - (dayOfWeek - 1 - i)),
+    );
+
+    result.push(temp.getDate());
+  }
+
+  result.push(today.getDate());
+
+  for (var i = 0; i < 7 - dayOfWeek; i++) {
+    var temp = new Date(new Date().setDate(new Date().getDate() + (i + 1)));
+
+    result.push(temp.getDate());
+  }
+
+  return result;
+}
+
+export function Graph({
+  scaleData,
+  dayNumbers,
+}: {
+  scaleData: number[];
+  dayNumbers: number[];
+}) {
+  const dayNameShort = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+  // console.log(scaleData);
+
   const styles = StyleSheet.create({
     root: {
+      display: 'flex',
+      flex: 1,
       height: '100%',
       width: '100%',
-      gap: 25,
+      gap: 15,
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      alignSelf: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    dayName: {
+      textAlign: 'center',
+      fontSize: 14,
+      fontWeight: 'bold',
+      marginTop: 6,
+      color: '#A5A5A5',
+    },
+    dayNumber: {
+      textAlign: 'center',
+      fontSize: 14,
+      fontWeight: 'bold',
     },
   });
 
+  // console.log(dayNumbers);
+
+  const thisWeekDayNumbers = getDefaultDayNumbers();
+
   return (
     <View style={styles.root}>
-      {scales.map(({point, color, label, label2}, index) => (
-        <Scale
-          key={index}
-          point={point}
-          label={label}
-          label2={label2}
-          color={style?.pointColors[index % style?.pointColors.length] || color}
-          style={style}
-          min={min}
-          max={max}
-        />
+      {scaleData.map((value, index) => (
+        <View key={index}>
+          <Scale value={value} />
+          <Text style={styles.dayName}>{dayNameShort[index]}</Text>
+          <Text style={styles.dayNumber}>
+            {dayNumbers != undefined
+              ? dayNumbers[index]
+              : thisWeekDayNumbers[index]}
+          </Text>
+        </View>
       ))}
     </View>
   );

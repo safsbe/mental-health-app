@@ -1,6 +1,6 @@
 import {Image} from 'expo-image';
 import React from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, View, Pressable, StyleSheet} from 'react-native';
 
 export default function MoodScale({
   currentMood,
@@ -19,18 +19,20 @@ export default function MoodScale({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.callToAction}>What is your mood today?</Text>
+      {/* <Text style={styles.callToAction}>What is your mood today?</Text> */}
       <View style={styles.moodContainer}>
         {moodImages.map((img, index) => (
-          <TouchableOpacity key={index} onPress={() => onSelectMood(index + 1)}>
+          <Pressable key={index} onPress={() => onSelectMood(index + 1)}>
             <Image
               source={img}
               style={{
                 ...styles.moodImage,
-                ...(currentMood + 1 == index ? styles.moodImageActive : {}),
+                ...(currentMood - 1 == index
+                  ? styles.moodImageActive
+                  : styles.moodImageInactive),
               }}
             />
-          </TouchableOpacity>
+          </Pressable>
         ))}
       </View>
     </View>
@@ -39,10 +41,9 @@ export default function MoodScale({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
+    // paddingTop: 10,
   },
   moodContainer: {
-    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -57,6 +58,9 @@ const styles = StyleSheet.create({
     opacity: 30,
   },
   moodImageActive: {
-    opacity: 100,
+    opacity: 1,
+  },
+  moodImageInactive: {
+    opacity: 0.4,
   },
 });

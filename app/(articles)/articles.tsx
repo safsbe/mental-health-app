@@ -204,9 +204,10 @@ function ArticleEntry({
       overflow: 'hidden',
       marginLeft: 20,
       marginRight: 20,
+      paddingVertical: 6,
       alignItems: 'center',
       justifyContent: 'center',
-      height: 32,
+      height: 'auto',
       backgroundColor: 'white',
     },
     articleText: {
@@ -220,9 +221,10 @@ function ArticleEntry({
     <Pressable
       onPress={() =>
         // @ts-ignore
-        router.push(
-          `/thisarticle?category=${category}&title=${titleShort}&id=${id}`,
-        )
+        router
+          .push
+          // `/thisarticle?category=${category}&title=${titleShort}&id=${id}`,
+          ()
       } // If it shows an error, ignore it - it works
       //onPress={() => console.log(`/thisarticle?category=${category}&title=${title}&id=${id}`)}
       style={styles.article}

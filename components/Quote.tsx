@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 6,
     alignItems: 'center',
-    marginVertical: 10,
+    marginBottom: 10,
   },
   icon: {
     marginRight: 10, // Space between the icon and the text

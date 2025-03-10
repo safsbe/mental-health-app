@@ -60,7 +60,7 @@ export default function DiaryEdit() {
     return (
       <ScrollView>
         <Text>Error loading diary entry.</Text>
-        <Text>{JSON.strngify(activeEntryError, undefined, 4)}</Text>
+        <Text>{JSON.stringify(activeEntryError, undefined, 4)}</Text>
       </ScrollView>
     );
   } else if (workingEntry) {
@@ -108,6 +108,7 @@ export default function DiaryEdit() {
                   marginHorizontal: 3,
                   backgroundColor: '#D9CBAE',
                 }}
+                onPress={() => null}
               >
                 <Text>Add</Text>
               </Pressable>
