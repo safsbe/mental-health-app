@@ -5,6 +5,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import {Graph} from '@/components/Graph';
 import {router, Stack} from 'expo-router';
@@ -15,6 +16,8 @@ import {format} from 'date-fns';
 import GetWeek from '@/components/GetWeek';
 import {Image} from 'expo-image';
 import {SleepHoursGraph} from '@/components/SleepGraph';
+import {Group, Section} from '@/components/diary';
+import MoodScale from '@/components/MoodScale';
 
 function GraphSection({title, subtitle, subtitle2, children}) {
   const styles = StyleSheet.create({
@@ -363,9 +366,18 @@ export default function Diary() {
   ];
 
   const styles = StyleSheet.create({
-    container: {
+    containerGraphsSection: {
       backgroundColor: '#FFF',
+      marginTop: 15,
       marginHorizontal: 15,
+      flex: 1,
+    },
+    containerDiarySection: {
+      backgroundColor: '#FDF6E7',
+      borderRadius: 30,
+      marginTop: 30,
+      paddingTop: 10,
+      paddingHorizontal: 15,
       flex: 1,
     },
   });
@@ -393,91 +405,103 @@ export default function Diary() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <NewCalendarView callBackToDiary={handleCallBackToDiary} />
-      <GraphSection
-        title="Mood 😄"
-        subtitle="Your mood has been Great"
-        subtitle2=""
-      >
-        <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
-      </GraphSection>
-      <GraphSection
-        title="Restfulness Level"
-        subtitle="Your restfulness: Fluctuated"
-        subtitle2=""
-      >
-        <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
-      </GraphSection>
-      <GraphSection
-        title="Sleep Hours"
-        subtitle="Your sleep hour: Fluctuated"
-        subtitle2="Average duration: 9.3 hours"
-      >
-        <SleepHoursGraph dayNumbers={dayNumbers} />
-      </GraphSection>
-      <Insights
-        insights={[
-          {
-            trend: '',
-            text: '',
-          },
-          {
-            trend: '',
-            text: 'There are no insights currently. Check back again later!',
-          },
-        ]}
-      />
-      <Recommendations recommendations={recommendations} />
+    <ScrollView>
+      <View style={styles.containerGraphsSection}>
+        <NewCalendarView callBackToDiary={handleCallBackToDiary} />
+        <GraphSection
+          title="Mood 😄"
+          subtitle="Your mood has been Great"
+          subtitle2=""
+        >
+          <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
+        </GraphSection>
+        <GraphSection
+          title="Restfulness Level"
+          subtitle="Your restfulness: Fluctuated"
+          subtitle2=""
+        >
+          <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
+        </GraphSection>
+        <GraphSection
+          title="Sleep Hours"
+          subtitle="Your sleep hour: Fluctuated"
+          subtitle2="Average duration: 9.3 hours"
+        >
+          <SleepHoursGraph dayNumbers={dayNumbers} />
+        </GraphSection>
+        <Insights
+          insights={[
+            {
+              trend: '',
+              text: '',
+            },
+            {
+              trend: '',
+              text: 'There are no insights currently. Check back again later!',
+            },
+          ]}
+        />
+        <Recommendations recommendations={recommendations} />
+      </View>
+      <View style={styles.containerDiarySection}>
+        <View
+          style={{
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingVertical: 10,
+          }}
+        >
+          <View style={{flex: 1}}></View>
+          <View style={{flex: 10, alignSelf: 'center', alignItems: 'center'}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              {today.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
+            </Text>
+          </View>
+          <Pressable
+            style={{
+              flex: 1,
+              alignSelf: 'flex-end',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              height: '100%',
+            }}
+            onPress={() => router.push('/(drawer)/diary-edit')}
+          >
+            <Text>Edit</Text>
+          </Pressable>
+        </View>
+        <Group title="Mood Board">
+          <Section title="">
+            <Text style={{color: '#765000'}}>Mood</Text>
+            <MoodScale
+              currentMood={scaleData[0] + 1}
+              onSelectMood={() =>
+                console.log(scaleData[new Date(Date.now()).getDay()])
+              }
+            />
+          </Section>
+          <Section title="">
+            <Text style={{color: '#765000'}}>Best Moment</Text>
+          </Section>
+        </Group>
+        <Group title="Sleep Board">
+          <Section title="">
+            <Text style={{color: '#765000'}}>How rested do you feel?</Text>
+            <MoodScale
+              currentMood={scaleData[0] + 1}
+              onSelectMood={() =>
+                console.log(scaleData[new Date(Date.now()).getDay()])
+              }
+            />
+          </Section>
+        </Group>
+      </View>
     </ScrollView>
   );
 }
-
-const pointColors = [
-  '#8DFAB7',
-  '#FADC8D',
-  '#8DD0FA',
-  '#FA9C93',
-  '#FADC8D',
-  '#FADC8D',
-  '#FADC8D',
-];
-
-const exampleSleepHoursGraphScaleData = [
-  {
-    point: 50,
-    label: 'M',
-    label2: '18',
-  },
-  {
-    point: 20,
-    label: 'T',
-    label2: '19',
-  },
-  {
-    point: 30,
-    label: 'W',
-    label2: '20',
-  },
-  {
-    point: 60,
-    label: 'T',
-    label2: '21',
-    highlight: true,
-  },
-  {
-    point: 20,
-    label: 'F',
-    label2: '22',
-  },
-  {
-    point: 30,
-    label: 'S',
-    label2: '23',
-  },
-  {
-    point: 90,
-    label: 'S',
-    label2: '24',
-  },
-];

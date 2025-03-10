@@ -120,6 +120,12 @@ function DiaryHero() {
       paddingTop: 5,
       textAlign: 'right',
     },
+    moodText: {
+      paddingTop: 10,
+      color: '#765000',
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
   });
 
   return (
@@ -129,6 +135,7 @@ function DiaryHero() {
       </Text>
       <Text style={styles.dateLarge}>{moment().format('dddd')}</Text>
       <Text style={styles.dateSmall}>{moment().format('DD MMMM YYYY')}</Text>
+      <Text style={styles.moodText}>What is your mood today?</Text>
       <MoodScale currentMood={mood} onSelectMood={handleMoodSelect} />
       <QuickRecommendation />
     </View>

@@ -108,6 +108,7 @@ export default function DiaryEdit() {
                   marginHorizontal: 3,
                   backgroundColor: '#D9CBAE',
                 }}
+                onPress={() => null}
               >
                 <Text>Add</Text>
               </Pressable>
