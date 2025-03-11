@@ -221,10 +221,9 @@ function ArticleEntry({
     <Pressable
       onPress={() =>
         // @ts-ignore
-        router
-          .push
-          // `/thisarticle?category=${category}&title=${titleShort}&id=${id}`,
-          ()
+        router.push(
+          `/thisarticle?category=${category}&title=${titleShort}&id=${id}`,
+        )
       } // If it shows an error, ignore it - it works
       //onPress={() => console.log(`/thisarticle?category=${category}&title=${title}&id=${id}`)}
       style={styles.article}

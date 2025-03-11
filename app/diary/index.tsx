@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Pressable,
+  Alert,
 } from 'react-native';
 import {Graph} from '@/components/Graph';
 import {router, Stack} from 'expo-router';
@@ -18,6 +19,7 @@ import {Image} from 'expo-image';
 import {SleepHoursGraph} from '@/components/SleepGraph';
 import {Group, Section} from '@/components/diary';
 import MoodScale from '@/components/MoodScale';
+import Octicons from '@expo/vector-icons/Octicons';
 
 function GraphSection({title, subtitle, subtitle2, children}) {
   const styles = StyleSheet.create({
@@ -151,6 +153,7 @@ function Option({text, imageType}: {text: string; imageType: number}) {
       textAlign: 'center',
       fontSize: 12,
       fontWeight: 'bold',
+      paddingHorizontal: 10,
     },
     image: {
       width: 64,
@@ -249,8 +252,8 @@ function Recommendations() {
       <Text style={styles.title}>Recommended</Text>
       <View style={styles.recommendationContainer}>
         <Option text="How to feel better article" imageType={0} />
-        <Option text="Try Deep     Breathing" imageType={1} />
-        <Option text="Anxiety and Panic attack" imageType={2} />
+        <Option text="Try Deep Breathing" imageType={1} />
+        <Option text="Anxiety and Panic Attack" imageType={2} />
       </View>
     </View>
   );
@@ -405,103 +408,147 @@ export default function Diary() {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.containerGraphsSection}>
-        <NewCalendarView callBackToDiary={handleCallBackToDiary} />
-        <GraphSection
-          title="Mood 😄"
-          subtitle="Your mood has been Great"
-          subtitle2=""
-        >
-          <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
-        </GraphSection>
-        <GraphSection
-          title="Restfulness Level"
-          subtitle="Your restfulness: Fluctuated"
-          subtitle2=""
-        >
-          <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
-        </GraphSection>
-        <GraphSection
-          title="Sleep Hours"
-          subtitle="Your sleep hour: Fluctuated"
-          subtitle2="Average duration: 9.3 hours"
-        >
-          <SleepHoursGraph dayNumbers={dayNumbers} />
-        </GraphSection>
-        <Insights
-          insights={[
-            {
-              trend: '',
-              text: '',
-            },
-            {
-              trend: '',
-              text: 'There are no insights currently. Check back again later!',
-            },
-          ]}
-        />
-        <Recommendations recommendations={recommendations} />
-      </View>
-      <View style={styles.containerDiarySection}>
-        <View
-          style={{
-            display: 'flex',
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}
-        >
-          <View style={{flex: 1}}></View>
-          <View style={{flex: 10, alignSelf: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-              {today.toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
+    <View>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          headerShadowVisible: false,
+          headerTitle: props => (
+            <Text
+              {...props}
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: '#765000',
+              }}
+            >
+              My Diary
             </Text>
-          </View>
-          <Pressable
-            style={{
-              flex: 1,
-              alignSelf: 'flex-end',
-              alignItems: 'flex-end',
-              justifyContent: 'center',
-              height: '100%',
-            }}
-            onPress={() => router.push('/diary-edit')}
+          ),
+          headerRight: props => (
+            <Pressable
+              {...props}
+              onPress={() =>
+                Alert.alert(
+                  'Welcome to the diary page!',
+                  'Here, you can see all your diary data. To make changes, scroll to the bottom and click on the edit button.',
+                )
+              }
+            >
+              <Octicons name="question" size={16} color="#765000" />
+            </Pressable>
+          ),
+        }}
+      />
+      <ScrollView>
+        <View style={styles.containerGraphsSection}>
+          <NewCalendarView callBackToDiary={handleCallBackToDiary} />
+          <GraphSection
+            title="Mood 😄"
+            subtitle="Your mood has been Great"
+            subtitle2=""
           >
-            <Text>Edit</Text>
-          </Pressable>
+            <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
+          </GraphSection>
+          <GraphSection
+            title="Restfulness Level"
+            subtitle="Your restfulness: Fluctuated"
+            subtitle2=""
+          >
+            <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
+          </GraphSection>
+          <GraphSection
+            title="Sleep Hours"
+            subtitle="Your sleep hour: Fluctuated"
+            subtitle2="Average duration: 9.3 hours"
+          >
+            <SleepHoursGraph dayNumbers={dayNumbers} />
+          </GraphSection>
+          <Insights
+            insights={[
+              {
+                trend: '',
+                text: '',
+              },
+              {
+                trend: '',
+                text: 'There are no insights currently. Check back again later!',
+              },
+            ]}
+          />
+          <Recommendations recommendations={recommendations} />
         </View>
-        <Group title="Mood Board">
-          <Section title="">
-            <Text style={{color: '#765000'}}>Mood</Text>
-            <MoodScale
-              currentMood={scaleData[0] + 1}
-              onSelectMood={() =>
-                console.log(scaleData[new Date(Date.now()).getDay()])
-              }
-            />
-          </Section>
-          <Section title="">
-            <Text style={{color: '#765000'}}>Best Moment</Text>
-          </Section>
-        </Group>
-        <Group title="Sleep Board">
-          <Section title="">
-            <Text style={{color: '#765000'}}>How rested do you feel?</Text>
-            <MoodScale
-              currentMood={scaleData[0] + 1}
-              onSelectMood={() =>
-                console.log(scaleData[new Date(Date.now()).getDay()])
-              }
-            />
-          </Section>
-        </Group>
-      </View>
-    </ScrollView>
+        <View style={styles.containerDiarySection}>
+          <View
+            style={{
+              display: 'flex',
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+            }}
+          >
+            <View style={{flex: 1}}></View>
+            <View style={{flex: 10, alignSelf: 'center', alignItems: 'center'}}>
+              <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                {today.toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                })}
+              </Text>
+            </View>
+            <Pressable
+              style={{
+                flex: 1,
+                alignSelf: 'flex-end',
+                alignItems: 'flex-end',
+                justifyContent: 'center',
+                height: '100%',
+              }}
+              onPress={() => router.push('/diary-edit')}
+            >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 5,
+                }}
+              >
+                <Octicons name="pencil" size={16} color="black" />
+                <Text>Edit</Text>
+              </View>
+            </Pressable>
+          </View>
+          <Group title="Mood Board">
+            <Section title="">
+              <Text style={{color: '#765000'}}>Mood</Text>
+              <MoodScale
+                currentMood={scaleData[0] + 1}
+                onSelectMood={() =>
+                  console.log(scaleData[new Date(Date.now()).getDay()])
+                }
+              />
+            </Section>
+            <Section title="">
+              <Text style={{color: '#765000'}}>Best Moment</Text>
+            </Section>
+          </Group>
+          <Group title="Sleep Board">
+            <Section title="">
+              <Text style={{color: '#765000'}}>How rested do you feel?</Text>
+              <MoodScale
+                currentMood={scaleData[0] + 1}
+                onSelectMood={() =>
+                  console.log(scaleData[new Date(Date.now()).getDay()])
+                }
+              />
+            </Section>
+          </Group>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
