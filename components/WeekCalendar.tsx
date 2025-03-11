@@ -89,7 +89,7 @@ export default function CalendarView({
       >
         <WeekCalendar
           // @ts-ignore
-          ref={ref}
+          // ref={ref}
           key={width} // For rerendering the calendar on width change // See this: https://github.com/wix/react-native-calendars/issues/2327#issuecomment-2276606500
           calendarWidth={width}
           firstDay={1}
