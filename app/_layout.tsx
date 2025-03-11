@@ -15,6 +15,10 @@ import {expoDb, db} from '@/db';
 import {useDrizzleStudio} from 'expo-drizzle-studio-plugin';
 import {useMigrations} from 'drizzle-orm/expo-sqlite/migrator';
 import migrations from '@/drizzle/migrations';
+import {HeaderBackButton} from '@react-navigation/elements';
+import {Text, Pressable, Alert} from 'react-native';
+import {Octicons} from '@expo/vector-icons';
+import StackLayout from './(articles)/_layout';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -86,7 +90,86 @@ export default function RootLayout() {
     <ReduxProvider store={store}>
       <ThemeProvider value={CustomTheme}>
         <Stack screenOptions={{headerShown: false}}>
-          <Stack.Screen name="(drawer)" options={{headerShown: false}} />
+          <Stack.Screen
+            name="(drawer)"
+            options={{
+              headerShown: false,
+              headerLeft: props => (
+                <HeaderBackButton
+                  {...props}
+                  // @ts-ignore
+                  onPress={() =>
+                    //changeToPortraitOrientation() &&
+                    router.back()
+                  }
+                />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="diary/index"
+            options={{
+              headerShown: true,
+              headerShadowVisible: false,
+              headerTitle: props => (
+                <Text
+                  {...props}
+                  style={{
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    color: '#765000',
+                  }}
+                >
+                  My Diary
+                </Text>
+              ),
+              headerRight: props => (
+                <Pressable
+                  {...props}
+                  onPress={() =>
+                    Alert.alert(
+                      'Welcome to the diary page!',
+                      'Here, you can see all your diary data. To make changes, scroll to the bottom and click on the edit button.',
+                    )
+                  }
+                >
+                  <Octicons name="question" size={16} color="#765000" />
+                </Pressable>
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="diary-edit/index"
+            options={{
+              headerShown: true,
+              headerShadowVisible: false,
+              headerTitle: props => (
+                <Text
+                  {...props}
+                  style={{
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    color: '#765000',
+                  }}
+                >
+                  Edit Diary
+                </Text>
+              ),
+              headerRight: props => (
+                <Text
+                  {...props}
+                  style={{
+                    fontSize: 16,
+                    color: '#765000',
+                    fontWeight: '500',
+                  }}
+                  onPress={() => console.log('save diary called')}
+                >
+                  Save
+                </Text>
+              ),
+            }}
+          />
           <Stack.Screen name="+not-found" />
         </Stack>
       </ThemeProvider>
