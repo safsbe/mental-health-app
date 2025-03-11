@@ -33,7 +33,7 @@ function ScaleBlock({value = -1}: {value: number}) {
     }
     default: {
       color = '#F7F7F7';
-      radius = 0;
+      radius = 6;
       break;
     }
   }
@@ -71,6 +71,10 @@ function Scale({value = -1}: {value: number}) {
       display: 'flex',
       flex: 1,
       maxWidth: 24,
+      width: 24,
+      height: 120,
+      borderRadius: 6,
+      backgroundColor: '#F7F7F7',
     },
   });
 

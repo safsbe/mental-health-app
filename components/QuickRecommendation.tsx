@@ -38,9 +38,9 @@ export default function QuickRecommendation() {
     <View style={styles.container}>
       <Text style={styles.header}>Recommended</Text>
       <View style={styles.recommendationOptions}>
-        <Option text="Log Your         Sleep" imageType={0} />
-        <Option text="Log Your           Day" imageType={0} />
-        <Option text="Try Deep     Breathing" imageType={1} />
+        <Option text="Log Your Sleep" imageType={0} />
+        <Option text="Log Your Day" imageType={0} />
+        <Option text="Try Deep Breathing" imageType={1} />
       </View>
     </View>
   );
@@ -78,11 +78,13 @@ function Option({text, imageType}: {text: string; imageType: number}) {
       fontSize: 12,
       fontWeight: 'bold',
       color: '#5D83FF',
+      paddingHorizontal: 10,
     },
     optionTextMeditation: {
       textAlign: 'center',
       fontSize: 12,
       fontWeight: 'bold',
+      paddingHorizontal: 10,
     },
     imagePlus: {
       marginTop: 16,
