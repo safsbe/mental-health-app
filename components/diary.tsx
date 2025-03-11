@@ -1,4 +1,4 @@
-import {PropsWithChildren, useState} from 'react';
+import {PropsWithChildren, ReactElement, useState} from 'react';
 import {
   Text,
   View,
@@ -10,7 +10,11 @@ import {
 import Ionicons from '@expo/vector-icons/Ionicons';
 import RNDateTimePicker, {
   DateTimePickerAndroid,
+  DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import {minutesInDay} from 'date-fns/constants';
+import {time} from 'drizzle-orm/mysql-core';
+import {min} from 'drizzle-orm';
 
 export function Group({title, children}: PropsWithChildren & {title?: string}) {
   return (
@@ -44,7 +48,7 @@ export function Section({
   title,
   titleRight,
   children,
-}: PropsWithChildren & {title?: string; titleRight?: string}) {
+}: PropsWithChildren & {title?: string; titleRight?: ReactElement}) {
   const styles = StyleSheet.create({
     container: {
       borderRadius: 6,
@@ -52,12 +56,12 @@ export function Section({
       paddingVertical: 5,
       paddingHorizontal: 10,
       backgroundColor: '#FDF6E7',
+      gap: 10,
     },
     titleText: {
       color: '#765000',
       fontSize: 16,
       fontWeight: '400',
-      marginBottom: 10,
       flexGrow: 1,
     },
     titleRight: {
@@ -71,9 +75,54 @@ export function Section({
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
         <Text style={styles.titleText}>{title}</Text>
-        <Text style={styles.titleRight}>{titleRight}</Text>
+        <View style={styles.titleRight}>{titleRight}</View>
       </View>
       {children}
+    </View>
+  );
+}
+
+function filterToNumber(number: string) {
+  var result = number.replace(/[^0-9]/g, '');
+
+  return Number(result);
+}
+
+export function NumberInputComponent({
+  title,
+  callBack,
+}: {
+  title: string;
+  callBack: ({title, number}: {title: string; number: number}) => void;
+}) {
+  const [number, setNumber] = useState(0);
+
+  const styles = StyleSheet.create({
+    root: {
+      maxWidth: 56,
+      width: 56,
+      height: 28,
+      backgroundColor: 'white',
+      borderColor: '#D9CBAE',
+      borderWidth: 1,
+      borderRadius: 5,
+      paddingHorizontal: 10,
+    },
+    input: {
+      textAlign: 'center',
+    },
+  });
+
+  return (
+    <View style={styles.root}>
+      <TextInput
+        style={styles.input}
+        value={number.toString()}
+        onChangeText={number => setNumber(filterToNumber(number))}
+        onEndEditing={() => callBack({title, number})}
+        keyboardType="numeric"
+        maxLength={2}
+      />
     </View>
   );
 }
@@ -103,13 +152,19 @@ export function TextInputDesign({
       height: 28,
     },
     button: {
+      maxWidth: 56,
+      width: 56,
+      height: 28,
       borderRadius: 5,
       paddingVertical: 4,
       paddingHorizontal: 15,
       backgroundColor: '#D9CBAE',
     },
     buttonText: {
+      textAlign: 'center',
       color: '#765000',
+      fontSize: 14,
+      paddingTop: 2,
     },
   });
 
@@ -123,7 +178,47 @@ export function TextInputDesign({
   );
 }
 
-export function SleepDurationInput() {
+function convert(value: Date) {
+  const hours = value.getHours().toString();
+  const minutes = value.getMinutes().toString();
+
+  var finalString = '';
+
+  if (Number(hours) == 0) {
+    finalString += '00';
+  } else if (Number(hours) > 0 && Number(hours) < 10) {
+    finalString += '0' + hours;
+  } else {
+    finalString += hours;
+  }
+
+  finalString += ':';
+
+  if (Number(minutes) == 0) {
+    finalString += '00';
+  } else if (Number(minutes) > 0 && Number(minutes) < 10) {
+    finalString += '0' + minutes;
+  } else {
+    finalString += minutes;
+  }
+
+  return finalString;
+}
+
+export function SleepDurationInput({
+  callBack,
+}: {
+  callBack: (value: Date) => void;
+}) {
+  // set default times first
+  const hours = new Date(Date.now()).getHours();
+  const minute = new Date(Date.now()).getMinutes();
+
+  const defaultTime = hours.toString() + ':' + minute.toString();
+
+  const [inputStartTime, setInputStartTime] = useState(new Date(Date.now()));
+  const [inputEndTime, setInputEndTime] = useState(new Date(Date.now()));
+
   const styles = StyleSheet.create({
     root: {
       display: 'flex',
@@ -138,7 +233,11 @@ export function SleepDurationInput() {
       flexGrow: 1,
       alignSelf: 'center',
     },
-    picker: {},
+    pickerText: {
+      textAlign: 'center',
+      fontSize: 14,
+      paddingTop: 4,
+    },
   });
 
   return (
@@ -149,30 +248,36 @@ export function SleepDurationInput() {
           {Platform.OS === 'ios' ? (
             <RNDateTimePicker
               mode="time"
-              value={new Date()}
-              minuteInterval={5}
+              value={inputStartTime}
+              onChange={value =>
+                setInputStartTime(new Date(value.nativeEvent.timestamp))
+              }
             />
           ) : (
             <View
               style={{
-                paddingVertical: 4,
+                width: 56,
+                height: 28,
                 paddingHorizontal: 10,
                 backgroundColor: 'white',
                 borderRadius: 5,
                 borderColor: '#D9CBAE',
                 borderWidth: 1,
+                display: 'flex',
               }}
             >
               <Text
+                style={styles.pickerText}
                 onPress={() =>
                   DateTimePickerAndroid.open({
                     mode: 'time',
                     value: new Date(),
-                    minuteInterval: 5,
+                    onChange: value =>
+                      setInputStartTime(new Date(value.nativeEvent.timestamp)),
                   })
                 }
               >
-                15:10
+                {convert(inputStartTime)}
               </Text>
             </View>
           )}
@@ -181,7 +286,42 @@ export function SleepDurationInput() {
       <View style={styles.row}>
         <Text style={styles.text}>End Time</Text>
         <View style={styles.picker}>
-          <RNDateTimePicker mode="time" value={new Date()} minuteInterval={5} />
+          {Platform.OS === 'ios' ? (
+            <RNDateTimePicker
+              mode="time"
+              value={inputEndTime}
+              onChange={value =>
+                setInputEndTime(new Date(value.nativeEvent.timestamp))
+              }
+            />
+          ) : (
+            <View
+              style={{
+                width: 56,
+                height: 28,
+                paddingHorizontal: 10,
+                backgroundColor: 'white',
+                borderRadius: 5,
+                borderColor: '#D9CBAE',
+                borderWidth: 1,
+                display: 'flex',
+              }}
+            >
+              <Text
+                style={styles.pickerText}
+                onPress={() =>
+                  DateTimePickerAndroid.open({
+                    mode: 'time',
+                    value: new Date(),
+                    onChange: value =>
+                      setInputEndTime(new Date(value.nativeEvent.timestamp)),
+                  })
+                }
+              >
+                {convert(inputEndTime)}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     </View>
@@ -190,9 +330,11 @@ export function SleepDurationInput() {
 
 export function TextBoxDesign({
   displayText,
+  title,
   callBack,
 }: {
   displayText: string;
+  title: string;
   callBack: (text: string) => void;
 }) {
   const styles = StyleSheet.create({
