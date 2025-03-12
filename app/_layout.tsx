@@ -138,38 +138,6 @@ export default function RootLayout() {
               ),
             }}
           />
-          <Stack.Screen
-            name="diary-edit/index"
-            options={{
-              headerShown: true,
-              headerShadowVisible: false,
-              headerTitle: props => (
-                <Text
-                  {...props}
-                  style={{
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                    color: '#765000',
-                  }}
-                >
-                  Edit Diary
-                </Text>
-              ),
-              headerRight: props => (
-                <Text
-                  {...props}
-                  style={{
-                    fontSize: 16,
-                    color: '#765000',
-                    fontWeight: '500',
-                  }}
-                  onPress={() => console.log('save diary called')}
-                >
-                  Save
-                </Text>
-              ),
-            }}
-          />
           <Stack.Screen name="+not-found" />
         </Stack>
       </ThemeProvider>

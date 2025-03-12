@@ -6,9 +6,10 @@ import {
   Text,
   TextInput,
   View,
+  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {useSegments} from 'expo-router';
+import {Stack, useSegments} from 'expo-router';
 import {
   Group,
   Section,
@@ -48,14 +49,15 @@ const styles = StyleSheet.create({
 // Main function
 
 const defaultDiaryData = {
-  moodRating: 3,
-  SignificantEvents: ['Ur mom'],
+  moodRating: 0,
+  SignificantEvents: ['Example Data; Click trash icon to remove me!'],
   BestMoment: [],
   WorstMoment: [],
   WhatHappened: [],
   NumberOfWakings: 0,
   MedicineTaken: [],
-  AlcoholCaffeinetaken: [],
+  SleepDuration: [], // e.g. [(date of start), (date of end)]
+  AlcoholCaffeineTaken: [],
   NumberOfNaps: 0,
 };
 
@@ -100,21 +102,18 @@ export default function DiaryEdit() {
 
   const handleTextBoxDesignCallBack = ({
     title,
-    text,
+    data,
   }: {
     title: string;
-    text: string;
+    data: string[];
   }) => {
-    var data = diaryData;
+    const newState = {...diaryData};
 
-    // sort data to make sure theres no value
-    var filteredData = data.title.filter(x => x !== text);
+    newState[title] = data;
 
-    data.title = filteredData;
+    setDiaryData(newState);
 
-    setDiaryData(data);
-
-    console.log('attempted deleting', title, text);
+    console.log('updated array', title, newState);
   };
 
   const handleTextInputDesignCallBack = ({
@@ -124,14 +123,14 @@ export default function DiaryEdit() {
     title: string;
     text: string;
   }) => {
-    var data = diaryData;
+    const newState = {...diaryData};
 
-    if (data[title].indexOf(text) === -1) {
+    if (newState[title].indexOf(text) === -1) {
       // this text under this title isnt in data
-      data[title].push(text);
+      newState[title].push(text);
     }
 
-    setDiaryData(data);
+    setDiaryData(newState);
 
     console.log('attempted adding', title, text);
   };
@@ -143,7 +142,36 @@ export default function DiaryEdit() {
     title: string;
     number: number;
   }) => {
+    const newState = {...diaryData};
+
+    newState[title] = number;
+
+    setDiaryData(newState);
+
     console.log('handleNumberInputComponent', title, number);
+  };
+
+  const handleSleepDurationInputCallBack = (dateArray: Date[]) => {
+    const newState = {...diaryData};
+
+    console.log(dateArray);
+
+    if (dateArray[0] > dateArray[1]) {
+      // invalid inputs
+      Alert.alert(
+        'Error',
+        'Sleep duration Start Time cannot be after End Time',
+      );
+    } else {
+      var newArray = [];
+
+      newArray.push(dateArray[0]);
+      newArray.push(dateArray[1]);
+
+      newState['SleepDuration'] = newArray;
+
+      setDiaryData(newState);
+    }
   };
 
   // Processing all the useStates and callbacks together
@@ -163,116 +191,180 @@ export default function DiaryEdit() {
     );
   } else if (workingEntry) {
     return (
-      <ScrollView style={styles.root}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>{workingEntry.entryDate}</Text>
-        </View>
-        <Group title="Mood Board">
-          <Section title="Emotion">
-            {/* <Text>Mood: {workingEntry?.moodRating}</Text> */}
-            <MoodScale
-              currentMood={workingEntry?.moodRating}
-              onSelectMood={i =>
-                setWorkingEntry({...workingEntry, moodRating: i})
-              }
-            />
-          </Section>
-          <Section title="Significant Events">
-            <TextInputDesign
-              title="SignificantEvents"
-              callBack={handleTextInputDesignCallBack}
-            />
-            <TextBoxDesign
-              displayText="test"
-              title="SignificantEvents"
-              callBack={handleTextBoxDesignCallBack}
-            />
-          </Section>
-          <Section title="Best Moment">
-            <TextInputDesign
-              title="BestMoment"
-              callBack={handleTextInputDesignCallBack}
-            />
-            <TextBoxDesign
-              displayText="entry text"
-              title="BestMoment"
-              callBack={handleTextBoxDesignCallBack}
-            />
-          </Section>
-          <Section title="Worst Moment">
-            <TextInputDesign
-              title="WorstMoment"
-              callBack={handleTextInputDesignCallBack}
-            />
-          </Section>
-          <Section title="What Happened">
-            <TextInputDesign
-              title="WhatHappened"
-              callBack={handleTextInputDesignCallBack}
-            />
-          </Section>
-        </Group>
-        <Group title="Sleep Board">
-          <Section title="How rested do you feel?">
-            {/* <Text>Mood: {workingEntry?.moodRating}</Text> */}
-            <MoodScale
-              currentMood={workingEntry?.moodRating}
-              onSelectMood={i =>
-                setWorkingEntry({...workingEntry, moodRating: i})
-              }
-            />
-          </Section>
-          <Section title="Sleep Duration" titleRight={<Text>10 hours</Text>}>
-            <SleepDurationInput />
-          </Section>
-          <Section
-            title="Number of Wakings"
-            titleRight={
-              <NumberInputComponent
-                title="NumberOfWakings"
-                callBack={handleNumberInputComponentCallBack}
-              />
-            }
-          ></Section>
-          <Section title="Medicine Taken">
-            <TextInputDesign
-              title="MedicineTaken"
-              callBack={handleTextInputDesignCallBack}
-            />
-          </Section>
-          <Section title="Alcohol / Caffeine Taken">
-            <TextInputDesign
-              title="AlcoholCaffeineTaken"
-              callBack={handleTextInputDesignCallBack}
-            />
-          </Section>
-          <Section
-            title="Number of Naps"
-            titleRight={
-              <NumberInputComponent
-                title="NumberOfNaps"
-                callBack={handleNumberInputComponentCallBack}
-              />
-            }
-          ></Section>
-          <Section
-            title="Total Duration of Naps"
-            titleRight={
-              <View
-                style={{display: 'flex', flex: 1, flexDirection: 'row', gap: 5}}
+      <View>
+        <Stack.Screen
+          options={{
+            headerShown: true,
+            headerShadowVisible: false,
+            headerTitle: props => (
+              <Text
+                {...props}
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  color: '#765000',
+                }}
               >
+                Edit Diary
+              </Text>
+            ),
+            headerRight: props => (
+              <Text
+                {...props}
+                style={{
+                  fontSize: 16,
+                  color: '#765000',
+                  fontWeight: '500',
+                }}
+                onPress={() => console.log('diaryData:', diaryData)}
+              >
+                Save
+              </Text>
+            ),
+          }}
+        />
+        <ScrollView style={styles.root}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>{workingEntry.entryDate}</Text>
+          </View>
+          <Group title="Mood Board">
+            <Section title="Emotion">
+              {/* <Text>Mood: {workingEntry?.moodRating}</Text> */}
+              <MoodScale
+                currentMood={workingEntry?.moodRating}
+                onSelectMood={i =>
+                  setWorkingEntry({...workingEntry, moodRating: i})
+                }
+              />
+            </Section>
+            <Section title="Significant Events">
+              <TextInputDesign
+                title="SignificantEvents"
+                callBack={handleTextInputDesignCallBack}
+              />
+              <TextBoxDesign
+                key={diaryData.SignificantEvents.length}
+                data={diaryData.SignificantEvents}
+                title="SignificantEvents"
+                callBack={handleTextBoxDesignCallBack}
+              />
+            </Section>
+            <Section title="Best Moment">
+              <TextInputDesign
+                title="BestMoment"
+                callBack={handleTextInputDesignCallBack}
+              />
+              <TextBoxDesign
+                key={diaryData.BestMoment.length}
+                data={diaryData.BestMoment}
+                title="BestMoment"
+                callBack={handleTextBoxDesignCallBack}
+              />
+            </Section>
+            <Section title="Worst Moment">
+              <TextInputDesign
+                title="WorstMoment"
+                callBack={handleTextInputDesignCallBack}
+              />
+              <TextBoxDesign
+                key={diaryData.WorstMoment.length}
+                data={diaryData.WorstMoment}
+                title="WorstMoment"
+                callBack={handleTextBoxDesignCallBack}
+              />
+            </Section>
+            <Section title="What Happened">
+              <TextInputDesign
+                title="WhatHappened"
+                callBack={handleTextInputDesignCallBack}
+              />
+              <TextBoxDesign
+                key={diaryData.WhatHappened.length}
+                data={diaryData.WhatHappened}
+                title="WhatHappened"
+                callBack={handleTextBoxDesignCallBack}
+              />
+            </Section>
+          </Group>
+          <Group title="Sleep Board">
+            <Section title="How rested do you feel?">
+              {/* <Text>Mood: {workingEntry?.moodRating}</Text> */}
+              <MoodScale
+                currentMood={workingEntry?.moodRating}
+                onSelectMood={i =>
+                  setWorkingEntry({...workingEntry, moodRating: i})
+                }
+              />
+            </Section>
+            <Section title="Sleep Duration" titleRight={<Text> hours</Text>}>
+              <SleepDurationInput callBack={handleSleepDurationInputCallBack} />
+            </Section>
+            <Section
+              title="Number of Wakings"
+              titleRight={
                 <NumberInputComponent
-                  title="TotalNapDuration"
+                  title="NumberOfWakings"
                   callBack={handleNumberInputComponentCallBack}
                 />
-                <Text style={{height: '100%', paddingTop: 8, fontSize: 16}}>
-                  Hrs
-                </Text>
-              </View>
-            }
-          ></Section>
-        </Group>
-      </ScrollView>
+              }
+            ></Section>
+            <Section title="Medicine Taken">
+              <TextInputDesign
+                title="MedicineTaken"
+                callBack={handleTextInputDesignCallBack}
+              />
+              <TextBoxDesign
+                key={diaryData.MedicineTaken.length}
+                data={diaryData.MedicineTaken}
+                title="MedicineTaken"
+                callBack={handleTextBoxDesignCallBack}
+              />
+            </Section>
+            <Section title="Alcohol / Caffeine Taken">
+              <TextInputDesign
+                title="AlcoholCaffeineTaken"
+                callBack={handleTextInputDesignCallBack}
+              />
+              <TextBoxDesign
+                key={diaryData.AlcoholCaffeineTaken.length}
+                data={diaryData.AlcoholCaffeineTaken}
+                title="AlcoholCaffeineTaken"
+                callBack={handleTextBoxDesignCallBack}
+              />
+            </Section>
+            <Section
+              title="Number of Naps"
+              titleRight={
+                <NumberInputComponent
+                  title="NumberOfNaps"
+                  callBack={handleNumberInputComponentCallBack}
+                />
+              }
+            ></Section>
+            <Section
+              title="Total Duration of Naps"
+              titleRight={
+                <View
+                  style={{
+                    display: 'flex',
+                    flex: 1,
+                    flexDirection: 'row',
+                    gap: 5,
+                  }}
+                >
+                  <NumberInputComponent
+                    title="TotalNapDuration"
+                    callBack={handleNumberInputComponentCallBack}
+                  />
+                  <Text style={{height: '100%', paddingTop: 8, fontSize: 16}}>
+                    Hrs
+                  </Text>
+                </View>
+              }
+            ></Section>
+          </Group>
+        </ScrollView>
+      </View>
     );
   }
 }
