@@ -56,7 +56,7 @@ export function Section({
       paddingVertical: 5,
       paddingHorizontal: 10,
       backgroundColor: '#FDF6E7',
-      gap: 10,
+      gap: 5,
     },
     titleText: {
       color: '#765000',
@@ -132,9 +132,17 @@ export function TextInputDesign({
   callBack,
 }: {
   title: string;
-  callBack: ({title, text}: {title: string; text: string}) => void;
+  callBack: ({title, textValue}: {title: string; textValue: string}) => void;
 }) {
   const [text, onChangeText] = useState('');
+
+  function checkThenCallBack() {
+    if (text.trim() == '') {
+      return;
+    } else {
+      callBack({title, text});
+    }
+  }
 
   const styles = StyleSheet.create({
     root: {
@@ -171,7 +179,7 @@ export function TextInputDesign({
   return (
     <View style={styles.root}>
       <TextInput style={styles.input} onChangeText={onChangeText} />
-      <Pressable style={styles.button} onPress={() => callBack({title, text})}>
+      <Pressable style={styles.button} onPress={() => checkThenCallBack()}>
         <Text style={styles.buttonText}>Add</Text>
       </Pressable>
     </View>
@@ -208,7 +216,7 @@ function convert(value: Date) {
 export function SleepDurationInput({
   callBack,
 }: {
-  callBack: (value: Date) => void;
+  callBack: ({start, end}: {start: Date; end: Date}) => void;
 }) {
   // set default times first
   const hours = new Date(Date.now()).getHours();
@@ -218,6 +226,16 @@ export function SleepDurationInput({
 
   const [inputStartTime, setInputStartTime] = useState(new Date(Date.now()));
   const [inputEndTime, setInputEndTime] = useState(new Date(Date.now()));
+
+  const processAndCallBackEndTime = data => {
+    // const newState = [...inputStartTime];
+
+    var timestamp = new Date(data.nativeEvent.timestamp);
+
+    setInputEndTime(timestamp);
+
+    callBack([inputStartTime, timestamp]);
+  };
 
   const styles = StyleSheet.create({
     root: {
@@ -313,8 +331,7 @@ export function SleepDurationInput({
                   DateTimePickerAndroid.open({
                     mode: 'time',
                     value: new Date(),
-                    onChange: value =>
-                      setInputEndTime(new Date(value.nativeEvent.timestamp)),
+                    onChange: value => processAndCallBackEndTime(value),
                   })
                 }
               >
@@ -329,20 +346,58 @@ export function SleepDurationInput({
 }
 
 export function TextBoxDesign({
-  displayText,
+  data,
   title,
   callBack,
 }: {
-  displayText: string;
+  data: string[];
   title: string;
-  callBack: (text: string) => void;
+  callBack: ({title, data}: {title: string; data: string[]}) => void;
 }) {
+  const handleDeleteRequest = (text: string) => {
+    // console.log(data)
+
+    var filteredData = data.filter(x => x !== text);
+
+    data = filteredData;
+
+    callBack({title, data});
+  };
+
   const styles = StyleSheet.create({
     root: {
       display: 'flex',
       flex: 1,
-      marginTop: 5,
+      gap: 5,
+      // marginTop: 5,
     },
+  });
+
+  return (
+    <View style={styles.root}>
+      {data != undefined && data.length != 0 ? (
+        data.map((text, index) => (
+          <TextBoxInternal
+            key={index}
+            text={text}
+            deleteRequest={handleDeleteRequest}
+          />
+        ))
+      ) : (
+        <View style={{height: 0}}></View>
+      )}
+    </View>
+  );
+}
+
+export function TextBoxInternal({
+  text,
+  deleteRequest,
+}: {
+  text: string;
+  deleteRequest: (text: string) => void;
+}) {
+  const styles = StyleSheet.create({
     textContainer: {
       flexDirection: 'row',
       paddingHorizontal: 10,
@@ -363,16 +418,11 @@ export function TextBoxDesign({
   });
 
   return (
-    <View style={styles.root}>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>{displayText}</Text>
-        <Pressable
-          onPress={() => callBack(displayText)}
-          style={styles.trashIcon}
-        >
-          <Ionicons name="trash-outline" size={16} color="black" />
-        </Pressable>
-      </View>
+    <View style={styles.textContainer}>
+      <Text style={styles.text}>{text}</Text>
+      <Pressable onPress={() => deleteRequest(text)} style={styles.trashIcon}>
+        <Ionicons name="trash-outline" size={16} color="black" />
+      </Pressable>
     </View>
   );
 }
