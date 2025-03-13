@@ -25,8 +25,6 @@ const goalTitles = [
   'Journalling',
 ];
 
-const goalImage = require('../../assets/placeholders/400x400.svg');
-
 const goalImages = [
   require('../../assets/guest/Break Bad Habits.png'),
   require('../../assets/guest/Learn More.png'),
