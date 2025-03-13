@@ -38,9 +38,9 @@ export default function Index() {
     <ScrollView>
       <View style={styles.container}>
         <DiaryHero />
-        <Section title="Recommended Read">
+        {/* <Section title="Recommended Read">
           <Quote />
-        </Section>
+        </Section> */}
         <Section title="Activities">
           <Activities />
         </Section>
