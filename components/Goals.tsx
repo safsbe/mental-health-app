@@ -22,7 +22,7 @@ const Goals: React.FC<GoalsProps> = ({title, image, isSelected, onSelect}) => {
 const styles = StyleSheet.create({
   goal: {
     width: '45%',
-    padding: 10,
+    padding: 5,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
   },
   image: {
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
     marginBottom: 10,
   },
 });

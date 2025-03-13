@@ -13,7 +13,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {router, Stack} from 'expo-router';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import {HeaderBackButton} from '@react-navigation/elements';
+import Goals from '@/components/Goals';
 import RNPickerSelect from 'react-native-picker-select';
+
+const goalTitles = [
+  'Break Bad Habits',
+  'Learn More',
+  'Keep Calm',
+  'Form Good Habits',
+  'Manage Stress',
+  'Journalling',
+];
+
+const goalImage = require('../../assets/placeholders/400x400.svg');
+
+const goalImages = [
+  require('../../assets/guest/Break Bad Habits.png'),
+  require('../../assets/guest/Learn More.png'),
+  require('../../assets/guest/Keep Calm.png'),
+  require('../../assets/guest/Form Good Habits.png'),
+  require('../../assets/guest/Manage Stress.png'),
+  require('../../assets/guest/Journalling.png'),
+];
 
 export default function GuestStart() {
   const [alias, setAlias] = useState<string>('');
@@ -23,6 +44,10 @@ export default function GuestStart() {
   const pickerRef2 = useRef();
   const [testState, setTestState] = useState<string>('');
 
+  const [selectedGoals, setSelectedGoals] = useState<boolean[]>(
+    Array(6).fill(false),
+  ); // Track selected goals
+
   async function lockApplicationPortrait() {
     await ScreenOrientation.lockAsync(2);
   }
@@ -30,7 +55,14 @@ export default function GuestStart() {
   lockApplicationPortrait();
 
   const handleSave = async () => {
-    if (!alias || !purpose) {
+    const selectedGoalTitles = goalTitles.filter(
+      (_, index) => selectedGoals[index],
+    );
+    const selectedGoalImages = goalImages.filter(
+      (_, index) => selectedGoals[index],
+    );
+
+    if (!alias || selectedGoals.length === 0) {
       Alert.alert(
         'Error',
         'Please fill all fields and select at least one goal',
@@ -43,11 +75,24 @@ export default function GuestStart() {
       await AsyncStorage.setItem('purpose', purpose);
       await AsyncStorage.setItem('appKnowledge', appKnowledge);
       await AsyncStorage.setItem('authToken', 'guest'); // Moved from login page to here.
+      await AsyncStorage.setItem(
+        'goals',
+        JSON.stringify({
+          titles: selectedGoalTitles,
+          images: selectedGoalImages,
+        }),
+      );
 
       router.replace('/(drawer)/(tabs)'); // Navigate to tabs after saving
     } catch (error) {
       Alert.alert('Error', 'Failed to save data');
     }
+  };
+
+  const handleGoalSelect = (index: number) => {
+    const updatedSelectedGoals = [...selectedGoals];
+    updatedSelectedGoals[index] = !updatedSelectedGoals[index]; // Toggle goal selection
+    setSelectedGoals(updatedSelectedGoals);
   };
 
   function resetInputs() {
@@ -100,7 +145,7 @@ export default function GuestStart() {
           2. What is your purpose of using this app?
         </Text>
 
-        <View style={styles.pickerContainer}>
+        {/* <View style={styles.pickerContainer}>
           <RNPickerSelect
             // @ts-ignore
             ref={pickerRef1}
@@ -115,6 +160,19 @@ export default function GuestStart() {
               {label: 'Others', value: 'Others'},
             ]}
           />
+        </View> */}
+
+        {/* Goals Components */}
+        <View style={styles.goalsContainer}>
+          {goalTitles.map((title, index) => (
+            <Goals
+              key={index}
+              title={title}
+              image={goalImages[index]}
+              isSelected={selectedGoals[index]}
+              onSelect={() => handleGoalSelect(index)}
+            />
+          ))}
         </View>
 
         <Text style={styles.questionText}>
@@ -214,6 +272,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     borderColor: '#2A4E4C',
     color: '#2A4E4C',
+  },
+  goalsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 20,
   },
 });
 

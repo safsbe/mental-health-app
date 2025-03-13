@@ -2,6 +2,7 @@ import {useEffect, useState, useRef} from 'react';
 import {
   AppState,
   AppStateStatus,
+  ScrollView,
   View,
   Text,
   StyleSheet,
@@ -36,12 +37,12 @@ export default function Meditation() {
       file: require('../../assets/meditation/audio/deep_breathing_ippt.mp3'),
     },
     {
-      title: 'Muscle Relaxation (Parody)',
-      file: require('../../assets/meditation/audio/muscle_relaxation_parody.mp3'),
-    },
-    {
       title: 'Progressive Muscle Relaxation',
       file: require('../../assets/meditation/audio/progressive_muscle_relaxation.mp3'),
+    },
+    {
+      title: 'Muscle Relaxation (Parody)',
+      file: require('../../assets/meditation/audio/muscle_relaxation_parody.mp3'),
     },
   ];
 
@@ -159,7 +160,7 @@ export default function Meditation() {
           ),
         }}
       />
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <View>
           <Text style={styles.titleSubtle}>Take a</Text>
           <Text style={styles.titleEmphasis}>Mindful Pause</Text>
@@ -246,7 +247,7 @@ export default function Meditation() {
         >
           <Text style={{...styles.pill, ...styles.pillActive}}>Read more</Text>
         </Pressable>
-      </View>
+      </ScrollView>
     </View>
   );
 }

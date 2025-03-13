@@ -8,6 +8,7 @@ import {
   Animated,
   Button,
   Platform,
+  useWindowDimensions,
 } from 'react-native';
 import {Image} from 'expo-image';
 import {Href, router, Stack, useLocalSearchParams} from 'expo-router';
@@ -1568,6 +1569,8 @@ export default function ArticleView() {
     );
   }
 
+  const {height, width, fontScale} = useWindowDimensions();
+
   // @ts-ignore
   const handleNavigationChange = newNavState => {
     const {url, target} = newNavState;
@@ -1682,7 +1685,10 @@ export default function ArticleView() {
           <Stack.Screen
             options={{
               title: title,
-              headerTitleStyle: {fontWeight: 'bold'},
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: fontScale > 1.5 ? 14 : 16,
+              },
               headerLeft: props => (
                 <HeaderBackButton
                   {...props}

@@ -40,7 +40,7 @@ export default function QuickRecommendation() {
       <View style={styles.recommendationOptions}>
         <Option text="Log Your Sleep" imageType={0} />
         <Option text="Log Your Day" imageType={0} />
-        <Option text="Try Deep Breathing" imageType={1} />
+        <Option text="Mindful Pause" imageType={1} />
       </View>
     </View>
   );
