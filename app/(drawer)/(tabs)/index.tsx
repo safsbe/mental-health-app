@@ -10,6 +10,10 @@ import Explore from '@/components/Explore';
 import {router} from 'expo-router';
 import {getNativeSourceAndFullInitialStatusForLoadAsync} from 'expo-av/build/AV';
 import {parse} from 'date-fns';
+import {
+  useGetDiaryEntryMoodQuery,
+  useSaveDiaryEntryMoodMutation,
+} from '@/services/diary-api';
 
 export default function Index() {
   const [name, setName] = useState('');
@@ -50,45 +54,27 @@ export default function Index() {
 }
 
 function DiaryHero() {
+  // REDUX WIRING
+  const {
+    data: diaryEntryMoodData,
+    isLoading: diaryEntryMoodIsLoading,
+    isSuccess: diaryEntryMoodIsSuccess,
+    isError: diaryEntryMoodisError,
+    error: diaryEntryMoodError,
+  } = useGetDiaryEntryMoodQuery(new Date().toISOString().split('T')[0]);
+  console.log(diaryEntryMoodData);
+
+  const [
+    saveDiaryEntryMood,
+    saveDiaryEntryMoodResult,
+  ] = useSaveDiaryEntryMoodMutation();
+  
+  // END REDUX WIRING
+  
   const [mood, setMood] = useState(0);
 
   const handleMoodSelect = async (selectedMood: number) => {
-    setMood(selectedMood);
-    const currentDate = new Date().toISOString().split('T')[0]; // date formatted as YYYY-MM-DD
-    const currMood = await AsyncStorage.getItem('mood');
-
-    if (currMood == null) {
-      await AsyncStorage.setItem(
-        'mood',
-        JSON.stringify([{date: currentDate, mood: selectedMood}]),
-      );
-    } else {
-      // console.log(currMood); // Mood before button press
-
-      const parsedCurrMood = JSON.parse(currMood);
-      // @ts-ignore
-      const otherResultArray = parsedCurrMood.filter(
-        x => x.date !== currentDate,
-      );
-
-      // console.log('parsedCurrMood:', parsedCurrMood);
-      // console.log('otherResultArray', otherResultArray);
-
-      const todayNewEntry = {
-        date: currentDate,
-        mood: selectedMood,
-      };
-
-      // console.log('todayNewEntry:', todayNewEntry);
-
-      otherResultArray.push(todayNewEntry); // add todays value to the moods from other days except the previous value for today
-
-      // console.log('new otherResultArray:', otherResultArray);
-
-      await AsyncStorage.setItem('mood', JSON.stringify(otherResultArray));
-    }
-
-    console.log('mood:', await AsyncStorage.getItem('mood'));
+    await saveDiaryEntryMood({moodRating: selectedMood});
   };
 
   const styles = StyleSheet.create({
@@ -136,7 +122,7 @@ function DiaryHero() {
       <Text style={styles.dateLarge}>{moment().format('dddd')}</Text>
       <Text style={styles.dateSmall}>{moment().format('DD MMMM YYYY')}</Text>
       <Text style={styles.moodText}>What is your mood today?</Text>
-      <MoodScale currentMood={mood} onSelectMood={handleMoodSelect} />
+      <MoodScale currentMood={diaryEntryMoodData} onSelectMood={handleMoodSelect} />
       <QuickRecommendation />
     </View>
   );

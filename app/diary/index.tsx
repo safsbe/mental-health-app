@@ -20,6 +20,10 @@ import {SleepHoursGraph} from '@/components/SleepGraph';
 import {Group, Section} from '@/components/diary';
 import MoodScale from '@/components/MoodScale';
 import Octicons from '@expo/vector-icons/Octicons';
+import {
+  useGetDiaryEntryQuery,
+  useSaveDiaryEntryMoodMutation,
+} from '@/services/diary-api';
 
 function GraphSection({title, subtitle, subtitle2, children}) {
   const styles = StyleSheet.create({
@@ -290,6 +294,20 @@ async function getDataFromAsync() {
 var defaultScaleData = [-1, -1, -1, -1, -1, -1, -1];
 
 export default function Diary() {
+  // REDUX WIRING
+  const {
+    data: diaryEntryData,
+    isLoading: diaryEntryIsLoading,
+    isSuccess: diaryEntryIsSuccess,
+    isError: diaryEntryisError,
+    error: diaryEntryError,
+  } = useGetDiaryEntryQuery(new Date().toISOString().split('T')[0]);
+  const [
+    saveDiaryEntryMood,
+    saveDiaryEntryMoodResult,
+  ] = useSaveDiaryEntryMoodMutation();
+  // END REDUX WIRING
+  
   const [dayNumbers, setDayNumbers] = useState<number[]>(defaultDayNumbers);
   const [scaleData, setScaleData] = useState<number[]>(defaultScaleData);
   const tempKey = useRef([]);
@@ -494,10 +512,8 @@ export default function Diary() {
           <Section title="">
             <Text style={{color: '#765000'}}>Mood</Text>
             <MoodScale
-              currentMood={scaleData[0] + 1}
-              onSelectMood={() =>
-                console.log(scaleData[new Date(Date.now()).getDay()])
-              }
+              currentMood={diaryEntryData!.moodRating}
+              onSelectMood={(selectedMood: number) => saveDiaryEntryMood({moodRating: selectedMood})}
             />
           </Section>
           <Section title="">
