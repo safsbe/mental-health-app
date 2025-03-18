@@ -1343,6 +1343,12 @@ export default function ArticleView() {
             uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page8.html',
           },
         ],
+        [
+          require('../../assets/articleAssets/aboutmentalhealth/burnout/page9.html'),
+          {
+            uri: 'file:///android_asset/articleAssets/aboutmentalhealth/burnout/page9.html',
+          },
+        ],
       ],
     },
   ];
@@ -1454,7 +1460,7 @@ export default function ArticleView() {
     {
       id: 19, // What is Burnout
       collection: 'aboutmentalhealth',
-      header: [0, 1, 2, 4, 6],
+      header: [0, 1, 2, 4, 999],
     },
     {
       id: 12, // Helplines
