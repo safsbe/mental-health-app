@@ -1,3 +1,4 @@
+import {format} from 'date-fns';
 import {useState} from 'react';
 import {
   View,
@@ -15,16 +16,15 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import GetWeek from './GetWeek';
 
 type NewCalendarViewProps = {
+  activeDate?: string;
   callBackToDiary: (data: string[]) => void; // Pass data back to parent index.tsx in /diary
 };
 
 export default function NewCalendarView({
+  activeDate = format(new Date(), 'yyyy-MM-dd'),
   callBackToDiary,
 }: NewCalendarViewProps) {
   const [view, setView] = useState<'week' | 'month' | 'year'>('week');
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split('T')[0],
-  );
 
   const [Monday, setMonday] = useState<string>();
   const [Sunday, setSunday] = useState<string>();
@@ -40,7 +40,7 @@ export default function NewCalendarView({
   ]; //PLACEHOLDER DATA CUZ HAVENT IMPLEMENTED GETTING MOOD DATA FROM ASYNCSTORAGE YET
 
   const handleDayPress = (date: string) => {
-    setSelectedDate(date);
+    callBackToDiary([date]);
   };
 
   const handleCallBack = (data: string[]) => {
@@ -138,7 +138,7 @@ export default function NewCalendarView({
       </View>
       <View style={styles.calendarContainer}>
         {view === 'week' && (
-          <WeekCalendar onDayPress={handleDayPress} callBack={handleCallBack} />
+          <WeekCalendar activeDate={activeDate} onDayPress={handleDayPress} callBack={handleCallBack} />
         )}
         {view === 'month' && (
           <MonthCalendar moodData={moodData} onDayPress={handleDayPress} />

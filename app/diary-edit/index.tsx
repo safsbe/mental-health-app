@@ -1,15 +1,12 @@
-import {PropsWithChildren, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
-  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Stack, useSegments} from 'expo-router';
+import {Stack} from 'expo-router';
 import {
   Group,
   Section,
@@ -21,7 +18,6 @@ import {
 import MoodScale from '@/components/MoodScale';
 import {
   ActiveDiaryEntry as ActiveEntry,
-  useGetActiveDiaryEntryQuery,
   useGetDiaryEntryQuery,
 } from '@/services/diary-api';
 import {RootState} from '@/utils/store';
@@ -46,20 +42,34 @@ const styles = StyleSheet.create({
   },
 });
 
-// Main function
+interface DiaryEntryListEditSectionProps<T> {
+  title: string;
+  onAddItem: () => void;
+  onRemoveItem: (item: {id: T}) => void;
+  items: {
+    id: T,
+    body: string,
+  }[];
+}
 
-const defaultDiaryData = {
-  moodRating: 0,
-  SignificantEvents: ['Example Data; Click trash icon to remove me!'],
-  BestMoment: [],
-  WorstMoment: [],
-  WhatHappened: [],
-  NumberOfWakings: 0,
-  MedicineTaken: [],
-  SleepDuration: [], // e.g. [(date of start), (date of end)]
-  AlcoholCaffeineTaken: [],
-  NumberOfNaps: 0,
-};
+function DiaryEntryListEditSection({
+  title,
+  onAddItem,
+  onRemoveItem,
+  items,
+}: DiaryEntryListEditSectionProps<string>) {
+  return (
+    <Section title={title}>
+      <TextInputDesign
+        title=""
+        callBack={onAddItem}
+      />
+      <TextBoxDesign
+        items={items}
+        onRemoveItem={onRemoveItem} />
+    </Section>
+  );
+}
 
 export default function DiaryEdit() {
   const [workingEntry, setWorkingEntry] = useState<ActiveEntry>();
@@ -72,7 +82,7 @@ export default function DiaryEdit() {
     data: activeEntryData,
     error: activeEntryError,
     isLoading: activeEntryIsLoading,
-  } = useGetDiaryEntryQuery(new Date().toISOString().split('T')[0]);
+  } = useGetDiaryEntryQuery(activeEntryDate);
 
   useEffect(() => {
     if (activeEntryError) {
@@ -85,94 +95,6 @@ export default function DiaryEdit() {
   useEffect(() => {
     console.log('workingEntryUpdate: ' + JSON.stringify(workingEntry));
   }, [workingEntry]);
-
-  // useStates
-
-  const [diaryData, setDiaryData] = useState(defaultDiaryData);
-
-  // handle Callbacks
-
-  useEffect(() => {
-    setDiaryData(defaultDiaryData);
-  }, []);
-
-  useEffect(() => {
-    console.log('diaryData:', diaryData);
-  }, [diaryData]);
-
-  const handleTextBoxDesignCallBack = ({
-    title,
-    data,
-  }: {
-    title: string;
-    data: string[];
-  }) => {
-    const newState = {...diaryData};
-
-    newState[title] = data;
-
-    setDiaryData(newState);
-
-    console.log('updated array', title, newState);
-  };
-
-  const handleTextInputDesignCallBack = ({
-    title,
-    text,
-  }: {
-    title: string;
-    text: string;
-  }) => {
-    const newState = {...diaryData};
-
-    if (newState[title].indexOf(text) === -1) {
-      // this text under this title isnt in data
-      newState[title].push(text);
-    }
-
-    setDiaryData(newState);
-
-    console.log('attempted adding', title, text);
-  };
-
-  const handleNumberInputComponentCallBack = ({
-    title,
-    number,
-  }: {
-    title: string;
-    number: number;
-  }) => {
-    const newState = {...diaryData};
-
-    newState[title] = number;
-
-    setDiaryData(newState);
-
-    console.log('handleNumberInputComponent', title, number);
-  };
-
-  const handleSleepDurationInputCallBack = (dateArray: Date[]) => {
-    const newState = {...diaryData};
-
-    console.log(dateArray);
-
-    if (dateArray[0] > dateArray[1]) {
-      // invalid inputs
-      Alert.alert(
-        'Error',
-        'Sleep duration Start Time cannot be after End Time',
-      );
-    } else {
-      var newArray = [];
-
-      newArray.push(dateArray[0]);
-      newArray.push(dateArray[1]);
-
-      newState['SleepDuration'] = newArray;
-
-      setDiaryData(newState);
-    }
-  };
 
   // Processing all the useStates and callbacks together
 
@@ -203,8 +125,7 @@ export default function DiaryEdit() {
                   fontSize: 20,
                   fontWeight: 'bold',
                   color: '#765000',
-                }}
-              >
+                }}>
                 Edit Diary
               </Text>
             ),
@@ -225,11 +146,14 @@ export default function DiaryEdit() {
         />
         <ScrollView style={styles.root}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>{workingEntry.entryDate}</Text>
+            <Text style={styles.headerText}>{new Date(workingEntry.entryDate).toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}</Text>
           </View>
           <Group title="Mood Board">
             <Section title="Emotion">
-              {/* <Text>Mood: {workingEntry?.moodRating}</Text> */}
               <MoodScale
                 currentMood={workingEntry?.moodRating}
                 onSelectMood={i =>
@@ -237,62 +161,33 @@ export default function DiaryEdit() {
                 }
               />
             </Section>
-            <Section title="Significant Events">
-              <TextInputDesign
-                title="SignificantEvents"
-                callBack={handleTextInputDesignCallBack}
-              />
-              <TextBoxDesign
-                key={diaryData.SignificantEvents.length}
-                data={diaryData.SignificantEvents}
-                title="SignificantEvents"
-                callBack={handleTextBoxDesignCallBack}
-              />
-            </Section>
-            <Section title="Best Moment">
-              <TextInputDesign
-                title="BestMoment"
-                callBack={handleTextInputDesignCallBack}
-              />
-              <TextBoxDesign
-                key={diaryData.BestMoment.length}
-                data={diaryData.BestMoment}
-                title="BestMoment"
-                callBack={handleTextBoxDesignCallBack}
-              />
-            </Section>
-            <Section title="Worst Moment">
-              <TextInputDesign
-                title="WorstMoment"
-                callBack={handleTextInputDesignCallBack}
-              />
-              <TextBoxDesign
-                key={diaryData.WorstMoment.length}
-                data={diaryData.WorstMoment}
-                title="WorstMoment"
-                callBack={handleTextBoxDesignCallBack}
-              />
-            </Section>
-            <Section title="What Happened">
-              <TextInputDesign
-                title="WhatHappened"
-                callBack={handleTextInputDesignCallBack}
-              />
-              <TextBoxDesign
-                key={diaryData.WhatHappened.length}
-                data={diaryData.WhatHappened}
-                title="WhatHappened"
-                callBack={handleTextBoxDesignCallBack}
-              />
-            </Section>
+            <DiaryEntryListEditSection
+              title="Significant Events"
+              onAddItem={() => {}}
+              onRemoveItem={() => {}}
+              items={[]} />
+            <DiaryEntryListEditSection
+              title="Best Moment"
+              onAddItem={() => {}}
+              onRemoveItem={() => {}}
+              items={[]} />
+            <DiaryEntryListEditSection
+              title="Worst Moment"
+              onAddItem={() => {}}
+              onRemoveItem={() => {}}
+              items={[]} />
+            <DiaryEntryListEditSection
+              title="What Happened"
+              onAddItem={() => {}}
+              onRemoveItem={() => {}}
+              items={[]} />
           </Group>
           <Group title="Sleep Board">
             <Section title="How rested do you feel?">
-              {/* <Text>Mood: {workingEntry?.moodRating}</Text> */}
               <MoodScale
-                currentMood={workingEntry?.moodRating}
+                currentMood={workingEntry?.sleepRating}
                 onSelectMood={i =>
-                  setWorkingEntry({...workingEntry, moodRating: i})
+                  setWorkingEntry({...workingEntry, sleepRating: i})
                 }
               />
             </Section>
@@ -308,30 +203,16 @@ export default function DiaryEdit() {
                 />
               }
             ></Section>
-            <Section title="Medicine Taken">
-              <TextInputDesign
-                title="MedicineTaken"
-                callBack={handleTextInputDesignCallBack}
-              />
-              <TextBoxDesign
-                key={diaryData.MedicineTaken.length}
-                data={diaryData.MedicineTaken}
-                title="MedicineTaken"
-                callBack={handleTextBoxDesignCallBack}
-              />
-            </Section>
-            <Section title="Alcohol / Caffeine Taken">
-              <TextInputDesign
-                title="AlcoholCaffeineTaken"
-                callBack={handleTextInputDesignCallBack}
-              />
-              <TextBoxDesign
-                key={diaryData.AlcoholCaffeineTaken.length}
-                data={diaryData.AlcoholCaffeineTaken}
-                title="AlcoholCaffeineTaken"
-                callBack={handleTextBoxDesignCallBack}
-              />
-            </Section>
+            <DiaryEntryListEditSection
+              title="Medicine Taken"
+              onAddItem={() => {}}
+              onRemoveItem={() => {}}
+              items={[]} />
+            <DiaryEntryListEditSection
+              title="Alcohol / Cafeine Taken"
+              onAddItem={() => {}}
+              onRemoveItem={() => {}}
+              items={[]} />
             <Section
               title="Number of Naps"
               titleRight={

@@ -2,13 +2,18 @@ import {Image} from 'expo-image';
 import React from 'react';
 import {Text, View, Pressable, StyleSheet} from 'react-native';
 
+interface MoodScaleProps {
+  /**
+   * @remarks
+   * `0`, `null`, and `undefined` are treated identically.
+   */
+    currentMood?: number | null;
+    onSelectMood: (mood: number) => void;
+}
 export default function MoodScale({
   currentMood,
   onSelectMood,
-}: {
-  currentMood: number;
-  onSelectMood: (mood: number) => void;
-}) {
+}: MoodScaleProps) {  
   const moodImages = [
     require('../assets/moodscale/sad_full.svg'),
     require('../assets/moodscale/sad_slight.svg'),

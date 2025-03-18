@@ -345,24 +345,13 @@ export function SleepDurationInput({
   );
 }
 
-export function TextBoxDesign({
-  data,
-  title,
-  callBack,
+export function TextBoxDesign<T extends {body: string}>({
+  items,
+  onRemoveItem,
 }: {
-  data: string[];
-  title: string;
-  callBack: ({title, data}: {title: string; data: string[]}) => void;
+  items: T[];
+  onRemoveItem: (datum: T) => void;
 }) {
-  const handleDeleteRequest = (text: string) => {
-    // console.log(data)
-
-    var filteredData = data.filter(x => x !== text);
-
-    data = filteredData;
-
-    callBack({title, data});
-  };
 
   const styles = StyleSheet.create({
     root: {
@@ -375,12 +364,12 @@ export function TextBoxDesign({
 
   return (
     <View style={styles.root}>
-      {data != undefined && data.length != 0 ? (
-        data.map((text, index) => (
+      {data?.length > 0 ? (
+        data.map(datum => (
           <TextBoxInternal
-            key={index}
-            text={text}
-            deleteRequest={handleDeleteRequest}
+            key={datum.body}
+            text={datum.body}
+            deleteRequest={() => onRemoveItem(datum)}
           />
         ))
       ) : (

@@ -1,3 +1,4 @@
+import {format} from 'date-fns';
 import {useEffect, useState, useRef, useMemo} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {
@@ -47,11 +48,13 @@ const moodColors = {
 };
 
 type CalendarViewProps = {
+  activeDate: string;
   onDayPress: (date: string) => void; // New prop for handling day press
   callBack: (data: string[]) => void; // Pass data back to parent NewCalendarView
 };
 
 export default function CalendarView({
+  activeDate,
   onDayPress,
   callBack,
 }: CalendarViewProps) {
@@ -84,7 +87,7 @@ export default function CalendarView({
   return (
     <View onLayout={e => setWidth(e.nativeEvent.layout.width)}>
       <CalendarProvider
-        date={new Date().toISOString().split('T')[0]} // Set the default selected date as today
+        date={activeDate} // Set the default selected date as today
         onDateChanged={date => callBack(GetWeek(date))} // Call the parent onDayPress when the date is changed
       >
         <WeekCalendar

@@ -1,4 +1,14 @@
-import {useState, useEffect, useRef} from 'react';
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  addDays,
+} from 'date-fns';
+import {
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -6,26 +16,45 @@ import {
   View,
   TouchableOpacity,
   Pressable,
-  Alert,
 } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import {Graph} from '@/components/Graph';
-import {router, Stack} from 'expo-router';
-import CalendarView from '@/components/CalendarView';
+import {router} from 'expo-router';
 import NewCalendarView from '@/components/NewCalendarView';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {format} from 'date-fns';
 import GetWeek from '@/components/GetWeek';
 import {Image} from 'expo-image';
 import {SleepHoursGraph} from '@/components/SleepGraph';
 import {Group, Section} from '@/components/diary';
 import MoodScale from '@/components/MoodScale';
 import Octicons from '@expo/vector-icons/Octicons';
+import {RootState} from '@/utils/store';
 import {
   useGetDiaryEntryQuery,
-  useSaveDiaryEntryMoodMutation,
+  useSaveDiaryEntryMoodRatingMutation,
+  useGetDiaryEntryMoodRatingQuery,
+  useGetDiaryEntryMoodRating7DaysQuery,
+  useSaveDiaryEntrySleepRatingMutation,
+  useGetDiaryEntrySleepRatingQuery,
+  useGetDiaryEntrySleepRating7DaysQuery,
+  switchActiveDiaryEntryDate,
 } from '@/services/diary-api';
 
-function GraphSection({title, subtitle, subtitle2, children}) {
+interface GraphSectionProps {
+  title: string,
+  subtitle: string,
+  subtitle2?: string,
+  children: ReactNode,
+}
+
+function generateCalendarWeekDayNumbers(date: string): number[] {
+  let currentDate = startOfWeek(new Date(date), {weekStartsOn: 1});
+  const days: number[] = [];
+  for (let i=0; i<7;i++)
+    days.push(+format(addDays(currentDate, i), 'd'));
+  return days;
+}
+
+function GraphSection({title, subtitle, subtitle2 = "", children}: GraphSectionProps) {
   const styles = StyleSheet.create({
     root: {
       display: 'flex',
@@ -41,7 +70,7 @@ function GraphSection({title, subtitle, subtitle2, children}) {
     subtitle: {
       color: '#765000',
       fontSize: 14,
-      alignSelf: 'stretch ',
+      alignSelf: 'stretch',
     },
     subtitle2: {
       color: '#765000',
@@ -115,7 +144,12 @@ export function Insights({insights}: InsightsProps) {
   );
 }
 
-function Option({text, imageType}: {text: string; imageType: number}) {
+interface OptionProps {
+    text: string;
+    imageType: number;
+}
+
+function Option({text, imageType}: OptionProps) {
   const imageOptions = [
     require('../../assets/quickRecommendation/aboutself.png'),
     require('../../assets/quickRecommendation/meditation.png'),
@@ -266,105 +300,48 @@ function Recommendations() {
 // Set the default days on the graph to be correct
 
 const today = new Date(Date.now());
-const week = GetWeek(today);
-
-var defaultDayNumbers = [];
-
-for (var i = 0; i < 7; i++) {
-  defaultDayNumbers.push(week[i].getDate());
-}
-
-// GLOBAL VARIABLE USED TO HOLD THE MOST UPDATED MOOD VALUE OF THE CURRENTLY CHOSEN WEEK
-
-var parsedAsyncMoodData = new Array();
-// var parsedAsyncRestData = new Array;
-
-async function getDataFromAsync() {
-  const asyncMoodData = await AsyncStorage.getItem('mood');
-  // const asyncRestData = await AsyncStorage.getItem('rest');
-
-  parsedAsyncMoodData = JSON.parse(asyncMoodData);
-  // const parsedAsyncRestData = JSON.parse(asyncRestData);
-
-  return parsedAsyncMoodData;
-}
-
-// ALL EMPTY IN CASE FAILURE TO LOAD DATA
-
-var defaultScaleData = [-1, -1, -1, -1, -1, -1, -1];
 
 export default function Diary() {
   // REDUX WIRING
+  const dispatch = useDispatch();
+  const activeDiaryEntryDate = useSelector((state: RootState) => state.activeDiaryEntryDate);
   const {
     data: diaryEntryData,
-    isLoading: diaryEntryIsLoading,
-    isSuccess: diaryEntryIsSuccess,
-    isError: diaryEntryisError,
-    error: diaryEntryError,
-  } = useGetDiaryEntryQuery(new Date().toISOString().split('T')[0]);
+  } = useGetDiaryEntryQuery(activeDiaryEntryDate);
+  const {
+    data: diaryEntryMoodRatingData,
+  } = useGetDiaryEntryMoodRatingQuery(activeDiaryEntryDate);
+  const {
+    data: diaryEntryMoodRating7DaysData,
+  } = useGetDiaryEntryMoodRating7DaysQuery(format(endOfWeek(new Date(activeDiaryEntryDate), {weekStartsOn: 1}), 'yyyy-MM-dd'));
   const [
-    saveDiaryEntryMood,
-    saveDiaryEntryMoodResult,
-  ] = useSaveDiaryEntryMoodMutation();
+    saveDiaryEntryMoodRating,
+    saveDiaryEntryMoodRatingResult,
+  ] = useSaveDiaryEntryMoodRatingMutation();
+  const {
+    data: diaryEntrySleepRatingData,
+  } = useGetDiaryEntrySleepRatingQuery(undefined);
+  const {
+    data: diaryEntrySleepRating7DaysData,
+  } = useGetDiaryEntrySleepRating7DaysQuery(format(endOfWeek(new Date(activeDiaryEntryDate), {weekStartsOn: 1}), 'yyyy-MM-dd'));
+  const [
+    saveDiaryEntrySleepRating
+  ] = useSaveDiaryEntrySleepRatingMutation();
   // END REDUX WIRING
-  
-  const [dayNumbers, setDayNumbers] = useState<number[]>(defaultDayNumbers);
-  const [scaleData, setScaleData] = useState<number[]>(defaultScaleData);
-  const tempKey = useRef([]);
-
-  // LORD KNOWS WHY THEF FOLLOWING WORKS I DONT EVEN UNDERSTAND IT MYSELF BUT PLEASE FOR THE LOVE OF GOD DO NOT TOUCH IT UNLESS YOU UNDERSTAND
 
   useEffect(() => {
-    var internalValueNow = [];
+    console.log('activeDiaryEntryDate: ' + activeDiaryEntryDate);
+  }, [activeDiaryEntryDate]);
 
-    getDataFromAsync().then(() => {
-      internalValueNow = parsedAsyncMoodData;
-      const data = getDefaultDiaryData(internalValueNow);
+  useEffect(() => {
+    console.log('diaryEntryMoodRatingData: ' + diaryEntryMoodRatingData);
+  }, [diaryEntryMoodRatingData]);
 
-      tempKey.current = data;
-
-      // console.log('deep effect called')
-      // console.log(tempKey.current)
-
-      setScaleData(tempKey.current);
-      // console.log('teset?')
-    });
-
-    // console.log('effect called');
-  }, []);
-
-  // DO NOT TOUCH ABOVE
-
-  // BELOW TWO FUNCTIONS GO WITH USE EFFECT
-
-  function checkDayDataFromAsync(type: string, date: Date, _DATA) {
-    // options for type are 'mood'/'rest'
-    const formattedDate = date.toISOString().split('T')[0];
-
-    if (type === 'mood') {
-      const check = _DATA.filter(x => x.date === formattedDate);
-
-      if (check.length === 0) {
-        // No data on that day
-        return -1;
-      } else {
-        // console.log('else triggered')
-        return check[0].mood - 1;
-      }
-    } else if (type === 'rest') {
-      // Implement later when theres rest data
-    }
-  }
-
-  function getDefaultDiaryData(_DATA) {
-    var data = [];
-
-    for (var i = 0; i < 7; i++) {
-      data.push(checkDayDataFromAsync('mood', week[i], _DATA));
-    }
-
-    return data;
-  }
+  useEffect(() => {
+    console.log('diaryEntryMoodRating7DaysData: ' + diaryEntryMoodRating7DaysData);
+  }, [diaryEntryMoodRating7DaysData]);
+  
+  const [dayNumbers, setDayNumbers] = useState<number[]>(GetWeek(today).map(x => x.getDate()));
 
   // STYLING STUFF
 
@@ -407,41 +384,24 @@ export default function Diary() {
 
   const handleCallBackToDiary = (data: string[]) => {
     // example 'data' value: ["3 Mar 2025", "4 Mar 2025", "5 Mar 2025", "6 Mar 2025", "7 Mar 2025", "8 Mar 2025", "9 Mar 2025"]
-
-    var result = [];
-    var dayNumbersArray = [];
-
-    // Call to update if theres any changes in asyncstorage
-    getDataFromAsync().then(() => {
-      for (var i = 0; i < 7; i++) {
-        var temp = new Date(data[i]);
-
-        dayNumbersArray.push(temp.getDate());
-        result.push(checkDayDataFromAsync('mood', temp, parsedAsyncMoodData));
-      }
-
-      setDayNumbers(dayNumbersArray);
-      setScaleData(result);
-    });
+    console.log("data");
+    dispatch(switchActiveDiaryEntryDate(format(new Date(data[data.length-1]), 'yyyy-MM-dd')));
+    setDayNumbers(generateCalendarWeekDayNumbers(data[data.length-1]));
   };
 
   return (
     <ScrollView>
       <View style={styles.containerGraphsSection}>
-        <NewCalendarView callBackToDiary={handleCallBackToDiary} />
+        <NewCalendarView activeDate={activeDiaryEntryDate} callBackToDiary={handleCallBackToDiary} />
         <GraphSection
           title="Mood 😄"
-          subtitle="Your mood has been Great"
-          subtitle2=""
-        >
-          <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
+          subtitle="Your mood has been Great">
+          { diaryEntryMoodRating7DaysData !== undefined && <Graph scaleData={diaryEntryMoodRating7DaysData} dayNumbers={dayNumbers} />}
         </GraphSection>
         <GraphSection
           title="Restfulness Level"
-          subtitle="Your restfulness: Fluctuated"
-          subtitle2=""
-        >
-          <Graph scaleData={scaleData} dayNumbers={dayNumbers} />
+          subtitle="Your restfulness: Fluctuated">
+          { diaryEntrySleepRating7DaysData !== undefined && <Graph scaleData={diaryEntrySleepRating7DaysData} dayNumbers={dayNumbers} />}
         </GraphSection>
         <GraphSection
           title="Sleep Hours"
@@ -478,7 +438,7 @@ export default function Diary() {
           <View style={{flex: 1}}></View>
           <View style={{flex: 10, alignSelf: 'center', alignItems: 'center'}}>
             <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-              {today.toLocaleDateString('en-GB', {
+              {new Date(activeDiaryEntryDate).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric',
@@ -512,8 +472,8 @@ export default function Diary() {
           <Section title="">
             <Text style={{color: '#765000'}}>Mood</Text>
             <MoodScale
-              currentMood={diaryEntryData!.moodRating}
-              onSelectMood={(selectedMood: number) => saveDiaryEntryMood({moodRating: selectedMood})}
+              currentMood={diaryEntryMoodRatingData}
+              onSelectMood={selectedMood => saveDiaryEntryMoodRating({moodRating: selectedMood, entryDate: activeDiaryEntryDate})}
             />
           </Section>
           <Section title="">
@@ -524,10 +484,8 @@ export default function Diary() {
           <Section title="">
             <Text style={{color: '#765000'}}>How rested do you feel?</Text>
             <MoodScale
-              currentMood={scaleData[0] + 1}
-              onSelectMood={() =>
-                console.log(scaleData[new Date(Date.now()).getDay()])
-              }
+              currentMood={diaryEntrySleepRatingData}
+              onSelectMood={x => saveDiaryEntrySleepRating({sleepRating: x, entryDate: activeDiaryEntryDate})}
             />
           </Section>
         </Group>
