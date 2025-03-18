@@ -335,7 +335,6 @@ export function TextBoxDesign<T extends {body: string}>({
   items: T[];
   onRemoveItem: (datum: T) => void;
 }) {
-
   const styles = StyleSheet.create({
     root: {
       display: 'flex',

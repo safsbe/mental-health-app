@@ -1,12 +1,15 @@
-import {useEffect, useState} from 'react';
+import {PropsWithChildren, useEffect, useState} from 'react';
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
+  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Stack} from 'expo-router';
+import {Stack, useSegments} from 'expo-router';
 import {
   Group,
   Section,
@@ -47,8 +50,8 @@ interface DiaryEntryListEditSectionProps<T> {
   onAddItem: () => void;
   onRemoveItem: (item: {id: T}) => void;
   items: {
-    id: T,
-    body: string,
+    id: T;
+    body: string;
   }[];
 }
 
@@ -60,16 +63,19 @@ function DiaryEntryListEditSection({
 }: DiaryEntryListEditSectionProps<string>) {
   return (
     <Section title={title}>
-      <TextInputDesign
-        title=""
-        callBack={onAddItem}
-      />
-      <TextBoxDesign
-        items={items}
-        onRemoveItem={onRemoveItem} />
+      <TextInputDesign title="" callBack={onAddItem} />
+      <TextBoxDesign items={items} onRemoveItem={onRemoveItem} />
     </Section>
   );
 }
+
+const handleSleepDurationInputCallBack = () => {
+  return;
+};
+
+const handleNumberInputComponentCallBack = () => {
+  return;
+};
 
 export default function DiaryEdit() {
   const [workingEntry, setWorkingEntry] = useState<ActiveEntry>();
@@ -125,7 +131,8 @@ export default function DiaryEdit() {
                   fontSize: 20,
                   fontWeight: 'bold',
                   color: '#765000',
-                }}>
+                }}
+              >
                 Edit Diary
               </Text>
             ),
@@ -137,7 +144,7 @@ export default function DiaryEdit() {
                   color: '#765000',
                   fontWeight: '500',
                 }}
-                onPress={() => console.log('diaryData:', diaryData)}
+                onPress={() => console.log('diaryData:', 'e')}
               >
                 Save
               </Text>
@@ -146,11 +153,13 @@ export default function DiaryEdit() {
         />
         <ScrollView style={styles.root}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>{new Date(workingEntry.entryDate).toLocaleDateString('en-GB', {
+            <Text style={styles.headerText}>
+              {new Date(workingEntry.entryDate).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric',
-              })}</Text>
+              })}
+            </Text>
           </View>
           <Group title="Mood Board">
             <Section title="Emotion">
@@ -165,22 +174,26 @@ export default function DiaryEdit() {
               title="Significant Events"
               onAddItem={() => {}}
               onRemoveItem={() => {}}
-              items={[]} />
+              items={[]}
+            />
             <DiaryEntryListEditSection
               title="Best Moment"
               onAddItem={() => {}}
               onRemoveItem={() => {}}
-              items={[]} />
+              items={[]}
+            />
             <DiaryEntryListEditSection
               title="Worst Moment"
               onAddItem={() => {}}
               onRemoveItem={() => {}}
-              items={[]} />
+              items={[]}
+            />
             <DiaryEntryListEditSection
               title="What Happened"
               onAddItem={() => {}}
               onRemoveItem={() => {}}
-              items={[]} />
+              items={[]}
+            />
           </Group>
           <Group title="Sleep Board">
             <Section title="How rested do you feel?">
@@ -207,12 +220,14 @@ export default function DiaryEdit() {
               title="Medicine Taken"
               onAddItem={() => {}}
               onRemoveItem={() => {}}
-              items={[]} />
+              items={[]}
+            />
             <DiaryEntryListEditSection
               title="Alcohol / Cafeine Taken"
               onAddItem={() => {}}
               onRemoveItem={() => {}}
-              items={[]} />
+              items={[]}
+            />
             <Section
               title="Number of Naps"
               titleRight={
