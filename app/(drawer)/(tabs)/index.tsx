@@ -9,10 +9,9 @@ import Activities from '@/components/Activities';
 import Explore from '@/components/Explore';
 import {router} from 'expo-router';
 import {getNativeSourceAndFullInitialStatusForLoadAsync} from 'expo-av/build/AV';
-import {parse} from 'date-fns';
 import {
-  useGetDiaryEntryMoodQuery,
-  useSaveDiaryEntryMoodMutation,
+  useGetDiaryEntryMoodRatingQuery,
+  useSaveDiaryEntryMoodRatingMutation,
 } from '@/services/diary-api';
 
 export default function Index() {
@@ -56,25 +55,21 @@ export default function Index() {
 function DiaryHero() {
   // REDUX WIRING
   const {
-    data: diaryEntryMoodData,
-    isLoading: diaryEntryMoodIsLoading,
-    isSuccess: diaryEntryMoodIsSuccess,
-    isError: diaryEntryMoodisError,
-    error: diaryEntryMoodError,
-  } = useGetDiaryEntryMoodQuery(new Date().toISOString().split('T')[0]);
-  console.log(diaryEntryMoodData);
-
+    data: diaryEntryMoodRatingData,
+    isLoading: diaryEntryMoodRatingIsLoading,
+    isSuccess: diaryEntryMoodRatingIsSuccess,
+    isError: diaryEntryMoodRatingisError,
+    error: diaryEntryMoodRatingError,
+  } = useGetDiaryEntryMoodRatingQuery(undefined);
   const [
-    saveDiaryEntryMood,
-    saveDiaryEntryMoodResult,
-  ] = useSaveDiaryEntryMoodMutation();
+    saveDiaryEntryMoodRating,
+    saveDiaryEntryMoodRatingResult,
+  ] = useSaveDiaryEntryMoodRatingMutation();
   
   // END REDUX WIRING
-  
-  const [mood, setMood] = useState(0);
 
-  const handleMoodSelect = async (selectedMood: number) => {
-    await saveDiaryEntryMood({moodRating: selectedMood});
+  const handleMoodSelect = (selectedMood: number) => {
+    saveDiaryEntryMoodRating({moodRating: selectedMood});
   };
 
   const styles = StyleSheet.create({
@@ -122,7 +117,7 @@ function DiaryHero() {
       <Text style={styles.dateLarge}>{moment().format('dddd')}</Text>
       <Text style={styles.dateSmall}>{moment().format('DD MMMM YYYY')}</Text>
       <Text style={styles.moodText}>What is your mood today?</Text>
-      <MoodScale currentMood={diaryEntryMoodData} onSelectMood={handleMoodSelect} />
+      <MoodScale currentMood={diaryEntryMoodRatingData} onSelectMood={handleMoodSelect} />
       <QuickRecommendation />
     </View>
   );

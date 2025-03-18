@@ -1,0 +1,155 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "396785af-d0a2-44ad-b70b-2465b072d366",
+  "prevId": "c1d6ea0e-ddc1-4a48-b3dc-92dfa15cd446",
+  "tables": {
+    "DIARY_ENTRIES": {
+      "name": "DIARY_ENTRIES",
+      "columns": {
+        "ENTRY_DATE": {
+          "name": "ENTRY_DATE",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "UPDATED_ON": {
+          "name": "UPDATED_ON",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "MOOD_RATING": {
+          "name": "MOOD_RATING",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "SLEEP_RATING": {
+          "name": "SLEEP_RATING",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "SLEEP_START": {
+          "name": "SLEEP_START",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "SLEEP_END": {
+          "name": "SLEEP_END",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "AWOKEN_COUNT": {
+          "name": "AWOKEN_COUNT",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "NAP_COUNT": {
+          "name": "NAP_COUNT",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "NAP_DURATION": {
+          "name": "NAP_DURATION",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "DIARY_MOMENTS": {
+      "name": "DIARY_MOMENTS",
+      "columns": {
+        "ENTRY_ID": {
+          "name": "ENTRY_ID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ID": {
+          "name": "ID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "TYPE": {
+          "name": "TYPE",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "BODY": {
+          "name": "BODY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "DIARY_MOMENTS_ENTRY_ID_ID_unique": {
+          "name": "DIARY_MOMENTS_ENTRY_ID_ID_unique",
+          "columns": [
+            "ENTRY_ID",
+            "ID"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "DIARY_MOMENTS_ENTRY_ID_DIARY_ENTRIES_ENTRY_DATE_fk": {
+          "name": "DIARY_MOMENTS_ENTRY_ID_DIARY_ENTRIES_ENTRY_DATE_fk",
+          "tableFrom": "DIARY_MOMENTS",
+          "tableTo": "DIARY_ENTRIES",
+          "columnsFrom": [
+            "ENTRY_ID"
+          ],
+          "columnsTo": [
+            "ENTRY_DATE"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {
+      "\"DIARY_MOMENTS\".\"id\"": "\"DIARY_MOMENTS\".\"ID\"",
+      "\"DIARY_MOMENTS\".\"type\"": "\"DIARY_MOMENTS\".\"TYPE\""
+    }
+  },
+  "internal": {
+    "indexes": {}
+  }
+}
