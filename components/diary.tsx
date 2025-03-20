@@ -74,8 +74,8 @@ export function Section({
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
-        <Text style={styles.titleText}>{title}</Text>
-        <View style={styles.titleRight}>{titleRight}</View>
+        {title && <Text style={styles.titleText}>{title}</Text>}
+        {titleRight && <View style={styles.titleRight}>{titleRight}</View>}
       </View>
       {children}
     </View>
@@ -189,27 +189,10 @@ export function TextInputDesign({
 function convert(value: Date) {
   const hours = value.getHours().toString();
   const minutes = value.getMinutes().toString();
-
   var finalString = '';
-
-  if (Number(hours) == 0) {
-    finalString += '00';
-  } else if (Number(hours) > 0 && Number(hours) < 10) {
-    finalString += '0' + hours;
-  } else {
-    finalString += hours;
-  }
-
+  finalString += hours.padStart(2, '0');
   finalString += ':';
-
-  if (Number(minutes) == 0) {
-    finalString += '00';
-  } else if (Number(minutes) > 0 && Number(minutes) < 10) {
-    finalString += '0' + minutes;
-  } else {
-    finalString += minutes;
-  }
-
+  finalString += minutes.padStart(2, '0');
   return finalString;
 }
 
@@ -364,8 +347,8 @@ export function TextBoxDesign<T extends {body: string}>({
 
   return (
     <View style={styles.root}>
-      {data?.length > 0 ? (
-        data.map(datum => (
+      {items?.length > 0 ? (
+        items.map(datum => (
           <TextBoxInternal
             key={datum.body}
             text={datum.body}
