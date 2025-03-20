@@ -17,6 +17,7 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
+import {SvgCss} from 'react-native-svg/css';
 import {useSelector, useDispatch} from 'react-redux';
 import {Graph} from '@/components/Graph';
 import {router} from 'expo-router';
@@ -39,8 +40,41 @@ import {
   switchActiveDiaryEntryDate,
 } from '@/services/diary-api';
 
+const svgPlaceholder = `
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="50" fill="#D9CBAE">
+    
+  </circle>
+  <path
+    fill="#765000"
+    d="M 10,30
+       A 20,20 0,0,1 50,30
+       A 20,20 0,0,1 90,30
+       Q 90,60 50,90
+       Q 10,60 10,30 z" />
+  <text class="hours" fill="#482641" x="50" y="50" text-anchor="middle" dominant-baseline="central">No data</text>
+  <Text class="time" x="50" y="0" text-anchor="middle" dominant-baseline="text-before-edge">12</Text>
+  <Text class="time" x="95" y="50" text-anchor="end" dominant-baseline="central">3</Text>
+  <Text class="time" x="50" y="100" text-anchor="middle" dominant-baseline="text-after-edge">6</Text>
+  <Text class="time" x="5" y="50" text-anchor="left" dominant-baseline="central">9</Text>
+</svg>
+
+<style>
+  text {
+    position: relative;
+    top: 50%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+  }
+
+  .time {
+    font-size: 12px;
+  }
+</style>
+`;
+
 interface GraphSectionProps {
-  title: string,
+  ltitle: string,
   subtitle: string,
   subtitle2?: string,
   children: ReactNode,
@@ -378,6 +412,10 @@ export default function Diary() {
       paddingHorizontal: 15,
       flex: 1,
     },
+    inlineSection: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
   });
 
   // TRIGGERS WHEN SCROLLING THE DIFFERENT WEEKS
@@ -485,8 +523,52 @@ export default function Diary() {
             <Text style={{color: '#765000'}}>How rested do you feel?</Text>
             <MoodScale
               currentMood={diaryEntrySleepRatingData}
-              onSelectMood={x => saveDiaryEntrySleepRating({sleepRating: x, entryDate: activeDiaryEntryDate})}
-            />
+              onSelectMood={x => saveDiaryEntrySleepRating({sleepRating: x, entryDate: activeDiaryEntryDate})} />
+          </Section>
+          <Section title="">
+            <View style={styles.inlineSection}>
+              <Text style={{color: '#765000'}}>Sleep duration</Text>
+              <Text style={{color: '#765000'}}>0 hrs</Text>
+            </View>
+            <View style={styles.inlineSection}>
+              <Text style={{color: '#A5A5A5'}}>Start</Text>
+              <Text>12:00 AM</Text>
+            </View>
+            <View style={styles.inlineSection}>
+              <Text style={{color: '#A5A5A5'}}>End</Text>
+              <Text>12:00 AM</Text>
+            </View>
+            {/*<SvgCss xml={svgPlaceholder} width="100%" height="100%" />*/}
+          </Section>
+          <Section title="">
+            <View style={styles.inlineSection}>
+              <Text style={{color: '#765000'}}>Number of wakings</Text>
+              <Text>0</Text>
+            </View>
+          </Section>
+          <Section title="">
+            <View>
+              <Text style={{color: '#765000'}}>Medicine taken</Text>
+              <Text>None</Text>
+            </View>
+          </Section>
+          <Section title="">
+            <View>
+              <Text style={{color: '#765000'}}>Alcohol / Caffeine taken</Text>
+              <Text>None</Text>
+            </View>
+          </Section>
+          <Section title="">
+            <View style={styles.inlineSection}>
+              <Text style={{color: '#765000'}}>Number of naps</Text>
+              <Text>0</Text>
+            </View>
+          </Section>
+          <Section title="">
+            <View style={styles.inlineSection}>
+              <Text style={{color: '#765000'}}>Duration of naps</Text>
+              <Text>0 hrs</Text>
+            </View>
           </Section>
         </Group>
       </View>
