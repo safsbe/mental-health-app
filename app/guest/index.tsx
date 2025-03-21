@@ -122,7 +122,7 @@ export default function GuestStart() {
             <HeaderBackButton
               {...props}
               // @ts-ignore
-              onPress={() => router.back()}
+              onPress={() => router.replace('/start')}
             />
           ),
         }}
