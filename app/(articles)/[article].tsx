@@ -1363,7 +1363,19 @@ export default function ArticleView() {
       'Impact on NS',
       'Treatment',
     ],
-    others: ['TL:DR'],
+    others: [
+      'For Emergencies',
+      'For Immediate Advice',
+      'General Well-being',
+      'Addiction',
+      'Autism (ASD)',
+      'Caregiver / Parenting Support',
+      'Child Abuse',
+      'Emotional Support',
+      'Financial',
+      'Gambling',
+      'Violence / Abuse',
+    ],
   };
 
   const articleSectionPageNumbers = [
@@ -1465,7 +1477,7 @@ export default function ArticleView() {
     {
       id: 12, // Helplines
       collection: 'others',
-      header: [0],
+      header: [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     },
   ];
 

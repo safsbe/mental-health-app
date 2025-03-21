@@ -141,7 +141,7 @@ export default function Meditation() {
   changeOrientation();
 
   return (
-    <View style={{height: '100%'}}>
+    <View style={{height: '100%', flex: 1}}>
       <Stack.Screen
         options={{
           // @ts-ignore
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     // paddingTop: '5%',
     paddingHorizontal: 16,
     paddingBottom: '5%',
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#595F59',

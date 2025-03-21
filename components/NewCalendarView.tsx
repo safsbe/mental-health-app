@@ -138,7 +138,11 @@ export default function NewCalendarView({
       </View>
       <View style={styles.calendarContainer}>
         {view === 'week' && (
-          <WeekCalendar activeDate={activeDate} onDayPress={handleDayPress} callBack={handleCallBack} />
+          <WeekCalendar
+            activeDate={activeDate}
+            onDayPress={handleDayPress}
+            callBack={handleCallBack}
+          />
         )}
         {view === 'month' && (
           <MonthCalendar moodData={moodData} onDayPress={handleDayPress} />

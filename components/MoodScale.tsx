@@ -7,13 +7,10 @@ interface MoodScaleProps {
    * @remarks
    * `0`, `null`, and `undefined` are treated identically.
    */
-    currentMood?: number | null;
-    onSelectMood: (mood: number) => void;
+  currentMood?: number | null;
+  onSelectMood: (mood: number) => void;
 }
-export default function MoodScale({
-  currentMood,
-  onSelectMood,
-}: MoodScaleProps) {  
+export default function MoodScale({currentMood, onSelectMood}: MoodScaleProps) {
   const moodImages = [
     require('../assets/moodscale/sad_full.svg'),
     require('../assets/moodscale/sad_slight.svg'),

@@ -1,14 +1,5 @@
-import {
-  format,
-  startOfWeek,
-  endOfWeek,
-  addDays,
-} from 'date-fns';
-import {
-  useEffect,
-  useState,
-  ReactNode,
-} from 'react';
+import {format, startOfWeek, endOfWeek, addDays} from 'date-fns';
+import {useEffect, useState, ReactNode} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -74,21 +65,25 @@ const svgPlaceholder = `
 `;
 
 interface GraphSectionProps {
-  ltitle: string,
-  subtitle: string,
-  subtitle2?: string,
-  children: ReactNode,
+  title: string;
+  subtitle: string;
+  subtitle2?: string;
+  children: ReactNode;
 }
 
 function generateCalendarWeekDayNumbers(date: string): number[] {
   let currentDate = startOfWeek(new Date(date), {weekStartsOn: 1});
   const days: number[] = [];
-  for (let i=0; i<7;i++)
-    days.push(+format(addDays(currentDate, i), 'd'));
+  for (let i = 0; i < 7; i++) days.push(+format(addDays(currentDate, i), 'd'));
   return days;
 }
 
-function GraphSection({title, subtitle, subtitle2 = "", children}: GraphSectionProps) {
+function GraphSection({
+  title,
+  subtitle,
+  subtitle2 = '',
+  children,
+}: GraphSectionProps) {
   const styles = StyleSheet.create({
     root: {
       display: 'flex',
@@ -179,8 +174,8 @@ export function Insights({insights}: InsightsProps) {
 }
 
 interface OptionProps {
-    text: string;
-    imageType: number;
+  text: string;
+  imageType: number;
 }
 
 function Option({text, imageType}: OptionProps) {
@@ -238,7 +233,11 @@ function Option({text, imageType}: OptionProps) {
   var imageSelectedOption = imageOptions[0]; // set default to first value
   var containerStyle = styles.containerAboutSelf;
   var redirect: () => void;
-  var routes = ['/', '/meditation/meditation/', '/'];
+  var routes = [
+    '/thisarticle?category=selfhelp&title=Self Care&id=13',
+    '/meditation/meditation/',
+    '/thisarticle?category=aboutmentalhelp&title=Anxiety&id=15',
+  ];
 
   switch (imageType) {
     case 0: {
@@ -338,29 +337,32 @@ const today = new Date(Date.now());
 export default function Diary() {
   // REDUX WIRING
   const dispatch = useDispatch();
-  const activeDiaryEntryDate = useSelector((state: RootState) => state.activeDiaryEntryDate);
-  const {
-    data: diaryEntryData,
-  } = useGetDiaryEntryQuery(activeDiaryEntryDate);
-  const {
-    data: diaryEntryMoodRatingData,
-  } = useGetDiaryEntryMoodRatingQuery(activeDiaryEntryDate);
-  const {
-    data: diaryEntryMoodRating7DaysData,
-  } = useGetDiaryEntryMoodRating7DaysQuery(format(endOfWeek(new Date(activeDiaryEntryDate), {weekStartsOn: 1}), 'yyyy-MM-dd'));
-  const [
-    saveDiaryEntryMoodRating,
-    saveDiaryEntryMoodRatingResult,
-  ] = useSaveDiaryEntryMoodRatingMutation();
-  const {
-    data: diaryEntrySleepRatingData,
-  } = useGetDiaryEntrySleepRatingQuery(undefined);
-  const {
-    data: diaryEntrySleepRating7DaysData,
-  } = useGetDiaryEntrySleepRating7DaysQuery(format(endOfWeek(new Date(activeDiaryEntryDate), {weekStartsOn: 1}), 'yyyy-MM-dd'));
-  const [
-    saveDiaryEntrySleepRating
-  ] = useSaveDiaryEntrySleepRatingMutation();
+  const activeDiaryEntryDate = useSelector(
+    (state: RootState) => state.activeDiaryEntryDate,
+  );
+  // const {data: diaryEntryData} = useGetDiaryEntryQuery(activeDiaryEntryDate);
+  const {data: diaryEntryMoodRatingData} =
+    useGetDiaryEntryMoodRatingQuery(activeDiaryEntryDate);
+  const {data: diaryEntryMoodRating7DaysData} =
+    useGetDiaryEntryMoodRating7DaysQuery(
+      format(
+        endOfWeek(new Date(activeDiaryEntryDate), {weekStartsOn: 1}),
+        'yyyy-MM-dd',
+      ),
+    );
+  const [saveDiaryEntryMoodRating, saveDiaryEntryMoodRatingResult] =
+    useSaveDiaryEntryMoodRatingMutation();
+
+  const {data: diaryEntrySleepRatingData} =
+    useGetDiaryEntrySleepRatingQuery(activeDiaryEntryDate);
+  const {data: diaryEntrySleepRating7DaysData} =
+    useGetDiaryEntrySleepRating7DaysQuery(
+      format(
+        endOfWeek(new Date(activeDiaryEntryDate), {weekStartsOn: 1}),
+        'yyyy-MM-dd',
+      ),
+    );
+  const [saveDiaryEntrySleepRating] = useSaveDiaryEntrySleepRatingMutation();
   // END REDUX WIRING
 
   useEffect(() => {
@@ -372,10 +374,14 @@ export default function Diary() {
   }, [diaryEntryMoodRatingData]);
 
   useEffect(() => {
-    console.log('diaryEntryMoodRating7DaysData: ' + diaryEntryMoodRating7DaysData);
+    console.log(
+      'diaryEntryMoodRating7DaysData: ' + diaryEntryMoodRating7DaysData,
+    );
   }, [diaryEntryMoodRating7DaysData]);
-  
-  const [dayNumbers, setDayNumbers] = useState<number[]>(GetWeek(today).map(x => x.getDate()));
+
+  const [dayNumbers, setDayNumbers] = useState<number[]>(
+    GetWeek(today).map(x => x.getDate()),
+  );
 
   // STYLING STUFF
 
@@ -422,24 +428,40 @@ export default function Diary() {
 
   const handleCallBackToDiary = (data: string[]) => {
     // example 'data' value: ["3 Mar 2025", "4 Mar 2025", "5 Mar 2025", "6 Mar 2025", "7 Mar 2025", "8 Mar 2025", "9 Mar 2025"]
-    console.log("data");
-    dispatch(switchActiveDiaryEntryDate(format(new Date(data[data.length-1]), 'yyyy-MM-dd')));
-    setDayNumbers(generateCalendarWeekDayNumbers(data[data.length-1]));
+    console.log('data');
+    dispatch(
+      switchActiveDiaryEntryDate(
+        format(new Date(data[data.length - 1]), 'yyyy-MM-dd'),
+      ),
+    );
+    setDayNumbers(generateCalendarWeekDayNumbers(data[data.length - 1]));
   };
 
   return (
     <ScrollView>
       <View style={styles.containerGraphsSection}>
-        <NewCalendarView activeDate={activeDiaryEntryDate} callBackToDiary={handleCallBackToDiary} />
-        <GraphSection
-          title="Mood 😄"
-          subtitle="Your mood has been Great">
-          { diaryEntryMoodRating7DaysData !== undefined && <Graph scaleData={diaryEntryMoodRating7DaysData} dayNumbers={dayNumbers} />}
+        <NewCalendarView
+          activeDate={activeDiaryEntryDate}
+          callBackToDiary={handleCallBackToDiary}
+        />
+        <GraphSection title="Mood 😄" subtitle="Your mood has been Great">
+          {diaryEntryMoodRating7DaysData !== undefined && (
+            <Graph
+              scaleData={diaryEntryMoodRating7DaysData}
+              dayNumbers={dayNumbers}
+            />
+          )}
         </GraphSection>
         <GraphSection
           title="Restfulness Level"
-          subtitle="Your restfulness: Fluctuated">
-          { diaryEntrySleepRating7DaysData !== undefined && <Graph scaleData={diaryEntrySleepRating7DaysData} dayNumbers={dayNumbers} />}
+          subtitle="Your restfulness: Fluctuated"
+        >
+          {diaryEntrySleepRating7DaysData !== undefined && (
+            <Graph
+              scaleData={diaryEntrySleepRating7DaysData}
+              dayNumbers={dayNumbers}
+            />
+          )}
         </GraphSection>
         <GraphSection
           title="Sleep Hours"
@@ -511,7 +533,12 @@ export default function Diary() {
             <Text style={{color: '#765000'}}>Mood</Text>
             <MoodScale
               currentMood={diaryEntryMoodRatingData}
-              onSelectMood={selectedMood => saveDiaryEntryMoodRating({moodRating: selectedMood, entryDate: activeDiaryEntryDate})}
+              onSelectMood={selectedMood =>
+                saveDiaryEntryMoodRating({
+                  moodRating: selectedMood,
+                  entryDate: activeDiaryEntryDate,
+                })
+              }
             />
           </Section>
           <Section title="">
@@ -523,7 +550,13 @@ export default function Diary() {
             <Text style={{color: '#765000'}}>How rested do you feel?</Text>
             <MoodScale
               currentMood={diaryEntrySleepRatingData}
-              onSelectMood={x => saveDiaryEntrySleepRating({sleepRating: x, entryDate: activeDiaryEntryDate})} />
+              onSelectMood={x =>
+                saveDiaryEntrySleepRating({
+                  sleepRating: x,
+                  entryDate: activeDiaryEntryDate,
+                })
+              }
+            />
           </Section>
           <Section title="">
             <View style={styles.inlineSection}>

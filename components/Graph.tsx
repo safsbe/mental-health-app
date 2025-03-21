@@ -118,7 +118,7 @@ export function Graph({
   scaleData,
   dayNumbers,
 }: {
-  scaleData: (number|null)[];
+  scaleData: (number | null)[];
   dayNumbers: number[];
 }) {
   const dayNameShort = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
@@ -161,7 +161,7 @@ export function Graph({
         if (!value) value = 0;
         return (
           <View key={index}>
-            <Scale value={value-1} />
+            <Scale value={value - 1} />
             <Text style={styles.dayName}>{dayNameShort[index]}</Text>
             <Text style={styles.dayNumber}>
               {dayNumbers != undefined
@@ -169,7 +169,8 @@ export function Graph({
                 : thisWeekDayNumbers[index]}
             </Text>
           </View>
-        )})}
+        );
+      })}
     </View>
   );
 }

@@ -61,11 +61,9 @@ function DiaryHero() {
     isError: diaryEntryMoodRatingisError,
     error: diaryEntryMoodRatingError,
   } = useGetDiaryEntryMoodRatingQuery(undefined);
-  const [
-    saveDiaryEntryMoodRating,
-    saveDiaryEntryMoodRatingResult,
-  ] = useSaveDiaryEntryMoodRatingMutation();
-  
+  const [saveDiaryEntryMoodRating, saveDiaryEntryMoodRatingResult] =
+    useSaveDiaryEntryMoodRatingMutation();
+
   // END REDUX WIRING
 
   const handleMoodSelect = (selectedMood: number) => {
@@ -117,7 +115,10 @@ function DiaryHero() {
       <Text style={styles.dateLarge}>{moment().format('dddd')}</Text>
       <Text style={styles.dateSmall}>{moment().format('DD MMMM YYYY')}</Text>
       <Text style={styles.moodText}>What is your mood today?</Text>
-      <MoodScale currentMood={diaryEntryMoodRatingData} onSelectMood={handleMoodSelect} />
+      <MoodScale
+        currentMood={diaryEntryMoodRatingData}
+        onSelectMood={handleMoodSelect}
+      />
       <QuickRecommendation />
     </View>
   );

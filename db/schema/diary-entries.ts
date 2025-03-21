@@ -21,14 +21,11 @@ export const enum DiaryEntryListTypes {
   TAGS = 6,
 }
 
-export const DiaryEntryListItems = sqliteTable(
-  'DIARY_ENTRY_LIST_ITEMS',
-  {
-    id: text('ID').primaryKey(),
-    entryId: text('ENTRY_ID')
-      .notNull()
-      .references(() => DiaryEntries.entryDate, {onDelete: 'cascade'}),
-    type: integer('TYPE').notNull(),
-    body: text('BODY').notNull(),
-  },
-);
+export const DiaryEntryListItems = sqliteTable('DIARY_ENTRY_LIST_ITEMS', {
+  id: text('ID').primaryKey(),
+  entryId: text('ENTRY_ID')
+    .notNull()
+    .references(() => DiaryEntries.entryDate, {onDelete: 'cascade'}),
+  type: integer('TYPE').notNull(),
+  body: text('BODY').notNull(),
+});
